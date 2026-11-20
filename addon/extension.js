@@ -354,6 +354,7 @@ export default {
         registryService.createRegistries([
             'engine:fleet-ops',
             'fleet-ops:component:map:drawer',
+            'fleet-ops:component:live-map:vehicle:popup',
             'fleet-ops:component:vehicle:details',
             'fleet-ops:component:driver:details',
             'fleet-ops:component:order-config-manager',

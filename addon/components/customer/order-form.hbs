@@ -1,5 +1,5 @@
 <Overlay @position="right" @noBackdrop={{true}} @width="580px" @fullHeight={{true}} @isResizable={{true}} as |overlay|>
-    <Overlay::Header @overlay={{overlay}} @title="New Order" @onPressCancel={{this.cancelOrderCreation}}>
+    <Overlay::Header @overlay={{overlay}} @title={{t "literal.fleet-ops.new-order"}} @onPressCancel={{this.cancelOrderCreation}}>
         {{!-- <Button
             @icon="check"
             @type="primary"
@@ -220,7 +220,7 @@
                 </div>
             </ContentPanel>
 
-            <ContentPanel @title="Details" @open={{true}} @panelBodyClass="bg-white dark:bg-gray-800">
+            <ContentPanel @title={{t "literal.fleet-ops.details"}} @open={{true}} @panelBodyClass="bg-white dark:bg-gray-800">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
                     <div class="lg:col-span-2">
                         <InputGroup>

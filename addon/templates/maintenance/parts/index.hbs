@@ -15,19 +15,19 @@
         @emptyStateComponent={{component
             "table/empty-state"
             icon="gears"
-            title="Add your first part"
-            description="Parts keep replacement inventory and compatibility details ready for maintenance work."
-            filteredTitle="No parts match your filters"
-            filteredDescription="Adjust the search or filters to find another part."
-            primaryText="New part"
+            title=(t "literal.fleet-ops.add-your-first-part")
+            description=(t "literal.fleet-ops.parts-keep-replacement-inventory-and-compatibili-fb32c")
+            filteredTitle=(t "literal.fleet-ops.no-parts-match-your-filters")
+            filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-par-cd605")
+            primaryText=(t "literal.fleet-ops.new-part")
             primaryIcon="plus"
             primaryAction=this.partActions.transition.create
-            secondaryText="Import"
+            secondaryText=(t "literal.fleet-ops.import")
             secondaryIcon="upload"
             secondaryAction=this.partActions.import
             docsSlug="fleet-ops/maintenance/parts/overview"
-            docsTitle="Parts guide"
-            docsText="Parts guide"
+            docsTitle=(t "literal.fleet-ops.parts-guide")
+            docsText=(t "literal.fleet-ops.parts-guide")
             docsSource="fleet-ops-empty-parts"
         }}
     />

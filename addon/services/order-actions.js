@@ -29,75 +29,79 @@ export default class OrderActionsService extends ResourceActionService {
         create: () => this.transitionTo('operations.orders.index.new'),
     };
 
-    panel = {
-        create: (attributes = {}, options = {}) => {
-            const order = this.createNewInstance(attributes);
-            return this.resourceContextPanel.open({
-                content: 'order/form',
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.order') }),
-                saveOptions: {
-                    callback: this.refresh,
-                },
-                useDefaultSaveTask: true,
-                order,
-                ...options,
-            });
-        },
-        edit: (order, options = {}) => {
-            return this.resourceContextPanel.open({
-                content: 'order/form',
-                title: this.intl.t('common.edit-resource-name', { resourceName: order.tracking }),
-                useDefaultSaveTask: true,
-                order,
-                ...options,
-            });
-        },
-        view: (order, options = {}) => {
-            return this.resourceContextPanel.open({
-                order,
-                tabs: [
-                    {
-                        label: this.intl.t('common.overview'),
-                        component: 'order/details',
+    get panel() {
+        return {
+            create: (attributes = {}, options = {}) => {
+                const order = this.createNewInstance(attributes);
+                return this.resourceContextPanel.open({
+                    content: 'order/form',
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.order') }),
+                    saveOptions: {
+                        callback: this.refresh,
                     },
-                ],
-                ...options,
-            });
-        },
-    };
+                    useDefaultSaveTask: true,
+                    order,
+                    ...options,
+                });
+            },
+            edit: (order, options = {}) => {
+                return this.resourceContextPanel.open({
+                    content: 'order/form',
+                    title: this.intl.t('common.edit-resource-name', { resourceName: order.tracking }),
+                    useDefaultSaveTask: true,
+                    order,
+                    ...options,
+                });
+            },
+            view: (order, options = {}) => {
+                return this.resourceContextPanel.open({
+                    order,
+                    tabs: [
+                        {
+                            label: this.intl.t('common.overview'),
+                            component: 'order/details',
+                        },
+                    ],
+                    ...options,
+                });
+            },
+        };
+    }
 
-    modal = {
-        create: (attributes = {}, options = {}, saveOptions = {}) => {
-            const order = this.createNewInstance(attributes);
-            return this.modalsManager.show('modals/resource', {
-                resource: order,
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.order') }),
-                acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.order') }),
-                component: 'order/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', order, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        edit: (order, options = {}, saveOptions = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: order,
-                title: this.intl.t('common.edit-resource-name', { resourceName: order.tracking }),
-                acceptButtonText: this.intl.t('common.save-changes'),
-                saveButtonIcon: 'save',
-                component: 'order/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', order, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        view: (order, options = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: order,
-                title: order.tracking,
-                component: 'order/details',
-                ...options,
-            });
-        },
-    };
+    get modal() {
+        return {
+            create: (attributes = {}, options = {}, saveOptions = {}) => {
+                const order = this.createNewInstance(attributes);
+                return this.modalsManager.show('modals/resource', {
+                    resource: order,
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.order') }),
+                    acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.order') }),
+                    component: 'order/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', order, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            edit: (order, options = {}, saveOptions = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: order,
+                    title: this.intl.t('common.edit-resource-name', { resourceName: order.tracking }),
+                    acceptButtonText: this.intl.t('common.save-changes'),
+                    saveButtonIcon: 'save',
+                    component: 'order/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', order, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            view: (order, options = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: order,
+                    title: order.tracking,
+                    component: 'order/details',
+                    ...options,
+                });
+            },
+        };
+    }
 
     @task *saveRoute(order, saveOptions = {}) {
         const { payload } = order;

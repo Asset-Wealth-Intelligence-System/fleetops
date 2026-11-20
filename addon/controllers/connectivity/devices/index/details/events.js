@@ -4,17 +4,19 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task, timeout } from 'ember-concurrency';
 
-const severityOptions = [
-    { label: 'Info', value: 'info' },
-    { label: 'Warning', value: 'warning' },
-    { label: 'Error', value: 'error' },
-    { label: 'Critical', value: 'critical' },
-    { label: 'High', value: 'high' },
-];
-
 const warningSeverities = ['warning', 'error', 'critical', 'high'];
 
 export default class ConnectivityDevicesIndexDetailsEventsController extends Controller {
+    get severityOptions() {
+        return [
+            { label: this.intl.t('literal.fleet-ops.info'), value: 'info' },
+            { label: this.intl.t('literal.fleet-ops.warning'), value: 'warning' },
+            { label: this.intl.t('literal.fleet-ops.error'), value: 'error' },
+            { label: this.intl.t('literal.fleet-ops.critical'), value: 'critical' },
+            { label: this.intl.t('literal.fleet-ops.high'), value: 'high' },
+        ];
+    }
+
     @service deviceEventActions;
     @service hostRouter;
     @service intl;
@@ -73,20 +75,20 @@ export default class ConnectivityDevicesIndexDetailsEventsController extends Con
 
     get metrics() {
         return [
-            { label: 'Recent events', value: this.totalEvents, icon: 'list', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
+            { label: this.intl.t('literal.fleet-ops.recent-events'), value: this.totalEvents, icon: 'list', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
             {
-                label: 'Warnings',
+                label: this.intl.t('literal.fleet-ops.warnings'),
                 value: this.warningEventsCount,
                 icon: 'triangle-exclamation',
                 accentClass: this.warningEventsCount ? 'fleetops-connectivity-kpi-accent-amber' : 'fleetops-connectivity-kpi-accent-green',
             },
             {
-                label: 'Unprocessed',
+                label: this.intl.t('literal.fleet-ops.unprocessed'),
                 value: this.unprocessedEventsCount,
                 icon: 'clock',
                 accentClass: this.unprocessedEventsCount ? 'fleetops-connectivity-kpi-accent-rose' : 'fleetops-connectivity-kpi-accent-green',
             },
-            { label: 'Processed', value: this.processedEventsCount, icon: 'check', accentClass: 'fleetops-connectivity-kpi-accent-green' },
+            { label: this.intl.t('literal.fleet-ops.processed-e6f64'), value: this.processedEventsCount, icon: 'check', accentClass: 'fleetops-connectivity-kpi-accent-green' },
         ];
     }
 
@@ -108,7 +110,7 @@ export default class ConnectivityDevicesIndexDetailsEventsController extends Con
         return [
             {
                 sticky: true,
-                label: 'Event',
+                label: this.intl.t('literal.fleet-ops.event'),
                 valuePath: 'event_type',
                 cellComponent: 'table/cell/anchor',
                 action: this.deviceEventActions.transition.view,
@@ -120,7 +122,7 @@ export default class ConnectivityDevicesIndexDetailsEventsController extends Con
                 filterComponent: 'filter/string',
             },
             {
-                label: 'Severity',
+                label: this.intl.t('literal.fleet-ops.severity'),
                 valuePath: 'severity',
                 cellComponent: 'table/cell/status',
                 resizable: true,
@@ -128,24 +130,24 @@ export default class ConnectivityDevicesIndexDetailsEventsController extends Con
                 filterable: true,
                 filterParam: 'events_severity',
                 filterComponent: 'filter/multi-option',
-                filterOptions: severityOptions,
+                filterOptions: this.severityOptions,
                 filterOptionLabel: 'label',
                 filterOptionValue: 'value',
             },
             {
-                label: 'Message',
+                label: this.intl.t('literal.fleet-ops.message'),
                 valuePath: 'message',
                 resizable: true,
                 sortable: false,
             },
             {
-                label: 'Code',
+                label: this.intl.t('literal.fleet-ops.code'),
                 valuePath: 'code',
                 resizable: true,
                 sortable: true,
             },
             {
-                label: 'Processed',
+                label: this.intl.t('literal.fleet-ops.processed-e6f64'),
                 valuePath: 'processedAt',
                 sortParam: 'processed_at',
                 resizable: true,
@@ -154,14 +156,14 @@ export default class ConnectivityDevicesIndexDetailsEventsController extends Con
                 filterParam: 'events_processed',
                 filterComponent: 'filter/multi-option',
                 filterOptions: [
-                    { label: 'Processed', value: 'processed' },
-                    { label: 'Unprocessed', value: 'unprocessed' },
+                    { label: this.intl.t('literal.fleet-ops.processed-e6f64'), value: 'processed' },
+                    { label: this.intl.t('literal.fleet-ops.unprocessed'), value: 'unprocessed' },
                 ],
                 filterOptionLabel: 'label',
                 filterOptionValue: 'value',
             },
             {
-                label: 'Occurred',
+                label: this.intl.t('literal.fleet-ops.occurred-b378d'),
                 valuePath: 'occurredAt',
                 sortParam: 'occurred_at',
                 resizable: true,
@@ -199,7 +201,7 @@ export default class ConnectivityDevicesIndexDetailsEventsController extends Con
                         permission: 'fleet-ops view device-event',
                     },
                     {
-                        label: 'Mark processed',
+                        label: this.intl.t('literal.fleet-ops.mark-processed-f1bfb'),
                         fn: this.markProcessed,
                         permission: 'fleet-ops update device-event',
                     },

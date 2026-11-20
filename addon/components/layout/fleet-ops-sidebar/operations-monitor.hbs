@@ -3,7 +3,7 @@
 
     <div class="mb-2 flex items-center justify-between px-1">
         <div class="min-w-0">
-            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">Live Operations</div>
+            <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">{{t "literal.fleet-ops.live-operations"}}</div>
             <div class="mt-1 flex flex-col gap-0.5 text-xs text-gray-500 dark:text-gray-400">
                 <span class="flex items-center gap-1"><span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>{{this.driverOnlineSummary}}</span>
                 <span class="flex items-center gap-1"><span class="h-1.5 w-1.5 rounded-full bg-blue-500"></span>{{this.vehicleOnlineSummary}}</span>
@@ -29,7 +29,7 @@
         <input
             type="search"
             value={{this.query}}
-            placeholder="Filter resources..."
+            placeholder={{t "literal.fleet-ops.filter-resources"}}
             class="min-w-0 flex-1 appearance-none border-0 bg-transparent p-0 text-xs leading-5 text-gray-700 outline-none shadow-none ring-0 focus:border-transparent focus:outline-none focus:ring-0 dark:text-gray-100"
             data-test-operations-monitor-filter
             {{on "input" this.updateQuery}}
@@ -44,7 +44,7 @@
                         <span class="h-2 w-2 shrink-0 rounded-full {{if driver.online 'bg-green-500' 'bg-yellow-300'}}"></span>
                         <span class="min-w-0 flex-1">
                             <span class="block truncate leading-5">{{or driver.displayName driver.display_name driver.name driver.public_id}}</span>
-                            <span class="block truncate text-xs leading-4 text-gray-400">{{if driver.online "Online" "Offline"}} - {{or driver.vehicle_name driver.public_id driver.status}}</span>
+                            <span class="block truncate text-xs leading-4 text-gray-400">{{if driver.online (t "literal.fleet-ops.online") (t "literal.fleet-ops.offline")}} - {{or driver.vehicle_name driver.public_id driver.status}}</span>
                         </span>
                     </button>
                     <div class="fleet-ops-operations-monitor-row-actions">
@@ -59,14 +59,14 @@
                             as |dd|
                         >
                             <div class="next-dd-menu mx-0 mt-1" role="menu">
-                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.viewDriver driver)}}>View details</a>
-                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.editDriver driver)}}>Edit details</a>
+                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.viewDriver driver)}}>{{t "literal.fleet-ops.view-details"}}</a>
+                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.editDriver driver)}}>{{t "literal.fleet-ops.edit-details"}}</a>
                                 <div class="next-dd-menu-seperator"></div>
-                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignOrderToDriver driver)}}>Assign order</a>
-                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignVehicleToDriver driver)}}>Assign vehicle</a>
-                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.locateDriver driver)}}>Locate on map</a>
+                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignOrderToDriver driver)}}>{{t "literal.fleet-ops.assign-order"}}</a>
+                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignVehicleToDriver driver)}}>{{t "literal.fleet-ops.assign-vehicle"}}</a>
+                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.locateDriver driver)}}>{{t "literal.fleet-ops.locate-on-map"}}</a>
                                 <div class="next-dd-menu-seperator"></div>
-                                <a href="javascript:;" class="next-dd-item text-danger" {{on "click" (dropdown-fn dd this.deleteDriver driver)}}>Delete driver</a>
+                                <a href="javascript:;" class="next-dd-item text-danger" {{on "click" (dropdown-fn dd this.deleteDriver driver)}}>{{t "literal.fleet-ops.delete-driver"}}</a>
                             </div>
                         </DropdownButton>
                     </div>
@@ -88,7 +88,7 @@
                         <span class="h-2 w-2 shrink-0 rounded-full {{if vehicle.online 'bg-green-500' 'bg-yellow-300'}}"></span>
                         <span class="min-w-0 flex-1">
                             <span class="block truncate leading-5">{{or vehicle.displayName vehicle.display_name vehicle.name vehicle.public_id}}</span>
-                            <span class="block truncate text-xs leading-4 text-gray-400">{{if vehicle.online "Online" "Offline"}} - {{or vehicle.driver_name vehicle.public_id vehicle.status}}</span>
+                            <span class="block truncate text-xs leading-4 text-gray-400">{{if vehicle.online (t "literal.fleet-ops.online") (t "literal.fleet-ops.offline")}} - {{or vehicle.driver_name vehicle.public_id vehicle.status}}</span>
                         </span>
                     </button>
                     <div class="fleet-ops-operations-monitor-row-actions">
@@ -103,11 +103,11 @@
                             as |dd|
                         >
                             <div class="next-dd-menu mx-0 mt-1" role="menu">
-                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.viewVehicle vehicle)}}>View details</a>
-                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.editVehicle vehicle)}}>Edit details</a>
-                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.locateVehicle vehicle)}}>Locate on map</a>
+                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.viewVehicle vehicle)}}>{{t "literal.fleet-ops.view-details"}}</a>
+                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.editVehicle vehicle)}}>{{t "literal.fleet-ops.edit-details"}}</a>
+                                <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.locateVehicle vehicle)}}>{{t "literal.fleet-ops.locate-on-map"}}</a>
                                 <div class="next-dd-menu-seperator"></div>
-                                <a href="javascript:;" class="next-dd-item text-danger" {{on "click" (dropdown-fn dd this.deleteVehicle vehicle)}}>Delete vehicle</a>
+                                <a href="javascript:;" class="next-dd-item text-danger" {{on "click" (dropdown-fn dd this.deleteVehicle vehicle)}}>{{t "literal.fleet-ops.delete-vehicle"}}</a>
                             </div>
                         </DropdownButton>
                     </div>
@@ -151,10 +151,10 @@
                                 as |dd|
                             >
                                 <div class="next-dd-menu mx-0 mt-1" role="menu">
-                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.viewFleet row.fleet)}}>View details</a>
+                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.viewFleet row.fleet)}}>{{t "literal.fleet-ops.view-details"}}</a>
                                     <div class="next-dd-menu-seperator"></div>
-                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignDriverToFleet row.fleet)}}>Assign driver</a>
-                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignVehicleToFleet row.fleet)}}>Assign vehicle</a>
+                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignDriverToFleet row.fleet)}}>{{t "literal.fleet-ops.assign-driver"}}</a>
+                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignVehicleToFleet row.fleet)}}>{{t "literal.fleet-ops.assign-vehicle"}}</a>
                                 </div>
                             </DropdownButton>
                         </div>
@@ -169,7 +169,7 @@
                         <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full {{if row.driver.online 'bg-green-500' 'bg-yellow-300'}}"></span>
                         <span class="min-w-0 flex-1">
                             <span class="block truncate leading-4">{{or row.driver.displayName row.driver.display_name row.driver.name row.driver.public_id}}</span>
-                            <span class="block truncate text-xs leading-4 text-gray-400">Driver - {{if row.driver.online "Online" "Offline"}}</span>
+                            <span class="block truncate text-xs leading-4 text-gray-400">{{t "literal.fleet-ops.driver-baed8"}} {{if row.driver.online (t "literal.fleet-ops.online") (t "literal.fleet-ops.offline")}}</span>
                         </span>
                     </button>
                 {{else}}
@@ -182,7 +182,7 @@
                         <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full {{if row.vehicle.online 'bg-green-500' 'bg-yellow-300'}}"></span>
                         <span class="min-w-0 flex-1">
                             <span class="block truncate leading-4">{{or row.vehicle.displayName row.vehicle.display_name row.vehicle.name row.vehicle.public_id}}</span>
-                            <span class="block truncate text-xs leading-4 text-gray-400">Vehicle - {{if row.vehicle.online "Online" "Offline"}}</span>
+                            <span class="block truncate text-xs leading-4 text-gray-400">{{t "literal.fleet-ops.vehicle-0f27a"}} {{if row.vehicle.online (t "literal.fleet-ops.online") (t "literal.fleet-ops.offline")}}</span>
                         </span>
                     </button>
                 {{/if}}

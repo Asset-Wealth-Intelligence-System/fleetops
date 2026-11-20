@@ -42,11 +42,11 @@
         </div>
     </ContentPanel>
 
-    <ContentPanel @title="Geofence Triggers" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.geofence-triggers"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="space-y-4">
             <p class="text-sm text-gray-500 dark:text-gray-400">
-                Configure when this service area fires active geofence events. Entry and exit events are dispatched to
-                webhooks, WebSocket channels, and the notification system whenever a driver crosses the service area boundary.
+                {{t "literal.fleet-ops.configure-when-this-service-area-fires-active-ge-d5025"}}
+                {{t "literal.fleet-ops.webhooks-websocket-channels-and-the-notification-b9753"}}
             </p>
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -59,7 +59,7 @@
                         />
                     </div>
                     <div>
-                        <p class="text-sm font-medium text-gray-900 dark:text-white">Trigger on Entry</p>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">{{t "literal.fleet-ops.trigger-on-entry"}}</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                             Fire a <code class="font-mono">geofence.entered</code> event when a driver enters this service area.
                         </p>
@@ -75,7 +75,7 @@
                         />
                     </div>
                     <div>
-                        <p class="text-sm font-medium text-gray-900 dark:text-white">Trigger on Exit</p>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">{{t "literal.fleet-ops.trigger-on-exit"}}</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                             Fire a <code class="font-mono">geofence.exited</code> event when a driver leaves this service area.
                         </p>
@@ -84,19 +84,19 @@
             </div>
 
             <InputGroup
-                @name="Dwell Threshold (minutes)"
+                @name={{t "literal.fleet-ops.dwell-threshold-minutes"}}
                 @value={{@resource.dwell_threshold_minutes}}
                 @type="number"
                 @placeholder="e.g. 10"
-                @helpText="Fire a geofence.dwelled event after a driver has been inside this service area for this many minutes. Leave blank to disable dwell tracking."
+                @helpText={{t "literal.fleet-ops.fire-a-geofence-dwelled-event-after-a-driver-has-9662d"}}
             />
 
             <InputGroup
-                @name="Speed Limit (km/h)"
+                @name={{t "literal.fleet-ops.speed-limit-km-h"}}
                 @value={{@resource.speed_limit_kmh}}
                 @type="number"
                 @placeholder="e.g. 50"
-                @helpText="Optional speed limit enforced within this service area. Leave blank for no limit."
+                @helpText={{t "literal.fleet-ops.optional-speed-limit-enforced-within-this-servic-10d28"}}
             />
         </div>
     </ContentPanel>

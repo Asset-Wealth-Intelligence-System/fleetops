@@ -1,15 +1,15 @@
 <div class="flex flex-col gap-3 p-3" ...attributes>
     <div class="flex items-start justify-between gap-3">
         <div class="min-w-0">
-            <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">Telemetry Events</h2>
-            <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-300">Recent device events, warning signals, and processing state.</p>
+            <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.telemetry-events"}}</h2>
+            <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.recent-device-events-warning-signals-and-process-094ba"}}</p>
         </div>
         <Button @icon="refresh" @size="xs" @onClick={{this.refreshEvents}} @isLoading={{this.loadEvents.isRunning}} />
     </div>
 
     <Layout::Resource::Tabular
         @resource="device-event"
-        @title="Telemetry Events"
+        @title={{t "literal.fleet-ops.telemetry-events"}}
         @data={{this.events}}
         @columns={{this.columns}}
         @controller={{this}}
@@ -20,8 +20,8 @@
             "table/empty-state"
             variant="compact"
             icon="bolt"
-            title="No telemetry events"
-            description="Events appear after this device reports provider activity."
+            title=(t "literal.fleet-ops.no-telemetry-events")
+            description=(t "literal.fleet-ops.events-appear-after-this-device-reports-provider-907a4")
             primaryText="Refresh"
             primaryIcon="refresh"
             primaryAction=this.refreshEvents

@@ -5,6 +5,7 @@ import { debug } from '@ember/debug';
 import { task } from 'ember-concurrency';
 
 export default class OrderDetailsTrackingComponent extends Component {
+    @service intl;
     @service orderActions;
     @service fetch;
     @service notifications;
@@ -110,19 +111,19 @@ export default class OrderDetailsTrackingComponent extends Component {
 
     get defaultLifecycleMessage() {
         if (this.statusCode === 'completed') {
-            return 'Order has been completed.';
+            return this.intl.t('literal.fleet-ops.order-has-been-completed');
         }
 
         if (this.statusCode === 'canceled') {
-            return 'Order has been canceled.';
+            return this.intl.t('literal.fleet-ops.order-has-been-canceled');
         }
 
         if (this.isDispatchedLifecycle) {
-            return 'Order has been dispatched. Estimated start is based on the assigned driver route to the first stop.';
+            return this.intl.t('literal.fleet-ops.order-has-been-dispatched-estimated-start-is-bas-edf5e');
         }
 
         if (this.isPreStartLifecycle) {
-            return 'Live ETA will begin once the order is started.';
+            return this.intl.t('literal.fleet-ops.live-eta-will-begin-once-the-order-is-started');
         }
 
         return null;
@@ -131,14 +132,14 @@ export default class OrderDetailsTrackingComponent extends Component {
     get lifecycleMessageTitle() {
         switch (this.lifecycleMode) {
             case 'completed':
-                return 'Order completed';
+                return this.intl.t('literal.fleet-ops.order-completed');
             case 'canceled':
-                return 'Order canceled';
+                return this.intl.t('literal.fleet-ops.order-canceled-3baf0');
             case 'dispatched':
-                return 'Order dispatched';
+                return this.intl.t('literal.fleet-ops.order-dispatched');
             case 'pre_start':
             case 'created':
-                return 'Tracking pending start';
+                return this.intl.t('literal.fleet-ops.tracking-pending-start');
             default:
                 return null;
         }
@@ -193,14 +194,14 @@ export default class OrderDetailsTrackingComponent extends Component {
 
     get smartAdjustedEtaUnavailableLabel() {
         if (this.driverSignal === 'Unassigned') {
-            return 'Pending driver assignment';
+            return this.intl.t('literal.fleet-ops.pending-driver-assignment');
         }
 
         if (this.driverSignal === 'Missing' || this.driverSignal === 'Stale') {
-            return 'Pending GPS fix';
+            return this.intl.t('literal.fleet-ops.pending-gps-fix');
         }
 
-        return 'Pending start';
+        return this.intl.t('literal.fleet-ops.pending-start');
     }
 
     get hasCompletionEta() {
@@ -221,32 +222,32 @@ export default class OrderDetailsTrackingComponent extends Component {
         const trackerData = this.trackerData;
 
         if (!this.hasAssignedDriver) {
-            return 'Unassigned';
+            return this.intl.t('literal.fleet-ops.unassigned');
         }
 
         if (!trackerData?.driver?.location) {
-            return 'Missing';
+            return this.intl.t('literal.fleet-ops.missing');
         }
 
         if (trackerData?.insights?.is_location_stale) {
-            return 'Stale';
+            return this.intl.t('literal.fleet-ops.stale');
         }
 
-        return trackerData?.driver?.online ? 'Live' : 'Offline';
+        return trackerData?.driver?.online ? this.intl.t('literal.fleet-ops.live') : this.intl.t('literal.fleet-ops.offline');
     }
 
     get driverStatusLabel() {
         switch (this.driverSignal) {
             case 'Live':
-                return 'Driver live';
+                return this.intl.t('literal.fleet-ops.driver-live');
             case 'Stale':
-                return 'Driver stale';
+                return this.intl.t('literal.fleet-ops.driver-stale');
             case 'Missing':
-                return 'Driver missing GPS';
+                return this.intl.t('literal.fleet-ops.driver-missing-gps');
             case 'Unassigned':
-                return 'No driver assigned';
+                return this.intl.t('literal.fleet-ops.no-driver-assigned-5c944');
             default:
-                return 'Driver offline';
+                return this.intl.t('literal.fleet-ops.driver-offline');
         }
     }
 
@@ -356,10 +357,10 @@ export default class OrderDetailsTrackingComponent extends Component {
 
     get activeStopLabel() {
         if (!this.activeStopIndex || !this.totalStops) {
-            return 'NOW HEADING TO';
+            return this.intl.t('literal.fleet-ops.now-heading-to');
         }
 
-        return `NOW HEADING TO - STOP ${this.activeStopIndex} OF ${this.totalStops}`;
+        return this.intl.t('literal.fleet-ops.now-heading-to-stop-of', { activeStopIndex: this.activeStopIndex, totalStops: this.totalStops });
     }
 
     get activeStopMarkerLabel() {
@@ -417,19 +418,19 @@ export default class OrderDetailsTrackingComponent extends Component {
 
     get reportedEtaWarning() {
         if (!this.isReportedEtaUntrusted) {
-            return 'Reported from existing route data';
+            return this.intl.t('literal.fleet-ops.reported-from-existing-route-data');
         }
 
-        return this.operatorWarning ?? 'Reported ETA may not reflect the latest tracking signal.';
+        return this.operatorWarning ?? this.intl.t('literal.fleet-ops.reported-eta-may-not-reflect-the-latest-tracking-04bb1');
     }
 
     get etaUnavailableLabel() {
         if (this.driverSignal === 'Unassigned') {
-            return 'Pending driver assignment';
+            return this.intl.t('literal.fleet-ops.pending-driver-assignment');
         }
 
         if (this.driverSignal === 'Missing' || this.driverSignal === 'Stale') {
-            return 'Pending GPS fix';
+            return this.intl.t('literal.fleet-ops.pending-gps-fix');
         }
 
         return '-';
@@ -438,13 +439,13 @@ export default class OrderDetailsTrackingComponent extends Component {
     get operatorWarningTitle() {
         switch (this.driverSignal) {
             case 'Unassigned':
-                return 'No driver assigned';
+                return this.intl.t('literal.fleet-ops.no-driver-assigned-5c944');
             case 'Missing':
-                return 'Pending GPS fix';
+                return this.intl.t('literal.fleet-ops.pending-gps-fix');
             case 'Stale':
-                return 'Stale driver location';
+                return this.intl.t('literal.fleet-ops.stale-driver-location');
             default:
-                return 'Tracking estimate warning';
+                return this.intl.t('literal.fleet-ops.tracking-estimate-warning');
         }
     }
 
@@ -529,12 +530,15 @@ export default class OrderDetailsTrackingComponent extends Component {
         }
 
         return [
-            { label: 'Provider', value: this.humanize(trackerData.provider) },
-            { label: 'Fallback', value: trackerData.fallback_provider ? this.humanize(trackerData.fallback_provider) : 'No' },
-            { label: 'Traffic aware', value: trackerData.options?.traffic_enabled ? 'Yes' : 'No' },
-            { label: 'Confidence', value: this.confidenceLabel },
-            { label: 'Driver signal', value: this.driverSignal },
-            { label: 'Warnings', value: String((trackerData.warnings ?? []).length) },
+            { label: this.intl.t('literal.fleet-ops.provider-27703'), value: this.humanize(trackerData.provider) },
+            { label: this.intl.t('literal.fleet-ops.fallback-88227'), value: trackerData.fallback_provider ? this.humanize(trackerData.fallback_provider) : 'No' },
+            { label: this.intl.t('literal.fleet-ops.traffic-aware'), value: trackerData.options?.traffic_enabled ? 'Yes' : 'No' },
+            {
+                label: this.intl.t('literal.fleet-ops.confidence-880e4'),
+                value: this.intl.t(`literal.status.${String(this.trackerData?.confidence || 'unknown').toLowerCase()}`, { default: this.confidenceLabel }),
+            },
+            { label: this.intl.t('literal.fleet-ops.driver-signal'), value: this.driverSignal },
+            { label: this.intl.t('literal.fleet-ops.warnings'), value: String((trackerData.warnings ?? []).length) },
         ];
     }
 
@@ -550,27 +554,27 @@ export default class OrderDetailsTrackingComponent extends Component {
         }
 
         if (!this.hasAssignedDriver) {
-            return 'Assign a driver to start live tracking and improve ETA accuracy.';
+            return this.intl.t('literal.fleet-ops.assign-a-driver-to-start-live-tracking-and-impro-d45a6');
         }
 
         if (!trackerData?.driver?.location) {
-            return 'Driver location is missing, so ETA accuracy may be limited.';
+            return this.intl.t('literal.fleet-ops.driver-location-is-missing-so-eta-accuracy-may-b-73749');
         }
 
         if (trackerData?.insights?.is_location_stale) {
-            return 'Driver location is stale. ETA may not reflect the latest movement.';
+            return this.intl.t('literal.fleet-ops.driver-location-is-stale-eta-may-not-reflect-the-6d7d5');
         }
 
         if (trackerData.fallback_provider) {
-            return `Using ${this.humanize(trackerData.fallback_provider)} fallback because the preferred tracking provider was unavailable.`;
+            return this.intl.t('literal.fleet-ops.using-fallback-because-the-preferred-tracking-pr-ddf65', { humanize: this.humanize(trackerData.fallback_provider) });
         }
 
         if (trackerData.confidence && trackerData.confidence !== 'high') {
-            return `${this.humanize(trackerData.confidence)} confidence ETA. Treat the estimate as directional.`;
+            return this.intl.t('literal.fleet-ops.confidence-eta-treat-the-estimate-as-directional', { humanize: this.humanize(trackerData.confidence) });
         }
 
         if ((trackerData.warnings ?? []).some((warning) => String(warning).startsWith('provider_failed'))) {
-            return 'Tracking provider returned an error. Showing the best available estimate.';
+            return this.intl.t('literal.fleet-ops.tracking-provider-returned-an-error-showing-the-d7a1f');
         }
 
         return null;
@@ -617,9 +621,9 @@ export default class OrderDetailsTrackingComponent extends Component {
 
         try {
             yield this.fetch.post(`orders/${order.id}/ping-driver`);
-            this.notifications.success('Driver app ping sent.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.driver-app-ping-sent'));
         } catch (err) {
-            this.notifications.error(err.message ?? 'Unable to ping driver app.');
+            this.notifications.error(err.message ?? this.intl.t('literal.fleet-ops.unable-to-ping-driver-app'));
         }
     }
 }

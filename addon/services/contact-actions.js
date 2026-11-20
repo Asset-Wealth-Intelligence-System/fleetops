@@ -5,6 +5,7 @@ import { action, get } from '@ember/object';
 const INTERNAL_NAMESPACE = 'int/v1';
 
 export default class ContactActionsService extends ResourceActionService {
+    @service intl;
     @service fetch;
     @service placeActions;
     @service notifications;
@@ -22,75 +23,79 @@ export default class ContactActionsService extends ResourceActionService {
         create: () => this.transitionTo('management.contacts.index.new'),
     };
 
-    panel = {
-        create: (attributes = {}, options = {}) => {
-            const contact = this.createNewInstance(attributes);
-            return this.resourceContextPanel.open({
-                content: 'contact/form',
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.contact')?.toLowerCase() }),
-                saveOptions: {
-                    callback: this.refresh,
-                },
-                useDefaultSaveTask: true,
-                contact,
-                ...options,
-            });
-        },
-        edit: (contact, options = {}) => {
-            return this.resourceContextPanel.open({
-                content: 'contact/form',
-                title: this.intl.t('common.edit-resource-name', { resourceName: contact.name }),
-                contact,
-                useDefaultSaveTask: true,
-                ...options,
-            });
-        },
-        view: (contact, options = {}) => {
-            return this.resourceContextPanel.open({
-                contact,
-                tabs: [
-                    {
-                        label: this.intl.t('common.overview'),
-                        component: 'contact/details',
+    get panel() {
+        return {
+            create: (attributes = {}, options = {}) => {
+                const contact = this.createNewInstance(attributes);
+                return this.resourceContextPanel.open({
+                    content: 'contact/form',
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.contact')?.toLowerCase() }),
+                    saveOptions: {
+                        callback: this.refresh,
                     },
-                ],
-                ...options,
-            });
-        },
-    };
+                    useDefaultSaveTask: true,
+                    contact,
+                    ...options,
+                });
+            },
+            edit: (contact, options = {}) => {
+                return this.resourceContextPanel.open({
+                    content: 'contact/form',
+                    title: this.intl.t('common.edit-resource-name', { resourceName: contact.name }),
+                    contact,
+                    useDefaultSaveTask: true,
+                    ...options,
+                });
+            },
+            view: (contact, options = {}) => {
+                return this.resourceContextPanel.open({
+                    contact,
+                    tabs: [
+                        {
+                            label: this.intl.t('common.overview'),
+                            component: 'contact/details',
+                        },
+                    ],
+                    ...options,
+                });
+            },
+        };
+    }
 
-    modal = {
-        create: (attributes = {}, options = {}, saveOptions = {}) => {
-            const contact = this.createNewInstance(attributes);
-            return this.modalsManager.show('modals/resource', {
-                resource: contact,
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.contact')?.toLowerCase() }),
-                acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.contact') }),
-                component: 'contact/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', contact, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        edit: (contact, options = {}, saveOptions = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: contact,
-                title: this.intl.t('common.edit-resource-name', { resourceName: contact.name }),
-                acceptButtonText: this.intl.t('common.save-changes'),
-                saveButtonIcon: 'save',
-                component: 'contact/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', contact, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        view: (contact, options = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: contact,
-                title: contact.name,
-                component: 'contact/details',
-                ...options,
-            });
-        },
-    };
+    get modal() {
+        return {
+            create: (attributes = {}, options = {}, saveOptions = {}) => {
+                const contact = this.createNewInstance(attributes);
+                return this.modalsManager.show('modals/resource', {
+                    resource: contact,
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.contact')?.toLowerCase() }),
+                    acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.contact') }),
+                    component: 'contact/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', contact, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            edit: (contact, options = {}, saveOptions = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: contact,
+                    title: this.intl.t('common.edit-resource-name', { resourceName: contact.name }),
+                    acceptButtonText: this.intl.t('common.save-changes'),
+                    saveButtonIcon: 'save',
+                    component: 'contact/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', contact, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            view: (contact, options = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: contact,
+                    title: contact.name,
+                    component: 'contact/details',
+                    ...options,
+                });
+            },
+        };
+    }
 
     @action async viewPlace(contact) {
         const place = await contact.place;
@@ -153,23 +158,23 @@ export default class ContactActionsService extends ResourceActionService {
     accountActionItems(contact, options = {}) {
         const actions = [
             {
-                text: 'Reset Password',
+                text: this.intl.t('literal.fleet-ops.reset-password'),
                 icon: 'key',
                 fn: () => this.openResetPasswordModal(contact),
             },
             {
-                text: 'Send Credentials',
+                text: this.intl.t('literal.fleet-ops.send-credentials'),
                 icon: 'paper-plane',
                 fn: () => this.confirmSendCredentials(contact),
             },
             this.hasInactiveLogin(contact)
                 ? {
-                      text: 'Reactivate Login',
+                      text: this.intl.t('literal.fleet-ops.reactivate-login'),
                       icon: 'unlock',
                       fn: () => this.confirmReactivatePortalLogin(contact),
                   }
                 : {
-                      text: 'Deactivate Login',
+                      text: this.intl.t('literal.fleet-ops.deactivate-login'),
                       icon: 'lock',
                       fn: () => this.confirmDeactivatePortalLogin(contact),
                       class: 'text-red-500 hover:text-red-600',
@@ -182,7 +187,7 @@ export default class ContactActionsService extends ResourceActionService {
                     separator: true,
                 },
                 {
-                    text: 'Convert to Vendor',
+                    text: this.intl.t('literal.fleet-ops.convert-to-vendor'),
                     icon: 'building',
                     fn: () => this.openConvertToVendorModal(contact, options),
                 }
@@ -198,26 +203,26 @@ export default class ContactActionsService extends ResourceActionService {
 
         const actions = [
             {
-                label: 'Reset Password',
+                label: this.intl.t('literal.fleet-ops.reset-password'),
                 icon: 'key',
                 fn: (contact) => this.openResetPasswordModal(contact),
                 isVisible: hasLinkedUser,
             },
             {
-                label: 'Send Credentials',
+                label: this.intl.t('literal.fleet-ops.send-credentials'),
                 icon: 'paper-plane',
                 fn: (contact) => this.confirmSendCredentials(contact),
                 isVisible: hasLinkedUser,
             },
             {
-                label: 'Deactivate Login',
+                label: this.intl.t('literal.fleet-ops.deactivate-login'),
                 icon: 'lock',
                 class: 'text-red-500 hover:text-red-600',
                 fn: (contact) => this.confirmDeactivatePortalLogin(contact),
                 isVisible: (contact) => hasLinkedUser(contact) && !this.hasInactiveLogin(contact),
             },
             {
-                label: 'Reactivate Login',
+                label: this.intl.t('literal.fleet-ops.reactivate-login'),
                 icon: 'unlock',
                 fn: (contact) => this.confirmReactivatePortalLogin(contact),
                 isVisible: (contact) => hasLinkedUser(contact) && this.hasInactiveLogin(contact),
@@ -226,7 +231,7 @@ export default class ContactActionsService extends ResourceActionService {
 
         if (hasCustomerPortal) {
             actions.push({
-                label: 'Convert to Vendor',
+                label: this.intl.t('literal.fleet-ops.convert-to-vendor'),
                 icon: 'building',
                 fn: (contact) => this.openConvertToVendorModal(contact, options),
                 isVisible: hasLinkedUser,
@@ -260,32 +265,32 @@ export default class ContactActionsService extends ResourceActionService {
 
     confirmSendCredentials(contact) {
         this.confirmLoginAction(contact, {
-            title: 'Send Portal Credentials',
-            body: 'Generate a new temporary password and email this contact their portal credentials.',
-            acceptButtonText: 'Send Credentials',
+            title: this.intl.t('literal.fleet-ops.send-portal-credentials'),
+            body: this.intl.t('literal.fleet-ops.generate-a-new-temporary-password-and-email-this-d1c14'),
+            acceptButtonText: this.intl.t('literal.fleet-ops.send-credentials'),
             endpoint: 'customers/send-credentials',
-            successMessage: 'Portal credentials sent.',
+            successMessage: this.intl.t('literal.fleet-ops.portal-credentials-sent'),
         });
     }
 
     confirmDeactivatePortalLogin(contact) {
         this.confirmLoginAction(contact, {
-            title: 'Deactivate Login',
-            body: 'Deactivate portal access for this contact. Their profile and history will be preserved.',
-            acceptButtonText: 'Deactivate Login',
+            title: this.intl.t('literal.fleet-ops.deactivate-login'),
+            body: this.intl.t('literal.fleet-ops.deactivate-portal-access-for-this-contact-their-2fb13'),
+            acceptButtonText: this.intl.t('literal.fleet-ops.deactivate-login'),
             acceptButtonScheme: 'danger',
             endpoint: 'customers/deactivate-portal-login',
-            successMessage: 'Portal login deactivated.',
+            successMessage: this.intl.t('literal.fleet-ops.portal-login-deactivated'),
         });
     }
 
     confirmReactivatePortalLogin(contact) {
         this.confirmLoginAction(contact, {
-            title: 'Reactivate Login',
-            body: 'Reactivate portal access for this contact.',
-            acceptButtonText: 'Reactivate Login',
+            title: this.intl.t('literal.fleet-ops.reactivate-login'),
+            body: this.intl.t('literal.fleet-ops.reactivate-portal-access-for-this-contact'),
+            acceptButtonText: this.intl.t('literal.fleet-ops.reactivate-login'),
             endpoint: 'customers/reactivate-portal-login',
-            successMessage: 'Portal login reactivated.',
+            successMessage: this.intl.t('literal.fleet-ops.portal-login-reactivated'),
         });
     }
 

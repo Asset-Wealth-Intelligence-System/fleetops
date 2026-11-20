@@ -1,6 +1,8 @@
 import Component from '@glimmer/component';
 
+import { inject as service } from '@ember/service';
 export default class TrackingStopProgressComponent extends Component {
+    @service intl;
     get stops() {
         const stops = this.args.stops ?? [];
         const activeStop = this.args.activeStop;
@@ -47,14 +49,14 @@ export default class TrackingStopProgressComponent extends Component {
 
     titleFor(stop, index) {
         if (stop.type === 'pickup') {
-            return 'Pickup';
+            return this.intl.t('literal.fleet-ops.pickup');
         }
 
         if (stop.type === 'dropoff') {
-            return 'Dropoff';
+            return this.intl.t('literal.fleet-ops.dropoff');
         }
 
-        return `Stop ${index + 1}`;
+        return this.intl.t('literal.fleet-ops.stop-2ed23', { value: index + 1 });
     }
 
     locationLabelFor(stop, index) {

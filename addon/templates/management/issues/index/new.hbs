@@ -2,7 +2,7 @@
     @resource={{this.issue}}
     @controller={{this}}
     @actionButtons={{this.actionButtons}}
-    @headerTitle="Create a new issue"
+    @headerTitle={{t "literal.fleet-ops.create-a-new-issue"}}
     @saveTask={{this.save}}
     @onPressCancel={{transition-to "management.issues.index"}}
     @onOverlayReady={{fn (mut this.overlay)}}

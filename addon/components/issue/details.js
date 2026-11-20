@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { formatDistanceStrict, isValid } from 'date-fns';
 
 export default class IssueDetailsComponent extends Component {
+    @service intl;
     @service hostRouter;
     @service issueActions;
 
@@ -28,7 +29,7 @@ export default class IssueDetailsComponent extends Component {
     }
 
     get reporterName() {
-        return this.resource?.reporter?.name || this.resource?.reporter_name || 'Unknown reporter';
+        return this.resource?.reporter?.name || this.resource?.reporter_name || this.intl.t('literal.fleet-ops.unknown-reporter');
     }
 
     get reporterInitial() {
@@ -36,7 +37,7 @@ export default class IssueDetailsComponent extends Component {
     }
 
     get assigneeName() {
-        return this.resource?.assignee?.name || this.resource?.assignee_name || 'Unassigned';
+        return this.resource?.assignee?.name || this.resource?.assignee_name || this.intl.t('literal.fleet-ops.unassigned');
     }
 
     get isResolved() {
@@ -73,26 +74,26 @@ export default class IssueDetailsComponent extends Component {
 
     get resolutionTitle() {
         if (this.isResolved) {
-            return 'Issue closed';
+            return this.intl.t('literal.fleet-ops.issue-closed-ffc0b');
         }
 
         if (this.isReopened) {
-            return 'Issue re-opened';
+            return this.intl.t('literal.fleet-ops.issue-re-opened-0641c');
         }
 
-        return 'Awaiting resolution';
+        return this.intl.t('literal.fleet-ops.awaiting-resolution');
     }
 
     get resolutionDescription() {
         if (this.isResolved) {
-            return this.resolutionMeta.note || 'This issue has been closed and no further action is currently required.';
+            return this.resolutionMeta.note || this.intl.t('literal.fleet-ops.this-issue-has-been-closed-and-no-further-action-94bc1');
         }
 
         if (this.isReopened) {
-            return this.lastReopen?.note || 'This issue was previously closed and has been re-opened for follow-up.';
+            return this.lastReopen?.note || this.intl.t('literal.fleet-ops.this-issue-was-previously-closed-and-has-been-re-02562');
         }
 
-        return 'No resolution details have been recorded yet.';
+        return this.intl.t('literal.fleet-ops.no-resolution-details-have-been-recorded-yet');
     }
 
     get resolutionDate() {

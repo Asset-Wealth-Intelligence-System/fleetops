@@ -111,7 +111,7 @@ export default class ConnectivitySensorsIndexController extends Controller {
     /** bulk action buttons */
     @tracked bulkActions = [
         {
-            label: 'Delete selected...',
+            label: this.intl.t('literal.fleet-ops.delete-selected'),
             class: 'text-red-500',
             fn: this.sensorActions.bulkDelete,
         },
@@ -134,7 +134,7 @@ export default class ConnectivitySensorsIndexController extends Controller {
             filterComponent: 'filter/string',
         },
         {
-            label: 'Telematic',
+            label: this.intl.t('literal.fleet-ops.telematic'),
             valuePath: 'telematic.provider',
             cellComponent: 'cell/telematic-provider',
             resourcePath: sensorTelematic,
@@ -145,12 +145,12 @@ export default class ConnectivitySensorsIndexController extends Controller {
             sortable: true,
             filterable: true,
             filterComponent: 'filter/model',
-            filterComponentPlaceholder: 'Select telematic',
+            filterComponentPlaceholder: this.intl.t('literal.fleet-ops.select-telematic-ac798'),
             filterParam: 'telematic',
             model: 'telematic',
         },
         {
-            label: 'Device',
+            label: this.intl.t('literal.fleet-ops.device'),
             valuePath: 'device.displayName',
             cellComponent: 'cell/device-identity',
             resourcePath: sensorDevice,
@@ -161,14 +161,14 @@ export default class ConnectivitySensorsIndexController extends Controller {
             sortable: true,
             filterable: true,
             filterComponent: 'filter/model',
-            filterComponentPlaceholder: 'Select device',
+            filterComponentPlaceholder: this.intl.t('literal.fleet-ops.select-device-1dffe'),
             filterParam: 'device',
             model: 'device',
             modelNamePath: 'displayName',
             query: this.telematic ? { telematic_uuid: this.telematic } : undefined,
         },
         {
-            label: 'Type',
+            label: this.intl.t('literal.fleet-ops.type'),
             valuePath: 'type',
             cellComponent: 'table/cell/base',
             humanize: true,
@@ -182,13 +182,13 @@ export default class ConnectivitySensorsIndexController extends Controller {
             filterOptionValue: 'value',
         },
         {
-            label: 'Last Value',
+            label: this.intl.t('literal.fleet-ops.last-value'),
             valuePath: 'last_value',
             resizable: true,
             sortable: true,
         },
         {
-            label: 'Unit',
+            label: this.intl.t('literal.fleet-ops.unit'),
             valuePath: 'unit',
             resizable: true,
             sortable: true,
@@ -206,14 +206,14 @@ export default class ConnectivitySensorsIndexController extends Controller {
             filterOptionValue: 'value',
         },
         {
-            label: 'Threshold',
+            label: this.intl.t('literal.fleet-ops.threshold'),
             valuePath: 'threshold_status',
             cellComponent: 'table/cell/status',
             resizable: true,
             sortable: true,
         },
         {
-            label: 'Serial Number',
+            label: this.intl.t('literal.fleet-ops.serial-number'),
             valuePath: 'serial_number',
             resizable: true,
             sortable: true,
@@ -231,7 +231,7 @@ export default class ConnectivitySensorsIndexController extends Controller {
             filterComponent: 'filter/string',
         },
         {
-            label: 'Last Reading',
+            label: this.intl.t('literal.fleet-ops.last-reading'),
             valuePath: 'lastReadingAt',
             sortParam: 'last_reading_at',
             resizable: true,

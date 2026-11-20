@@ -102,13 +102,13 @@
                         min={{1}}
                         {{on "change" this.onMaxDistanceChange}}
                     />
-                    <InputGroup @name="Max Distance Unit" @helpText="Select the maximum distance this service rate supports" @required={{true}}>
+                    <InputGroup @name={{t "literal.fleet-ops.max-distance-unit"}} @helpText={{t "literal.fleet-ops.select-the-maximum-distance-this-service-rate-su-b6350"}} @required={{true}}>
                         <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                             <PowerSelect
                                 @options={{get-fleet-ops-options "longDistanceUnits"}}
                                 @selected={{find-by "value" @resource.max_distance_unit (get-fleet-ops-options "longDistanceUnits")}}
                                 @onChange={{set-model-attr @resource "max_distance_unit"}}
-                                @placeholder="Max Distance Unit"
+                                @placeholder={{t "literal.fleet-ops.max-distance-unit"}}
                                 @triggerClass="form-select form-input"
                                 @disabled={{cannot-write @resource}}
                                 as |status|
@@ -210,17 +210,17 @@
             </div>
         </ContentPanel>
     {{else if @resource.isMultiZoneDistance}}
-        <ContentPanel @title="Multi-zone Distance" @open={{true}} @wrapperClass="bordered-top" @panelBodyWrapperClass="px-0i">
+        <ContentPanel @title={{t "literal.fleet-ops.multi-zone-distance"}} @open={{true}} @wrapperClass="bordered-top" @panelBodyWrapperClass="px-0i">
             <div class="px-2 mb-3">
                 <InfoBlock
                     class="mb-3"
-                    @text="Price route distance across multiple service areas or zones. Priority controls overlap: if a route segment matches more than one rule, the highest-priority rule is used. Unmatched distance can use a fallback rule."
-                    @exampleText="Main City: 2.50 per km, Remote Area: 3.75 per km, Fallback: 3.75 per km."
+                    @text={{t "literal.fleet-ops.price-route-distance-across-multiple-service-are-50725"}}
+                    @exampleText={{t "literal.fleet-ops.main-city-2-50-per-km-remote-area-3-75-per-km-fa-b10d0"}}
                 />
 
                 <div class="flex flex-row items-center space-x-2">
-                    <Button @text="Add Rule" @icon="plus" @iconPrefix="fas" @onClick={{@resource.addMultiZoneDistanceRule}} />
-                    <Button @text="Add Fallback" @icon="route" @iconPrefix="fas" @onClick={{@resource.addMultiZoneDistanceFallbackRule}} />
+                    <Button @text={{t "literal.fleet-ops.add-rule"}} @icon="plus" @iconPrefix="fas" @onClick={{@resource.addMultiZoneDistanceRule}} />
+                    <Button @text={{t "literal.fleet-ops.add-fallback"}} @icon="route" @iconPrefix="fas" @onClick={{@resource.addMultiZoneDistanceFallbackRule}} />
                 </div>
             </div>
 
@@ -229,12 +229,12 @@
                     <table class="table table-fixed">
                         <thead>
                             <tr>
-                                <th class="w-1/6">Label</th>
-                                <th class="w-1/6">Geography Type</th>
-                                <th class="w-1/5">Geography</th>
-                                <th class="w-1/12">Priority</th>
-                                <th class="w-1/6">Rate</th>
-                                <th class="w-1/6">Unit</th>
+                                <th class="w-1/6">{{t "literal.fleet-ops.label"}}</th>
+                                <th class="w-1/6">{{t "literal.fleet-ops.geography-type"}}</th>
+                                <th class="w-1/5">{{t "literal.fleet-ops.geography"}}</th>
+                                <th class="w-1/12">{{t "literal.fleet-ops.priority"}}</th>
+                                <th class="w-1/6">{{t "literal.fleet-ops.rate"}}</th>
+                                <th class="w-1/6">{{t "literal.fleet-ops.unit"}}</th>
                                 <th class="w-12"></th>
                             </tr>
                         </thead>
@@ -242,7 +242,7 @@
                             {{#each @resource.rateFees as |rateFee|}}
                                 <tr>
                                     <td>
-                                        <Input @value={{rateFee.label}} placeholder="Rule label" disabled={{cannot-write @resource}} class="form-input w-full" />
+                                        <Input @value={{rateFee.label}} placeholder={{t "literal.fleet-ops.rule-label"}} disabled={{cannot-write @resource}} class="form-input w-full" />
                                     </td>
                                     <td>
                                         <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
@@ -250,7 +250,7 @@
                                                 @options={{this.geographyTypes}}
                                                 @selected={{find-by "value" rateFee.geography_type this.geographyTypes}}
                                                 @onChange={{fn this.selectRuleGeographyType rateFee}}
-                                                @placeholder="Geography type"
+                                                @placeholder={{t "literal.fleet-ops.geography-type-baac2"}}
                                                 @triggerClass="form-select form-input"
                                                 @disabled={{cannot-write @resource}}
                                                 as |type|
@@ -266,7 +266,7 @@
                                                     @options={{this.zones}}
                                                     @selected={{rateFee.zone}}
                                                     @onChange={{fn this.selectRuleZone rateFee}}
-                                                    @placeholder="Select zone"
+                                                    @placeholder={{t "literal.fleet-ops.select-zone"}}
                                                     @triggerClass="form-select form-input"
                                                     @disabled={{cannot-write @resource}}
                                                     as |zone|
@@ -275,14 +275,14 @@
                                                 </PowerSelect>
                                             </div>
                                         {{else if (eq rateFee.geography_type "fallback")}}
-                                            <div class="text-sm text-gray-500 dark:text-gray-400">Unmatched route distance</div>
+                                            <div class="text-sm text-gray-500 dark:text-gray-400">{{t "literal.fleet-ops.unmatched-route-distance"}}</div>
                                         {{else}}
                                             <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                                                 <PowerSelect
                                                     @options={{this.serviceAreas}}
                                                     @selected={{rateFee.service_area}}
                                                     @onChange={{fn this.selectRuleServiceArea rateFee}}
-                                                    @placeholder="Select service area"
+                                                    @placeholder={{t "literal.fleet-ops.select-service-area"}}
                                                     @triggerClass="form-select form-input"
                                                     @disabled={{cannot-write @resource}}
                                                     as |serviceArea|
@@ -304,7 +304,7 @@
                                                 @options={{get-fleet-ops-options "distanceUnits"}}
                                                 @selected={{find-by "value" rateFee.distance_unit (get-fleet-ops-options "distanceUnits")}}
                                                 @onChange={{set-model-attr rateFee "distance_unit"}}
-                                                @placeholder="Distance unit"
+                                                @placeholder={{t "literal.fleet-ops.distance-unit"}}
                                                 @triggerClass="form-select form-input"
                                                 @disabled={{cannot-write @resource}}
                                                 as |unit|
@@ -319,7 +319,7 @@
                                 </tr>
                             {{else}}
                                 <tr>
-                                    <td colspan="7" class="text-center text-gray-500 italic">No geographic pricing rules defined</td>
+                                    <td colspan="7" class="text-center text-gray-500 italic">{{t "literal.fleet-ops.no-geographic-pricing-rules-defined"}}</td>
                                 </tr>
                             {{/each}}
                         </tbody>
@@ -370,17 +370,17 @@
     {{else if @resource.isAlgorithm}}
         <ContentPanel @title={{t "service-rate.fields.custom-algorithm-title"}} @open={{true}} @wrapperClass="bordered-top">
             <InfoBlock class="mb-5">
-                Define a custom formula for this service rate using variables wrapped in a single pair of curly braces.
+                {{t "literal.fleet-ops.define-a-custom-formula-for-this-service-rate-us-9c392"}}
 
                 <div class="block my-4 break-text">
                     <ul class="list-disc space-y-2 pl-16">
                         <li class="leading-5"><code>&#123;distance&#125;</code>, <code>&#123;distance_m&#125;</code>, <code>&#123;distance_km&#125;</code>, <code>&#123;distance_mi&#125;</code>: route distance in meters, kilometers, or miles.</li>
                         <li class="leading-5"><code>&#123;time&#125;</code>, <code>&#123;time_s&#125;</code>, <code>&#123;time_min&#125;</code>: route time in seconds or minutes.</li>
-                        <li class="leading-5"><code>&#123;stops&#125;</code>: total service stops including pickup, dropoff, and intermediate waypoints.</li>
-                        <li class="leading-5"><code>&#123;waypoints&#125;</code>: intermediate waypoint count only.</li>
+                        <li class="leading-5"><code>&#123;stops&#125;</code>{{t "literal.fleet-ops.total-service-stops-including-pickup-dropoff-and-ee1c3"}}</li>
+                        <li class="leading-5"><code>&#123;waypoints&#125;</code>{{t "literal.fleet-ops.intermediate-waypoint-count-only"}}</li>
                         <li class="leading-5"><code>&#123;parcels&#125;</code>, <code>&#123;entities&#125;</code>: parcel count and total payload entity count.</li>
                         <li class="leading-5"><code>&#123;weight&#125;</code>, <code>&#123;weight_kg&#125;</code>, <code>&#123;weight_g&#125;</code>, <code>&#123;weight_lb&#125;</code>, <code>&#123;weight_oz&#125;</code>, <code>&#123;weight_tonne&#125;</code>, <code>&#123;weight_t&#125;</code>: total entity weight converted across supported units.</li>
-                        <li class="leading-5"><code>&#123;base_fee&#125;</code>: the configured base fee for this service rate.</li>
+                        <li class="leading-5"><code>&#123;base_fee&#125;</code>{{t "literal.fleet-ops.the-configured-base-fee-for-this-service-rate"}}</li>
                         <li class="leading-5">Supported functions: <code>max(a,b)</code>, <code>min(a,b)</code>, <code>ceil(x)</code>, <code>floor(x)</code>, <code>round(x)</code>.</li>
                     </ul>
                 </div>
@@ -388,19 +388,19 @@
                 <div class="space-y-3">
                     <div>
                         <h4 class="mb-1 text-sm font-semibold">{{t "service-rate.fields.example"}} 1</h4>
-                        <div class="mb-2 text-inherit">Charge by distance in miles after the first 15 miles, plus the base fee.</div>
+                        <div class="mb-2 text-inherit">{{t "literal.fleet-ops.charge-by-distance-in-miles-after-the-first-15-m-c3330"}}</div>
                         <code class="text-xs font-mono">max(&#123;distance_mi&#125; - 15, 0) * 5 + &#123;base_fee&#125;</code>
                     </div>
 
                     <div>
                         <h4 class="mb-1 text-sm font-semibold">{{t "service-rate.fields.example"}} 2</h4>
-                        <div class="mb-2 text-inherit">Charge extra for stops after the first 2 service stops.</div>
+                        <div class="mb-2 text-inherit">{{t "literal.fleet-ops.charge-extra-for-stops-after-the-first-2-service-9db67"}}</div>
                         <code class="text-xs font-mono">max(&#123;stops&#125; - 2, 0) * 10 + &#123;base_fee&#125;</code>
                     </div>
 
                     <div>
                         <h4 class="mb-1 text-sm font-semibold">{{t "service-rate.fields.example"}} 3</h4>
-                        <div class="mb-2 text-inherit">Combine waypoint, payload weight, and distance surcharges in one formula.</div>
+                        <div class="mb-2 text-inherit">{{t "literal.fleet-ops.combine-waypoint-payload-weight-and-distance-sur-12b29"}}</div>
                         <code class="text-xs font-mono">max(&#123;waypoints&#125;, 0) * 15 + max(&#123;weight_kg&#125; - 100, 0) * 0.25 + max(&#123;distance_km&#125; - 25, 0) * 0.5 + &#123;base_fee&#125;</code>
                     </div>
                 </div>

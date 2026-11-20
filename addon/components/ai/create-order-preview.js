@@ -5,6 +5,7 @@ import { action, get } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 
 export default class AiCreateOrderPreviewComponent extends Component {
+    @service intl;
     @service router;
 
     @tracked draft = this.clone(this.args.preview?.draft ?? {});
@@ -40,11 +41,11 @@ export default class AiCreateOrderPreviewComponent extends Component {
     }
 
     get cancelledMessage() {
-        return this.preview?.error?.message ?? 'This order creation preview was cancelled.';
+        return this.preview?.error?.message ?? this.intl.t('literal.fleet-ops.this-order-creation-preview-was-cancelled');
     }
 
     get completedMessage() {
-        return this.preview?.result?.message ?? 'Fleet-Ops order was created.';
+        return this.preview?.result?.message ?? this.intl.t('literal.fleet-ops.fleet-ops-order-was-created');
     }
 
     get resultResource() {
@@ -52,7 +53,7 @@ export default class AiCreateOrderPreviewComponent extends Component {
     }
 
     get orderReference() {
-        return this.resultResource?.id ?? this.resultResource?.uuid ?? 'Created order';
+        return this.resultResource?.id ?? this.resultResource?.uuid ?? this.intl.t('literal.fleet-ops.created-order');
     }
 
     get canOpenOrder() {
@@ -72,37 +73,37 @@ export default class AiCreateOrderPreviewComponent extends Component {
     }
 
     get orderTypeLabel() {
-        return this.titleize(this.draft.type ?? this.draft.order_config_name ?? this.draft.order_config_uuid) ?? 'Select order type';
+        return this.titleize(this.draft.type ?? this.draft.order_config_name ?? this.draft.order_config_uuid) ?? this.intl.t('literal.fleet-ops.select-order-type');
     }
 
     get scheduledAtLabel() {
         const scheduledAt = this.draft.scheduled_at;
 
         if (!scheduledAt) {
-            return 'Add schedule';
+            return this.intl.t('literal.fleet-ops.add-schedule-57a05');
         }
 
         return String(scheduledAt);
     }
 
     get pickupLabel() {
-        return this.addressLabel(this.payload.pickup) ?? this.payload.pickup_query ?? 'Add pickup';
+        return this.addressLabel(this.payload.pickup) ?? this.payload.pickup_query ?? this.intl.t('literal.fleet-ops.add-pickup');
     }
 
     get dropoffLabel() {
-        return this.addressLabel(this.payload.dropoff) ?? this.payload.dropoff_query ?? 'Add dropoff';
+        return this.addressLabel(this.payload.dropoff) ?? this.payload.dropoff_query ?? this.intl.t('literal.fleet-ops.add-dropoff');
     }
 
     get driverLabel() {
-        return this.draft.driver_query ?? this.draft.driver_name ?? 'Assign driver';
+        return this.draft.driver_query ?? this.draft.driver_name ?? this.intl.t('literal.fleet-ops.assign-driver');
     }
 
     get vehicleLabel() {
-        return this.draft.vehicle_query ?? this.draft.vehicle_name ?? 'Assign vehicle';
+        return this.draft.vehicle_query ?? this.draft.vehicle_name ?? this.intl.t('literal.fleet-ops.assign-vehicle');
     }
 
     get notesLabel() {
-        return this.draft.notes?.trim?.() || 'Add order notes';
+        return this.draft.notes?.trim?.() || this.intl.t('literal.fleet-ops.add-order-notes');
     }
 
     get podMethodLabel() {

@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 const INTERNAL_NAMESPACE = 'int/v1';
 
 export default class ModalsResetCustomerCredentialsComponent extends Component {
+    @service intl;
     @service fetch;
     @service notifications;
     @tracked options = {};
@@ -39,7 +40,7 @@ export default class ModalsResetCustomerCredentialsComponent extends Component {
                     { namespace: INTERNAL_NAMESPACE }
                 );
 
-                this.notifications.success('Customer password reset.');
+                this.notifications.success(this.intl.t('literal.fleet-ops.customer-password-reset'));
 
                 if (typeof this.options.onPasswordResetComplete === 'function') {
                     this.options.onPasswordResetComplete();

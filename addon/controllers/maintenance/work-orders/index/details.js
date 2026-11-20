@@ -19,7 +19,7 @@ export default class MaintenanceWorkOrdersIndexDetailsController extends Control
 
     get actionButtons() {
         return [
-            { icon: 'paper-plane', fn: this.sendEmail, text: 'Send to Vendor', permission: 'fleet-ops update work-order' },
+            { icon: 'paper-plane', fn: this.sendEmail, text: this.intl.t('literal.fleet-ops.send-to-vendor'), permission: 'fleet-ops update work-order' },
             { icon: 'edit', fn: this.edit, permission: 'fleet-ops update work-order' },
             { icon: 'trash', fn: this.delete, type: 'danger', permission: 'fleet-ops delete work-order' },
         ];

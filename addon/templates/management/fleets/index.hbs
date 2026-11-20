@@ -14,19 +14,19 @@
     @emptyStateComponent={{component
         "table/empty-state"
         icon="layer-group"
-        title="Create your first fleet"
-        description="Fleets help group vehicles and drivers for dispatching, reporting, and operational coverage."
-        filteredTitle="No fleets match your filters"
-        filteredDescription="Adjust the search or filters to find another fleet."
-        primaryText="New fleet"
+        title=(t "literal.fleet-ops.create-your-first-fleet")
+        description=(t "literal.fleet-ops.fleets-help-group-vehicles-and-drivers-for-dispa-8efba")
+        filteredTitle=(t "literal.fleet-ops.no-fleets-match-your-filters")
+        filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-fle-e11f0")
+        primaryText=(t "literal.fleet-ops.new-fleet")
         primaryIcon="plus"
         primaryAction=this.fleetActions.transition.create
-        secondaryText="Import"
+        secondaryText=(t "literal.fleet-ops.import")
         secondaryIcon="upload"
         secondaryAction=this.fleetActions.import
         docsSlug="fleet-ops/resources/fleets/overview"
-        docsTitle="Fleets guide"
-        docsText="Fleet guide"
+        docsTitle=(t "literal.fleet-ops.fleets-guide")
+        docsText=(t "literal.fleet-ops.fleet-guide")
         docsSource="fleet-ops-empty-fleets"
     }}
 />

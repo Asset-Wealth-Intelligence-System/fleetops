@@ -15,19 +15,19 @@
         @emptyStateComponent={{component
             "table/empty-state"
             icon="id-card"
-            title="Add your first driver"
-            description="Drivers power dispatching, live fleet visibility, assignments, and delivery activity."
-            filteredTitle="No drivers match your search"
-            filteredDescription="Adjust the search or filters to find another driver."
-            primaryText="New driver"
+            title=(t "literal.fleet-ops.add-your-first-driver")
+            description=(t "literal.fleet-ops.drivers-power-dispatching-live-fleet-visibility-bec6d")
+            filteredTitle=(t "literal.fleet-ops.no-drivers-match-your-search")
+            filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-dri-3e74a")
+            primaryText=(t "literal.fleet-ops.new-driver")
             primaryIcon="plus"
             primaryAction=this.driverActions.transition.create
-            secondaryText="Import"
+            secondaryText=(t "literal.fleet-ops.import")
             secondaryIcon="upload"
             secondaryAction=this.driverActions.import
             docsSlug="fleet-ops/resources/drivers/overview"
-            docsTitle="Drivers guide"
-            docsText="Driver guide"
+            docsTitle=(t "literal.fleet-ops.drivers-guide")
+            docsText=(t "literal.fleet-ops.driver-guide")
             docsSource="fleet-ops-empty-drivers"
         }}
     />

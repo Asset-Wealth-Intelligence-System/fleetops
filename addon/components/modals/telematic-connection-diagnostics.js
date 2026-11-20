@@ -8,6 +8,7 @@ import copyToClipboard from '@fleetbase/ember-core/utils/copy-to-clipboard';
 const SENSITIVE_METADATA_KEYS = ['password', 'secret', 'session', 'token'];
 
 export default class ModalsTelematicConnectionDiagnosticsComponent extends Component {
+    @service intl;
     @service fetch;
     @service modalsManager;
     @service notifications;
@@ -28,7 +29,7 @@ export default class ModalsTelematicConnectionDiagnosticsComponent extends Compo
     }
 
     get providerLabel() {
-        return this.telematic?.provider_descriptor?.label ?? this.telematic?.provider ?? 'Provider';
+        return this.telematic?.provider_descriptor?.label ?? this.telematic?.provider ?? this.intl.t('literal.fleet-ops.provider-27703');
     }
 
     get providerKey() {
@@ -49,27 +50,27 @@ export default class ModalsTelematicConnectionDiagnosticsComponent extends Compo
 
     get connectionStateTitle() {
         if (this.connectionState === 'testing') {
-            return 'Testing provider connection...';
+            return this.intl.t('literal.fleet-ops.testing-provider-connection');
         }
 
         if (this.connectionState === 'success') {
-            return 'Connection verified';
+            return this.intl.t('literal.fleet-ops.connection-verified');
         }
 
         if (this.connectionState === 'failed') {
-            return 'Connection failed';
+            return this.intl.t('literal.fleet-ops.connection-failed');
         }
 
-        return 'Ready to test';
+        return this.intl.t('literal.fleet-ops.ready-to-test');
     }
 
     get connectionStateMessage() {
         if (this.connectionState === 'testing') {
-            return 'Waiting for the provider to accept the saved credentials.';
+            return this.intl.t('literal.fleet-ops.waiting-for-the-provider-to-accept-the-saved-cre-f2c14');
         }
 
         if (this.connectionState === 'idle') {
-            return 'Run a connection test to verify the saved provider credentials.';
+            return this.intl.t('literal.fleet-ops.run-a-connection-test-to-verify-the-saved-provid-8bbf8');
         }
 
         if (this.isDuplicateConnectionMessage) {
@@ -118,20 +119,20 @@ export default class ModalsTelematicConnectionDiagnosticsComponent extends Compo
         entries.push({
             time: this.formatDiagnosticTime(startedAt),
             tone: 'muted',
-            text: `Provider selected: ${this.providerLabel}${this.providerKey ? ` (${this.providerKey})` : ''}`,
+            text: this.intl.t('literal.fleet-ops.provider-selected-806e5', { providerLabel: this.providerLabel, value: this.providerKey ? ` (${this.providerKey})` : '' }),
         });
 
         entries.push({
             time: this.formatDiagnosticTime(startedAt),
             tone: 'info',
-            text: 'Sending saved provider connection test request',
+            text: this.intl.t('literal.fleet-ops.sending-saved-provider-connection-test-request'),
         });
 
         if (this.connectionState === 'testing') {
             entries.push({
                 time: this.formatDiagnosticTime(),
                 tone: 'info',
-                text: 'Awaiting provider response',
+                text: this.intl.t('literal.fleet-ops.awaiting-provider-response'),
             });
             return entries;
         }
@@ -140,7 +141,7 @@ export default class ModalsTelematicConnectionDiagnosticsComponent extends Compo
             entries.push({
                 time: this.formatDiagnosticTime(),
                 tone: 'muted',
-                text: 'Connection test has not been run yet',
+                text: this.intl.t('literal.fleet-ops.connection-test-has-not-been-run-yet'),
             });
             return entries;
         }
@@ -148,14 +149,14 @@ export default class ModalsTelematicConnectionDiagnosticsComponent extends Compo
         entries.push({
             time: this.formatDiagnosticTime(completedAt),
             tone: 'info',
-            text: 'Provider response received',
+            text: this.intl.t('literal.fleet-ops.provider-response-received'),
         });
 
         if (this.hasConnectionMetadata) {
             entries.push({
                 time: this.formatDiagnosticTime(completedAt),
                 tone: 'muted',
-                text: `Provider metadata: ${this.connectionMetadataEntries.map((entry) => `${entry.label}=${entry.value}`).join(', ')}`,
+                text: this.intl.t('literal.fleet-ops.provider-metadata', { join: this.connectionMetadataEntries.map((entry) => `${entry.label}=${entry.value}`).join(', ') }),
             });
         }
 
@@ -163,7 +164,7 @@ export default class ModalsTelematicConnectionDiagnosticsComponent extends Compo
             entries.push({
                 time: this.formatDiagnosticTime(completedAt),
                 tone: 'success',
-                text: 'Connection verified',
+                text: this.intl.t('literal.fleet-ops.connection-verified'),
             });
             return entries;
         }
@@ -171,7 +172,7 @@ export default class ModalsTelematicConnectionDiagnosticsComponent extends Compo
         entries.push({
             time: this.formatDiagnosticTime(completedAt),
             tone: 'danger',
-            text: `Connection failed${this.result?.message ? `: ${this.formatDiagnosticValue(this.result.message)}` : ''}`,
+            text: this.intl.t('literal.fleet-ops.connection-failed-b9b9b', { value: this.result?.message ? `: ${this.formatDiagnosticValue(this.result.message)}` : '' }),
         });
 
         return entries;
@@ -182,10 +183,10 @@ export default class ModalsTelematicConnectionDiagnosticsComponent extends Compo
     }
 
     setupOptions() {
-        this.options.title = this.options.title ?? 'Test Connection';
+        this.options.title = this.options.title ?? this.intl.t('literal.fleet-ops.test-connection');
         this.options.acceptButtonText = 'Run Test';
         this.options.acceptButtonIcon = 'plug';
-        this.options.declineButtonText = this.options.declineButtonText ?? 'Close';
+        this.options.declineButtonText = this.options.declineButtonText ?? this.intl.t('literal.fleet-ops.close');
         this.options.confirm = async (modal) => {
             modal.startLoading();
 
@@ -216,11 +217,11 @@ export default class ModalsTelematicConnectionDiagnosticsComponent extends Compo
             this.completedAt = new Date();
             this.result = {
                 success: false,
-                message: error.message || 'Connection test failed',
+                message: error.message || this.intl.t('literal.fleet-ops.connection-test-failed'),
             };
         } finally {
             this.modalsManager.setOption('acceptButtonDisabled', false);
-            this.modalsManager.setOption('acceptButtonText', this.result ? 'Test Again' : 'Run Test');
+            this.modalsManager.setOption('acceptButtonText', this.result ? this.intl.t('literal.fleet-ops.test-again') : this.intl.t('literal.fleet-ops.run-test'));
         }
     }
 
@@ -228,10 +229,10 @@ export default class ModalsTelematicConnectionDiagnosticsComponent extends Compo
     copyConnectionDiagnostics() {
         copyToClipboard(this.connectionDiagnosticText)
             .then(() => {
-                this.notifications.success('Connection diagnostics copied.');
+                this.notifications.success(this.intl.t('literal.fleet-ops.connection-diagnostics-copied'));
             })
             .catch(() => {
-                this.notifications.error('Unable to copy connection diagnostics.');
+                this.notifications.error(this.intl.t('literal.fleet-ops.unable-to-copy-connection-diagnostics'));
             });
     }
 

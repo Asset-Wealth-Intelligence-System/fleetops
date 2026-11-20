@@ -66,7 +66,7 @@
 
     <CustomField::Yield @subject={{@resource}} @viewMode={{true}} @wrapperClass="bordered-top" />
 
-    <ContentPanel @title="Map" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.map"}} @open={{true}} @wrapperClass="bordered-top">
         <LeafletMap
             class="w-full h-48 rounded-md shadow-md border border-gray-200 dark:border-gray-700"
             @lat={{@resource.latitude}}
@@ -78,7 +78,7 @@
             <layers.tile @url={{leaflet-tile-url}} />
             <layers.marker
                 @id={{@resource.id}}
-                @icon={{icon iconUrl=(or @resource.avatar_url "/engines-dist/images/building-marker.png") iconSize=(array 40 40)}}
+                @icon={{icon iconUrl=(or @resource.avatar_url "/engines-dist/images/building-marker.png") iconSize=(array 40 40) iconAnchor=(array 20 40)}}
                 @location={{point-to-coordinates @resource.location}}
                 @riseOnHover={{true}}
                 @title={{@resource.address}}

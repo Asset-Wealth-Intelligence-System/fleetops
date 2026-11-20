@@ -183,12 +183,12 @@ export default class ConnectivityTelematicsDetailsAttachmentsController extends 
                 return {
                     tone: 'danger',
                     icon: 'triangle-exclamation',
-                    title: 'Unable to load device attachments',
-                    message: 'Fleetbase could not load the full provider device list. Refresh the tab or review the connection logs.',
-                    primaryText: 'Refresh',
+                    title: this.intl.t('literal.fleet-ops.unable-to-load-device-attachments'),
+                    message: this.intl.t('literal.fleet-ops.fleetbase-could-not-load-the-full-provider-devic-c0285'),
+                    primaryText: this.intl.t('literal.fleet-ops.refresh'),
                     primaryIcon: 'refresh',
                     primaryAction: this.refresh,
-                    secondaryText: 'Go to Logs',
+                    secondaryText: this.intl.t('literal.fleet-ops.go-to-logs'),
                     secondaryIcon: 'history',
                     secondaryAction: this.goToLogs,
                 };
@@ -196,9 +196,9 @@ export default class ConnectivityTelematicsDetailsAttachmentsController extends 
                 return {
                     tone: 'warning',
                     icon: 'satellite-dish',
-                    title: 'Sync devices before mapping vehicles',
-                    message: 'Vehicle attachment starts after provider devices are synced into this connection.',
-                    primaryText: 'Go to Devices',
+                    title: this.intl.t('literal.fleet-ops.sync-devices-before-mapping-vehicles'),
+                    message: this.intl.t('literal.fleet-ops.vehicle-attachment-starts-after-provider-devices-8d20f'),
+                    primaryText: this.intl.t('literal.fleet-ops.go-to-devices'),
                     primaryIcon: 'microchip',
                     primaryAction: this.goToDevices,
                 };
@@ -206,9 +206,9 @@ export default class ConnectivityTelematicsDetailsAttachmentsController extends 
                 return {
                     tone: 'info',
                     icon: 'filter',
-                    title: 'No mappings match these filters',
-                    message: 'Clear the search and filters to return to all synced devices and vehicle mappings.',
-                    primaryText: 'Clear filters',
+                    title: this.intl.t('literal.fleet-ops.no-mappings-match-these-filters'),
+                    message: this.intl.t('literal.fleet-ops.clear-the-search-and-filters-to-return-to-all-sy-7166f'),
+                    primaryText: this.intl.t('literal.fleet-ops.clear-filters'),
                     primaryIcon: 'filter',
                     primaryAction: this.clearFilters,
                 };
@@ -216,15 +216,15 @@ export default class ConnectivityTelematicsDetailsAttachmentsController extends 
                 return {
                     tone: 'success',
                     icon: 'check',
-                    title: 'All synced devices are mapped',
-                    message: 'Every synced provider device in this connection is currently attached to a vehicle.',
+                    title: this.intl.t('literal.fleet-ops.all-synced-devices-are-mapped'),
+                    message: this.intl.t('literal.fleet-ops.every-synced-provider-device-in-this-connection-20078'),
                 };
             case 'unattached_only':
                 return {
                     tone: 'warning',
                     icon: 'link-slash',
-                    title: 'Attach synced devices to vehicles',
-                    message: 'Use the unattached devices section below to map each device deliberately. Bulk auto-attachment is intentionally not available here.',
+                    title: this.intl.t('literal.fleet-ops.attach-synced-devices-to-vehicles'),
+                    message: this.intl.t('literal.fleet-ops.use-the-unattached-devices-section-below-to-map-1dc29'),
                 };
             default:
                 return null;
@@ -233,11 +233,11 @@ export default class ConnectivityTelematicsDetailsAttachmentsController extends 
 
     get metrics() {
         return [
-            { label: 'Synced devices', value: this.totalSyncedDevices, icon: 'microchip', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
-            { label: 'Vehicles mapped', value: this.mappedVehiclesCount, icon: 'truck', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
-            { label: 'Attached devices', value: this.attachedDevicesCount, icon: 'link', accentClass: 'fleetops-connectivity-kpi-accent-green' },
-            { label: 'Unattached devices', value: this.unattachedDevicesCount, icon: 'link-slash', accentClass: 'fleetops-connectivity-kpi-accent-amber' },
-            { label: 'Online devices', value: this.onlineDevicesCount, icon: 'signal', accentClass: 'fleetops-connectivity-kpi-accent-green' },
+            { label: this.intl.t('literal.fleet-ops.synced-devices-9953e'), value: this.totalSyncedDevices, icon: 'microchip', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
+            { label: this.intl.t('literal.fleet-ops.vehicles-mapped'), value: this.mappedVehiclesCount, icon: 'truck', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
+            { label: this.intl.t('literal.fleet-ops.attached-devices'), value: this.attachedDevicesCount, icon: 'link', accentClass: 'fleetops-connectivity-kpi-accent-green' },
+            { label: this.intl.t('literal.fleet-ops.unattached-devices'), value: this.unattachedDevicesCount, icon: 'link-slash', accentClass: 'fleetops-connectivity-kpi-accent-amber' },
+            { label: this.intl.t('literal.fleet-ops.online-devices'), value: this.onlineDevicesCount, icon: 'signal', accentClass: 'fleetops-connectivity-kpi-accent-green' },
         ];
     }
 
@@ -380,7 +380,7 @@ export default class ConnectivityTelematicsDetailsAttachmentsController extends 
     }
 
     getDeviceVehicleName(device) {
-        return device.attached_to_name ?? device.attachable?.display_name ?? device.attachable?.name ?? 'Unknown vehicle';
+        return device.attached_to_name ?? device.attachable?.display_name ?? device.attachable?.name ?? this.intl.t('literal.fleet-ops.unknown-vehicle');
     }
 
     applyDeviceAttachment(device, selectedVehicle, serverDevice = {}) {

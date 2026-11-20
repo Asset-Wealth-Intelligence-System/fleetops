@@ -4,13 +4,17 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
-const SORTS = [
-    { key: 'orders_completed', label: 'Orders' },
-    { key: 'on_time', label: 'On-time' },
-    { key: 'distance', label: 'Distance' },
-];
-
 export default class WidgetTopDriversComponent extends Component {
+    @service intl;
+
+    get SORTS() {
+        return [
+            { key: 'orders_completed', label: this.intl.t('literal.fleet-ops.orders') },
+            { key: 'on_time', label: this.intl.t('literal.fleet-ops.on-time') },
+            { key: 'distance', label: this.intl.t('literal.fleet-ops.distance') },
+        ];
+    }
+
     static widgetId = 'fleet-ops-top-drivers-widget';
 
     @service fetch;
@@ -19,7 +23,7 @@ export default class WidgetTopDriversComponent extends Component {
     @tracked data = null;
     @tracked error = null;
 
-    sorts = SORTS;
+    sorts = this.SORTS;
 
     constructor() {
         super(...arguments);
@@ -35,7 +39,7 @@ export default class WidgetTopDriversComponent extends Component {
             });
             this.error = null;
         } catch (e) {
-            this.error = e?.message ?? 'Failed to load top drivers';
+            this.error = e?.message ?? this.intl.t('literal.fleet-ops.failed-to-load-top-drivers');
         }
     }
 

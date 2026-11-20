@@ -8,6 +8,7 @@ import copyToClipboard from '@fleetbase/ember-core/utils/copy-to-clipboard';
 const SENSITIVE_METADATA_KEYS = ['password', 'secret', 'session', 'token'];
 
 export default class TelematicFormComponent extends Component {
+    @service intl;
     @service fetch;
     @service notifications;
     @tracked providers = [];
@@ -23,19 +24,19 @@ export default class TelematicFormComponent extends Component {
         return [
             {
                 icon: 'plug',
-                label: 'Provider',
+                label: this.intl.t('literal.fleet-ops.provider-27703'),
                 complete: this.activeStep > 0 && this.isProviderStepValid,
                 active: this.activeStep === 0,
             },
             {
                 icon: 'key',
-                label: 'Credentials',
+                label: this.intl.t('literal.fleet-ops.credentials'),
                 complete: this.activeStep > 1 && this.areCredentialsValid,
                 active: this.activeStep === 1,
             },
             {
                 icon: 'circle-check',
-                label: 'Test',
+                label: this.intl.t('literal.fleet-ops.test'),
                 complete: this.activeStep > 2 && this.isTestStepValid,
                 active: this.activeStep === 2,
             },
@@ -47,7 +48,7 @@ export default class TelematicFormComponent extends Component {
             },
             {
                 icon: 'clipboard-check',
-                label: 'Review',
+                label: this.intl.t('literal.fleet-ops.review'),
                 complete: false,
                 active: this.activeStep === 4,
             },
@@ -124,7 +125,7 @@ export default class TelematicFormComponent extends Component {
             return this.args.isSaving ? this.args.savingLabel : this.args.saveLabel;
         }
 
-        return 'Continue';
+        return this.intl.t('literal.fleet-ops.continue');
     }
 
     get primaryFooterIcon() {
@@ -169,27 +170,27 @@ export default class TelematicFormComponent extends Component {
 
     get connectionStateTitle() {
         if (this.connectionState === 'testing') {
-            return 'Testing provider credentials...';
+            return this.intl.t('literal.fleet-ops.testing-provider-credentials');
         }
 
         if (this.connectionState === 'success') {
-            return 'Connection verified';
+            return this.intl.t('literal.fleet-ops.connection-verified');
         }
 
         if (this.connectionState === 'failed') {
-            return 'Connection failed';
+            return this.intl.t('literal.fleet-ops.connection-failed');
         }
 
-        return 'Ready to test';
+        return this.intl.t('literal.fleet-ops.ready-to-test');
     }
 
     get connectionStateMessage() {
         if (this.connectionState === 'testing') {
-            return 'Sending the configured credentials to the provider and waiting for a response.';
+            return this.intl.t('literal.fleet-ops.sending-the-configured-credentials-to-the-provid-d0c34');
         }
 
         if (this.connectionState === 'idle') {
-            return 'Run a connection test to verify credentials before saving. You can still continue if the provider does not support live credential testing.';
+            return this.intl.t('literal.fleet-ops.run-a-connection-test-to-verify-credentials-befo-fd611');
         }
 
         if (this.isDuplicateConnectionMessage) {
@@ -232,7 +233,7 @@ export default class TelematicFormComponent extends Component {
 
     get connectionDiagnosticEntries() {
         const entries = [];
-        const providerLabel = this.selectedProvider?.label ?? 'No provider selected';
+        const providerLabel = this.selectedProvider?.label ?? this.intl.t('literal.fleet-ops.no-provider-selected');
         const providerKey = this.selectedProvider?.key;
         const startedAt = this.lastConnectionTestStartedAt;
         const completedAt = this.lastConnectionTestCompletedAt;
@@ -240,20 +241,20 @@ export default class TelematicFormComponent extends Component {
         entries.push({
             time: this.formatDiagnosticTime(startedAt),
             tone: 'muted',
-            text: `Provider selected: ${providerLabel}${providerKey ? ` (${providerKey})` : ''}`,
+            text: this.intl.t('literal.fleet-ops.provider-selected-806e5', { providerLabel: providerLabel, value: providerKey ? ` (${providerKey})` : '' }),
         });
 
         if (this.areCredentialsValid) {
             entries.push({
                 time: this.formatDiagnosticTime(startedAt),
                 tone: 'muted',
-                text: `Credentials prepared: ${this.requiredCredentialFields.length} required fields present`,
+                text: this.intl.t('literal.fleet-ops.credentials-prepared-required-fields-present', { length: this.requiredCredentialFields.length }),
             });
         } else {
             entries.push({
                 time: this.formatDiagnosticTime(startedAt),
                 tone: 'warning',
-                text: `Credentials incomplete: ${this.missingCredentialFields.length} required fields missing`,
+                text: this.intl.t('literal.fleet-ops.credentials-incomplete-required-fields-missing', { length: this.missingCredentialFields.length }),
             });
         }
 
@@ -261,7 +262,7 @@ export default class TelematicFormComponent extends Component {
             entries.push({
                 time: this.formatDiagnosticTime(),
                 tone: 'muted',
-                text: 'Credential test has not been run yet',
+                text: this.intl.t('literal.fleet-ops.credential-test-has-not-been-run-yet'),
             });
             return entries;
         }
@@ -269,14 +270,14 @@ export default class TelematicFormComponent extends Component {
         entries.push({
             time: this.formatDiagnosticTime(startedAt),
             tone: 'info',
-            text: 'Sending provider credential test request',
+            text: this.intl.t('literal.fleet-ops.sending-provider-credential-test-request'),
         });
 
         if (this.connectionState === 'testing') {
             entries.push({
                 time: this.formatDiagnosticTime(),
                 tone: 'info',
-                text: 'Awaiting provider response',
+                text: this.intl.t('literal.fleet-ops.awaiting-provider-response'),
             });
             return entries;
         }
@@ -284,14 +285,14 @@ export default class TelematicFormComponent extends Component {
         entries.push({
             time: this.formatDiagnosticTime(completedAt),
             tone: 'info',
-            text: 'Provider response received',
+            text: this.intl.t('literal.fleet-ops.provider-response-received'),
         });
 
         if (this.hasConnectionMetadata) {
             entries.push({
                 time: this.formatDiagnosticTime(completedAt),
                 tone: 'muted',
-                text: `Provider metadata: ${this.connectionMetadataEntries.map((entry) => `${entry.label}=${entry.value}`).join(', ')}`,
+                text: this.intl.t('literal.fleet-ops.provider-metadata', { join: this.connectionMetadataEntries.map((entry) => `${entry.label}=${entry.value}`).join(', ') }),
             });
         }
 
@@ -299,7 +300,7 @@ export default class TelematicFormComponent extends Component {
             entries.push({
                 time: this.formatDiagnosticTime(completedAt),
                 tone: 'success',
-                text: 'Connection verified',
+                text: this.intl.t('literal.fleet-ops.connection-verified'),
             });
             return entries;
         }
@@ -307,7 +308,9 @@ export default class TelematicFormComponent extends Component {
         entries.push({
             time: this.formatDiagnosticTime(completedAt),
             tone: 'danger',
-            text: `Connection failed${this.connectionTestResult?.message ? `: ${this.formatDiagnosticValue(this.connectionTestResult.message)}` : ''}`,
+            text: this.intl.t('literal.fleet-ops.connection-failed-b9b9b', {
+                value: this.connectionTestResult?.message ? `: ${this.formatDiagnosticValue(this.connectionTestResult.message)}` : '',
+            }),
         });
 
         return entries;
@@ -382,7 +385,7 @@ export default class TelematicFormComponent extends Component {
             {
                 size: 'xs',
                 icon: 'plug',
-                text: 'Test Connection',
+                text: this.intl.t('literal.fleet-ops.test-connection'),
                 onClick: () => this.testConnection.perform(),
                 isLoading: this.testConnection.isRunning,
             },
@@ -465,10 +468,10 @@ export default class TelematicFormComponent extends Component {
     @action copyConnectionDiagnostics() {
         copyToClipboard(this.connectionDiagnosticText)
             .then(() => {
-                this.notifications.success('Connection diagnostics copied.');
+                this.notifications.success(this.intl.t('literal.fleet-ops.connection-diagnostics-copied'));
             })
             .catch(() => {
-                this.notifications.error('Unable to copy connection diagnostics.');
+                this.notifications.error(this.intl.t('literal.fleet-ops.unable-to-copy-connection-diagnostics'));
             });
     }
 
@@ -504,22 +507,22 @@ export default class TelematicFormComponent extends Component {
 
     validateStep(index) {
         if (index === 0 && !this.isProviderStepValid) {
-            this.notifications.warning('Choose a provider to continue.');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.choose-a-provider-to-continue'));
             return false;
         }
 
         if (index === 1 && !this.areCredentialsValid) {
-            this.notifications.warning('Enter the required provider credentials to continue.');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.enter-the-required-provider-credentials-to-conti-40562'));
             return false;
         }
 
         if (index === 3 && !this.isIntegrationStepValid) {
-            this.notifications.warning('Enter an integration name to continue.');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.enter-an-integration-name-to-continue'));
             return false;
         }
 
         if (index === 4 && !this.isReviewStepValid) {
-            this.notifications.warning('Complete the required setup steps before saving.');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.complete-the-required-setup-steps-before-saving'));
             return false;
         }
 
@@ -563,7 +566,7 @@ export default class TelematicFormComponent extends Component {
             this.updateResourceConnectionTestMeta(result);
 
             if (result.success) {
-                this.notifications.success('Connection successful!');
+                this.notifications.success(this.intl.t('literal.fleet-ops.connection-successful'));
             } else {
                 this.notifications.error(result.message);
             }
@@ -571,10 +574,10 @@ export default class TelematicFormComponent extends Component {
             this.lastConnectionTestCompletedAt = new Date();
             this.connectionTestResult = {
                 success: false,
-                message: error.message || 'Connection test failed',
+                message: error.message || this.intl.t('literal.fleet-ops.connection-test-failed'),
             };
             this.updateResourceConnectionTestMeta(this.connectionTestResult);
-            this.notifications.error('Connection test failed');
+            this.notifications.error(this.intl.t('literal.fleet-ops.connection-test-failed'));
         }
     }
 
@@ -594,7 +597,7 @@ export default class TelematicFormComponent extends Component {
             ...meta,
             last_connection_test: testedAt.toISOString(),
             last_test_result: result?.success ? 'success' : 'failed',
-            last_error: result?.success ? null : (result?.message ?? 'Connection test failed'),
+            last_error: result?.success ? null : (result?.message ?? this.intl.t('literal.fleet-ops.connection-test-failed')),
             last_test_metadata: result?.metadata ?? {},
         });
     }

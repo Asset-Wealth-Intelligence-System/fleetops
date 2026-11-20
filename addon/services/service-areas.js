@@ -14,6 +14,7 @@ import ensureLeafletDrawEditNamespace from '../utils/leaflet-draw-namespace-guar
 
 const L = window.L;
 export default class ServiceAreasService extends Service {
+    @service intl;
     @service store;
     @service modalsManager;
     @service notifications;
@@ -279,7 +280,7 @@ export default class ServiceAreasService extends Service {
         this.triggerLiveMapFn('showDrawControls', { text: true });
         this.setLayerCreationContext('service-area');
 
-        this.notifications.info('Use drawing controls to the right to draw a service area, complete point connections to save service area.', {
+        this.notifications.info(this.intl.t('literal.fleet-ops.use-drawing-controls-to-the-right-to-draw-a-serv-45bd2'), {
             clearDuration: 1000 * 9,
         });
     }
@@ -314,14 +315,14 @@ export default class ServiceAreasService extends Service {
         }
 
         this.modalsManager.show('modals/map-layer-form', {
-            title: 'Create new Layer',
+            title: this.intl.t('literal.fleet-ops.create-new-layer'),
             modalClass: 'flb-resource-modal',
-            acceptButtonText: 'Create',
+            acceptButtonText: this.intl.t('literal.fleet-ops.create'),
             acceptButtonIcon: 'magic',
             declineButtonIcon: 'times',
             declineButtonIconPrefix: 'fas',
             layerTypes: ['Service Area', 'Zone'],
-            selectedLayerType: 'Service Area',
+            selectedLayerType: this.intl.t('literal.fleet-ops.service-area'),
             serviceAreaTypes: this.serviceAreaTypes,
             layerOptions: {
                 trigger_on_entry: false,
@@ -339,7 +340,7 @@ export default class ServiceAreasService extends Service {
 
                 // parse service area for zone
                 if (selectedLayerType === 'Zone' && !layerOptions?.service_area) {
-                    this.notifications.error('Service Area required to create Zone!');
+                    this.notifications.error(this.intl.t('literal.fleet-ops.service-area-required-to-create-zone'));
                     return;
                 } else {
                     serviceArea = layerOptions.service_area;
@@ -349,7 +350,7 @@ export default class ServiceAreasService extends Service {
                 record.setProperties({ border });
 
                 return record.save().then((record) => {
-                    this.notifications.success(`New ${selectedLayerType} '${record.name}' saved.`);
+                    this.notifications.success(this.intl.t('literal.fleet-ops.new-saved', { selectedLayerType: selectedLayerType, name: record.name }));
 
                     // remove drawn layer
                     map.removeLayer(drawFeatureGroupLayer);
@@ -409,8 +410,8 @@ export default class ServiceAreasService extends Service {
         });
 
         return this.editServiceAreaDetails(serviceArea, {
-            title: 'Save Service Area',
-            acceptButtonText: 'Confirm & Save',
+            title: this.intl.t('literal.fleet-ops.save-service-area'),
+            acceptButtonText: this.intl.t('literal.fleet-ops.confirm-save'),
             onFinish: () => {
                 map.removeLayer(drawFeatureGroupLayer);
                 // Hide draw controls on finish
@@ -428,7 +429,7 @@ export default class ServiceAreasService extends Service {
      */
     @action editServiceAreaDetails(serviceArea, options = {}) {
         this.modalsManager.show('modals/service-area-form', {
-            title: 'Edit Service Area',
+            title: this.intl.t('literal.fleet-ops.edit-service-area'),
             acceptButtonText: this.intl.t('common.save-changes'),
             acceptButtonIcon: 'save',
             declineButtonIcon: 'times',
@@ -439,7 +440,7 @@ export default class ServiceAreasService extends Service {
                 modal.startLoading();
 
                 return serviceArea.save().then((serviceArea) => {
-                    this.notifications.success(`New service area '${serviceArea.name}' saved.`);
+                    this.notifications.success(this.intl.t('literal.fleet-ops.new-service-area-saved', { name: serviceArea.name }));
 
                     this.clearLayerCreationContext();
                     this.addToCache(serviceArea);
@@ -491,7 +492,7 @@ export default class ServiceAreasService extends Service {
         this.setZoneServiceAreaContext(serviceArea);
         this.setLayerCreationContext('zone');
 
-        this.notifications.info('Use the drawing controls to the right to draw a zone within the service area, complete point connections to save the zone.', {
+        this.notifications.info(this.intl.t('literal.fleet-ops.use-the-drawing-controls-to-the-right-to-draw-a-8de77'), {
             clearDuration: 1000 * 9,
         });
     }
@@ -521,8 +522,8 @@ export default class ServiceAreasService extends Service {
         });
 
         return this.editZone(zone, serviceArea, {
-            title: 'Save Zone',
-            acceptButtonText: 'Confirm & Save',
+            title: this.intl.t('literal.fleet-ops.save-zone'),
+            acceptButtonText: this.intl.t('literal.fleet-ops.confirm-save'),
             onFinish: () => {
                 map.removeLayer(drawFeatureGroupLayer);
                 // Hide draw controls on finish
@@ -542,7 +543,7 @@ export default class ServiceAreasService extends Service {
      */
     @action editZone(zone, serviceArea, options = {}) {
         this.modalsManager.show('modals/zone-form', {
-            title: 'Edit Zone',
+            title: this.intl.t('literal.fleet-ops.edit-zone'),
             acceptButtonText: this.intl.t('common.save-changes'),
             acceptButtonIcon: 'save',
             declineButtonIcon: 'times',
@@ -552,7 +553,7 @@ export default class ServiceAreasService extends Service {
                 modal.startLoading();
 
                 return zone.save().then(() => {
-                    this.notifications.success(`New zone '${zone.name}' added to '${serviceArea.name}' service area.`);
+                    this.notifications.success(this.intl.t('literal.fleet-ops.new-zone-added-to-service-area', { name: zone.name, name2: serviceArea.name }));
 
                     this.clearLayerCreationContext();
                     this.clearZoneServiceAreaContext();
@@ -605,7 +606,7 @@ export default class ServiceAreasService extends Service {
      */
     @action viewServiceAreaInDialog(serviceArea, options = {}) {
         this.modalsManager.show('modals/view-service-area', {
-            title: `Service Area (${serviceArea.get('name')})`,
+            title: this.intl.t('literal.fleet-ops.service-area-da048', { value: serviceArea.get('name') }),
             modalClass: 'modal-lg',
             acceptButtonText: this.intl.t('common.done'),
             acceptButtonIcon: 'check',
@@ -625,7 +626,7 @@ export default class ServiceAreasService extends Service {
      */
     @action viewZoneInDialog(zone, options = {}) {
         this.modalsManager.show('modals/view-zone', {
-            title: `Zone (${zone.get('name')})`,
+            title: this.intl.t('literal.fleet-ops.zone-d3b53', { value: zone.get('name') }),
             modalClass: 'modal-lg',
             acceptButtonText: this.intl.t('common.done'),
             acceptButtonIcon: 'check',

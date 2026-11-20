@@ -6,6 +6,7 @@ import { action } from '@ember/object';
 const WARNING_STATUSES = ['error', 'degraded', 'disconnected'];
 
 export default class TelematicHubComponent extends Component {
+    @service intl;
     @service telematicActions;
     @service hostRouter;
     @tracked table;
@@ -61,9 +62,9 @@ export default class TelematicHubComponent extends Component {
         return [
             {
                 icon: 'plug',
-                label: 'Provider count',
+                label: this.intl.t('literal.fleet-ops.provider-count'),
                 value: this.activeProviderCount,
-                help: 'Connected provider accounts',
+                help: this.intl.t('literal.fleet-ops.connected-provider-accounts'),
                 action: 'Connect a provider',
                 routeAction: 'create',
                 accent: 'blue',
@@ -71,9 +72,9 @@ export default class TelematicHubComponent extends Component {
             },
             {
                 icon: 'satellite-dish',
-                label: 'Synced Devices',
+                label: this.intl.t('literal.fleet-ops.synced-devices-b1ec4'),
                 value: this.syncedDeviceCount,
-                help: 'Discovered from providers',
+                help: this.intl.t('literal.fleet-ops.discovered-from-providers'),
                 action: 'Review synced devices',
                 routeAction: 'devices',
                 accent: 'green',
@@ -81,9 +82,9 @@ export default class TelematicHubComponent extends Component {
             },
             {
                 icon: 'truck',
-                label: 'Unattached devices',
+                label: this.intl.t('literal.fleet-ops.unattached-devices'),
                 value: this.unattachedDeviceCount,
-                help: this.unattachedDeviceCount > 0 ? 'Devices need vehicles' : 'No open attachment count',
+                help: this.unattachedDeviceCount > 0 ? this.intl.t('literal.fleet-ops.devices-need-vehicles') : this.intl.t('literal.fleet-ops.no-open-attachment-count'),
                 action: 'Attach to vehicles',
                 routeAction: 'attachments',
                 accent: 'amber',
@@ -91,9 +92,9 @@ export default class TelematicHubComponent extends Component {
             },
             {
                 icon: 'wave-square',
-                label: 'Health warnings',
+                label: this.intl.t('literal.fleet-ops.health-warnings'),
                 value: this.healthWarningCount,
-                help: this.healthWarningCount > 0 ? 'Warnings need review' : 'No warnings',
+                help: this.healthWarningCount > 0 ? this.intl.t('literal.fleet-ops.warnings-need-review') : this.intl.t('literal.fleet-ops.no-warnings'),
                 action: 'Review health',
                 routeAction: 'health',
                 accent: 'rose',

@@ -38,19 +38,19 @@
         @emptyStateComponent={{component
             "table/empty-state"
             icon="calendar-check"
-            title="Create your first maintenance schedule"
-            description="Schedules help automate preventive work and keep service intervals visible before assets fall behind."
-            filteredTitle="No maintenance schedules match your filters"
-            filteredDescription="Adjust the search or filters to find another schedule."
-            primaryText="New schedule"
+            title=(t "literal.fleet-ops.create-your-first-maintenance-schedule")
+            description=(t "literal.fleet-ops.schedules-help-automate-preventive-work-and-keep-72bbe")
+            filteredTitle=(t "literal.fleet-ops.no-maintenance-schedules-match-your-filters")
+            filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-sch-369e5")
+            primaryText=(t "literal.fleet-ops.new-schedule")
             primaryIcon="plus"
             primaryAction=this.maintenanceScheduleActions.transition.create
-            secondaryText="Import"
+            secondaryText=(t "literal.fleet-ops.import")
             secondaryIcon="upload"
             secondaryAction=this.maintenanceScheduleActions.import
             docsSlug="fleet-ops/maintenance/schedules/overview"
-            docsTitle="Schedules guide"
-            docsText="Schedules guide"
+            docsTitle=(t "literal.fleet-ops.schedules-guide")
+            docsText=(t "literal.fleet-ops.schedules-guide")
             docsSource="fleet-ops-empty-maintenance-schedules"
         }}
     />

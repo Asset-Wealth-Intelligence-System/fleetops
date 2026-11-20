@@ -31,6 +31,7 @@ const RECONCILE_INTERVAL_MS = 60_000;
  * without polling. Reconciles via a full refetch every 60s.
  */
 export default class WidgetOperationsPulseComponent extends Component {
+    @service intl;
     static widgetId = 'fleet-ops-operations-pulse-widget';
 
     @service fetch;
@@ -92,7 +93,7 @@ export default class WidgetOperationsPulseComponent extends Component {
             this.data = yield this.fetch.get('fleet-ops/analytics/operations-pulse');
             this.error = null;
         } catch (e) {
-            this.error = e?.message ?? 'Failed to load operations pulse';
+            this.error = e?.message ?? this.intl.t('literal.fleet-ops.failed-to-load-operations-pulse');
         }
     }
 

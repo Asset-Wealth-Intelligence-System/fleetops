@@ -30,8 +30,8 @@
     {{#if (eq this.activeStep 0)}}
         <section class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <div class="mb-3">
-                <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Choose Provider</h2>
-                <p class="text-xs text-gray-500 dark:text-gray-300">Select the provider that will supply device connectivity and telemetry.</p>
+                <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.choose-provider"}}</h2>
+                <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.select-the-provider-that-will-supply-device-conn-ef7d8"}}</p>
             </div>
 
             {{#if this.loadProviders.isRunning}}
@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                                 {{#if provider.selected}}
-                                    <Badge @status="success" @hideStatusDot={{true}}>Selected</Badge>
+                                    <Badge @status="success" @hideStatusDot={{true}}>{{t "literal.fleet-ops.selected"}}</Badge>
                                 {{/if}}
                             </div>
                             <p class="mt-3 line-clamp-2 flex-1 text-xs leading-5 text-gray-500 dark:text-gray-300">{{provider.description}}</p>
@@ -69,8 +69,8 @@
             <div class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 lg:col-span-2">
                 <div class="mb-3">
                     <div>
-                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Credentials</h2>
-                        <p class="text-xs text-gray-500 dark:text-gray-300">Fleet-Ops uses these credentials to test the connection and sync devices.</p>
+                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.credentials"}}</h2>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.fleet-ops-uses-these-credentials-to-test-the-con-5aab2"}}</p>
                     </div>
                 </div>
 
@@ -93,9 +93,9 @@
                             <summary class="flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2 text-xs font-semibold text-gray-700 dark:text-gray-200">
                                 <span class="inline-flex items-center gap-2">
                                     <FaIcon @icon="sliders" />
-                                    Advanced connection settings
+                                    {{t "literal.fleet-ops.advanced-connection-settings"}}
                                 </span>
-                                <span class="text-[11px] font-normal text-gray-400 dark:text-gray-500">Endpoint overrides</span>
+                                <span class="text-[11px] font-normal text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.endpoint-overrides"}}</span>
                             </summary>
                             <div class="border-t border-gray-200 p-3 dark:border-gray-700">
                                 <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 no-input-group-padding text-xs">
@@ -116,7 +116,7 @@
                     {{/if}}
                 {{else}}
                     <div class="rounded-md border border-dashed border-gray-300 p-6 text-center text-xs text-gray-500 dark:border-gray-700 dark:text-gray-300">
-                        Choose a provider before entering credentials.
+                        {{t "literal.fleet-ops.choose-a-provider-before-entering-credentials"}}
                     </div>
                 {{/if}}
             </div>
@@ -131,8 +131,8 @@
                         </div>
                     </div>
                     <div class="mt-3 flex flex-wrap gap-2">
-                        <Badge @status={{if this.selectedProvider.supports_discovery "success" "default"}} @hideStatusDot={{true}}>Discovery</Badge>
-                        <Badge @status={{if this.selectedProvider.supports_webhooks "success" "default"}} @hideStatusDot={{true}}>Webhooks</Badge>
+                        <Badge @status={{if this.selectedProvider.supports_discovery "success" "default"}} @hideStatusDot={{true}}>{{t "literal.fleet-ops.discovery"}}</Badge>
+                        <Badge @status={{if this.selectedProvider.supports_webhooks "success" "default"}} @hideStatusDot={{true}}>{{t "literal.fleet-ops.webhooks"}}</Badge>
                     </div>
                 </aside>
             {{/if}}
@@ -141,8 +141,8 @@
         <section class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <div class="mb-3">
                 <div>
-                    <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Test Connection</h2>
-                    <p class="text-xs text-gray-500 dark:text-gray-300">Confirm the provider accepts the credentials before saving this connection.</p>
+                    <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.test-connection"}}</h2>
+                    <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.confirm-the-provider-accepts-the-credentials-bef-43671"}}</p>
                 </div>
             </div>
 
@@ -193,11 +193,11 @@
 
                     <div class="flex flex-shrink-0 items-center justify-end">
                         {{#if (eq this.connectionState "failed")}}
-                            <Button @icon="rotate" @text="Retry Test" @size="xs" @isLoading={{this.testConnection.isRunning}} @disabled={{this.testConnection.isRunning}} @onClick={{perform this.testConnection}} />
+                            <Button @icon="rotate" @text={{t "literal.fleet-ops.retry-test"}} @size="xs" @isLoading={{this.testConnection.isRunning}} @disabled={{this.testConnection.isRunning}} @onClick={{perform this.testConnection}} />
                         {{else if (eq this.connectionState "success")}}
-                            <Button @icon="rotate" @text="Test Again" @size="xs" @isLoading={{this.testConnection.isRunning}} @disabled={{this.testConnection.isRunning}} @onClick={{perform this.testConnection}} />
+                            <Button @icon="rotate" @text={{t "literal.fleet-ops.test-again"}} @size="xs" @isLoading={{this.testConnection.isRunning}} @disabled={{this.testConnection.isRunning}} @onClick={{perform this.testConnection}} />
                         {{else if (eq this.connectionState "idle")}}
-                            <Button @icon="plug" @text="Test Connection" @size="xs" @isLoading={{this.testConnection.isRunning}} @disabled={{this.testConnection.isRunning}} @onClick={{perform this.testConnection}} />
+                            <Button @icon="plug" @text={{t "literal.fleet-ops.test-connection"}} @size="xs" @isLoading={{this.testConnection.isRunning}} @disabled={{this.testConnection.isRunning}} @onClick={{perform this.testConnection}} />
                         {{/if}}
                     </div>
                 </div>
@@ -212,11 +212,11 @@
                     <div class="flex flex-col gap-2 py-2 md:flex-row md:items-center md:justify-between">
                         <button type="button" class="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-200" {{on "click" this.toggleConnectionDiagnostics}}>
                             <FaIcon @icon={{if this.showConnectionDiagnostics "chevron-up" "chevron-down"}} class="text-[10px]" />
-                            <span>{{if this.showConnectionDiagnostics "Hide diagnostics" "Show diagnostics"}}</span>
+                            <span>{{if this.showConnectionDiagnostics (t "literal.fleet-ops.hide-diagnostics") (t "literal.fleet-ops.show-diagnostics")}}</span>
                         </button>
 
                         {{#if this.showConnectionDiagnostics}}
-                            <Button @icon="copy" @text="Copy diagnostics" @size="xs" @disabled={{not this.hasConnectionDiagnostics}} @onClick={{this.copyConnectionDiagnostics}} />
+                            <Button @icon="copy" @text={{t "literal.fleet-ops.copy-diagnostics"}} @size="xs" @disabled={{not this.hasConnectionDiagnostics}} @onClick={{this.copyConnectionDiagnostics}} />
                         {{/if}}
                     </div>
 
@@ -244,29 +244,29 @@
     {{else if (eq this.activeStep 3)}}
         <section class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <div class="mb-3">
-                <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Configure Integration</h2>
-                <p class="text-xs text-gray-500 dark:text-gray-300">Name the connection and confirm any provider-facing URLs.</p>
+                <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.configure-integration"}}</h2>
+                <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.name-the-connection-and-confirm-any-provider-fac-77e75"}}</p>
             </div>
 
             <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 no-input-group-padding text-xs">
-                <InputGroup @value={{@resource.name}} @name="Integration Name" />
+                <InputGroup @value={{@resource.name}} @name={{t "literal.fleet-ops.integration-name-b52f0"}} />
 
                 {{#if this.selectedProvider.supports_webhooks}}
-                    <InputGroup @name="Webhook URL" @wrapperClass="lg:col-span-2">
+                    <InputGroup @name={{t "literal.fleet-ops.webhook-url"}} @wrapperClass="lg:col-span-2">
                         {{#if this.webhookUrl}}
                             <ClickToCopy @value={{this.webhookUrl}} class="w-full">
                                 <Input @value={{this.webhookUrl}} class="form-input w-full" readonly />
                             </ClickToCopy>
-                            <small class="form-text text-muted mt-1">Use this public URL in the provider dashboard.</small>
+                            <small class="form-text text-muted mt-1">{{t "literal.fleet-ops.use-this-public-url-in-the-provider-dashboard"}}</small>
                         {{else}}
                             <div class="rounded-md border border-yellow-200 bg-yellow-50 p-3 text-xs text-yellow-800 dark:border-yellow-700 dark:bg-gray-800 dark:text-yellow-300">
-                                The webhook URL will be available after this connection has a public ID.
+                                {{t "literal.fleet-ops.the-webhook-url-will-be-available-after-this-con-c8bba"}}
                             </div>
                         {{/if}}
                     </InputGroup>
                 {{else}}
                     <div class="rounded-md border border-dashed border-gray-300 p-3 text-xs text-gray-500 dark:border-gray-700 dark:text-gray-300 lg:col-span-2">
-                        This provider does not require Fleet-Ops webhook configuration.
+                        {{t "literal.fleet-ops.this-provider-does-not-require-fleet-ops-webhook-9934c"}}
                     </div>
                 {{/if}}
             </div>
@@ -275,13 +275,13 @@
     {{else}}
         <section class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <div class="mb-3">
-                <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Hardware Identity</h2>
-                <p class="text-xs text-gray-500 dark:text-gray-300">Optional blackbox metadata for provider hardware installed in the fleet.</p>
+                <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.hardware-identity"}}</h2>
+                <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.optional-blackbox-metadata-for-provider-hardware-636a7"}}</p>
             </div>
             <div class="grid grid-cols-1 gap-2 lg:grid-cols-3 no-input-group-padding text-xs">
-                <InputGroup @value={{@resource.model}} @name="Model" />
-                <InputGroup @value={{@resource.serial_number}} @name="Serial Number" />
-                <InputGroup @value={{@resource.firmware_version}} @name="Firmware Version" />
+                <InputGroup @value={{@resource.model}} @name={{t "literal.fleet-ops.model"}} />
+                <InputGroup @value={{@resource.serial_number}} @name={{t "literal.fleet-ops.serial-number"}} />
+                <InputGroup @value={{@resource.firmware_version}} @name={{t "literal.fleet-ops.firmware-version"}} />
                 <InputGroup @value={{@resource.imei}} @name="IMEI" />
                 <InputGroup @value={{@resource.imsi}} @name="IMSI" />
                 <InputGroup @value={{@resource.iccid}} @name="ICCID" />
@@ -301,8 +301,8 @@
         <div class="mx-auto flex w-full max-w-6xl flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div class="text-xs text-gray-500 dark:text-gray-300">{{@footerHelp}}</div>
             <div class="flex items-center justify-end gap-2">
-                <Button @icon="times" @text="Cancel" @size="sm" @onClick={{@onCancel}} />
-                <Button @icon="arrow-left" @text="Back" @size="sm" @disabled={{not this.canGoBack}} @onClick={{this.previousStep}} />
+                <Button @icon="times" @text={{t "literal.fleet-ops.cancel"}} @size="sm" @onClick={{@onCancel}} />
+                <Button @icon="arrow-left" @text={{t "literal.fleet-ops.back"}} @size="sm" @disabled={{not this.canGoBack}} @onClick={{this.previousStep}} />
                 <Button
                     @icon={{this.primaryFooterIcon}}
                     @text={{this.primaryFooterLabel}}

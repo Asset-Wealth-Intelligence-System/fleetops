@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default class ConnectivityTelematicsDetailsController extends Controller {
+    @service intl;
     @service hostRouter;
     @service fetch;
     @service modalsManager;
@@ -13,27 +14,27 @@ export default class ConnectivityTelematicsDetailsController extends Controller 
         return [
             {
                 route: 'connectivity.telematics.details.index',
-                label: 'Overview',
+                label: this.intl.t('literal.fleet-ops.overview'),
             },
             {
                 route: 'connectivity.telematics.details.devices',
-                label: 'Devices',
+                label: this.intl.t('literal.fleet-ops.devices-c03ca'),
             },
             {
                 route: 'connectivity.telematics.details.attachments',
-                label: 'Vehicle Attachments',
+                label: this.intl.t('literal.fleet-ops.vehicle-attachments'),
             },
             {
                 route: 'connectivity.telematics.details.sensors',
-                label: 'Sensors',
+                label: this.intl.t('literal.fleet-ops.sensors'),
             },
             {
                 route: 'connectivity.telematics.details.events',
-                label: 'Events',
+                label: this.intl.t('literal.fleet-ops.events'),
             },
             {
                 route: 'connectivity.telematics.details.logs',
-                label: 'Logs',
+                label: this.intl.t('literal.fleet-ops.logs'),
             },
         ].map((tab) => ({
             ...tab,
@@ -45,12 +46,12 @@ export default class ConnectivityTelematicsDetailsController extends Controller 
         return [
             {
                 icon: 'plug',
-                text: 'Test',
+                text: this.intl.t('literal.fleet-ops.test'),
                 onClick: () => this.openConnectionTestDialog(),
             },
             {
                 icon: 'satellite-dish',
-                text: 'Discover',
+                text: this.intl.t('literal.fleet-ops.discover'),
                 onClick: () => this.discoverDevices.perform(),
                 isLoading: this.discoverDevices.isRunning,
             },
@@ -90,31 +91,31 @@ export default class ConnectivityTelematicsDetailsController extends Controller 
     get statusLabel() {
         switch (this.model?.status) {
             case 'initialized':
-                return 'Not tested';
+                return this.intl.t('literal.fleet-ops.not-tested');
             case 'connected':
-                return 'Connected';
+                return this.intl.t('literal.fleet-ops.connected');
             case 'synchronizing':
-                return 'Syncing';
+                return this.intl.t('literal.fleet-ops.syncing');
             case 'active':
-                return 'Connected';
+                return this.intl.t('literal.fleet-ops.connected');
             case 'error':
-                return 'Needs attention';
+                return this.intl.t('literal.fleet-ops.needs-attention');
             case null:
             case undefined:
-                return 'Unknown';
+                return this.intl.t('literal.fleet-ops.unknown');
             default:
-                return 'Unknown';
+                return this.intl.t('literal.fleet-ops.unknown');
         }
     }
 
     get connectionTestLabel() {
         switch (this.model?.meta?.last_test_result) {
             case 'success':
-                return 'Verified';
+                return this.intl.t('literal.fleet-ops.verified');
             case 'failed':
-                return 'Failed';
+                return this.intl.t('literal.fleet-ops.failed');
             default:
-                return 'Not tested';
+                return this.intl.t('literal.fleet-ops.not-tested');
         }
     }
 
@@ -128,10 +129,10 @@ export default class ConnectivityTelematicsDetailsController extends Controller 
 
     @action openConnectionTestDialog() {
         this.modalsManager.show('modals/telematic-connection-diagnostics', {
-            title: 'Test Connection',
-            acceptButtonText: 'Run Test',
+            title: this.intl.t('literal.fleet-ops.test-connection'),
+            acceptButtonText: this.intl.t('literal.fleet-ops.run-test'),
             acceptButtonIcon: 'plug',
-            declineButtonText: 'Close',
+            declineButtonText: this.intl.t('literal.fleet-ops.close'),
             telematic: this.model,
             onTested: () => this.hostRouter.refresh(),
         });
@@ -140,7 +141,7 @@ export default class ConnectivityTelematicsDetailsController extends Controller 
     @task *discoverDevices() {
         try {
             const result = yield this.fetch.post(`telematics/${this.telematicId}/discover`);
-            this.notifications.success(result.message ?? 'Device discovery initiated.');
+            this.notifications.success(result.message ?? this.intl.t('literal.fleet-ops.device-discovery-initiated'));
             yield this.hostRouter.refresh();
         } catch (error) {
             this.notifications.serverError(error);

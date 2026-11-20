@@ -4,14 +4,6 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 
-const severityOptions = [
-    { label: 'Info', value: 'info' },
-    { label: 'Warning', value: 'warning' },
-    { label: 'Error', value: 'error' },
-    { label: 'Critical', value: 'critical' },
-    { label: 'High', value: 'high' },
-];
-
 function toRecentList(records) {
     const list = Array.from(records ?? []);
 
@@ -28,6 +20,17 @@ function toRecentList(records) {
 }
 
 export default class DevicePanelTabsEventsComponent extends Component {
+    get severityOptions() {
+        return [
+            { label: this.intl.t('literal.fleet-ops.info'), value: 'info' },
+            { label: this.intl.t('literal.fleet-ops.warning'), value: 'warning' },
+            { label: this.intl.t('literal.fleet-ops.error'), value: 'error' },
+            { label: this.intl.t('literal.fleet-ops.critical'), value: 'critical' },
+            { label: this.intl.t('literal.fleet-ops.high'), value: 'high' },
+        ];
+    }
+
+    @service intl;
     @service deviceEventActions;
     @service store;
 
@@ -46,7 +49,7 @@ export default class DevicePanelTabsEventsComponent extends Component {
         return [
             {
                 sticky: true,
-                label: 'Event',
+                label: this.intl.t('literal.fleet-ops.event'),
                 valuePath: 'event_type',
                 cellComponent: 'table/cell/anchor',
                 action: this.deviceEventActions.panel?.view ?? this.deviceEventActions.transition.view,
@@ -54,30 +57,30 @@ export default class DevicePanelTabsEventsComponent extends Component {
                 resizable: true,
             },
             {
-                label: 'Severity',
+                label: this.intl.t('literal.fleet-ops.severity'),
                 valuePath: 'severity',
                 cellComponent: 'table/cell/status',
-                filterOptions: severityOptions,
+                filterOptions: this.severityOptions,
                 resizable: true,
             },
             {
-                label: 'Message',
+                label: this.intl.t('literal.fleet-ops.message'),
                 valuePath: 'message',
                 resizable: true,
             },
             {
-                label: 'Code',
+                label: this.intl.t('literal.fleet-ops.code'),
                 valuePath: 'code',
                 resizable: true,
             },
             {
-                label: 'Processed',
+                label: this.intl.t('literal.fleet-ops.processed-e6f64'),
                 valuePath: 'processedAt',
                 sortParam: 'processed_at',
                 resizable: true,
             },
             {
-                label: 'Occurred',
+                label: this.intl.t('literal.fleet-ops.occurred-b378d'),
                 valuePath: 'occurredAt',
                 sortParam: 'occurred_at',
                 resizable: true,
@@ -93,12 +96,12 @@ export default class DevicePanelTabsEventsComponent extends Component {
                 width: 60,
                 actions: [
                     {
-                        label: 'View event',
+                        label: this.intl.t('literal.fleet-ops.view-event'),
                         fn: this.deviceEventActions.panel?.view ?? this.deviceEventActions.transition.view,
                         permission: 'fleet-ops view device-event',
                     },
                     {
-                        label: 'Mark processed',
+                        label: this.intl.t('literal.fleet-ops.mark-processed-f1bfb'),
                         fn: this.markProcessed,
                         permission: 'fleet-ops update device-event',
                     },

@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-4 p-4 md:p-6">
     <div class="flex flex-col gap-1">
-        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">Sensor Inventory + Health</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-300">Review sensor readings discovered from synced devices and identify sensors that are not reporting.</p>
+        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.sensor-inventory-health"}}</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.review-sensor-readings-discovered-from-synced-de-a7929"}}</p>
     </div>
 
     <section class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -23,12 +23,12 @@
     <section class="overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <div class="fleetops-provider-connections-header border-b border-gray-200 px-4 py-3 dark:border-gray-700">
             <div>
-                <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">Sensor Readings</h3>
-                <p class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-300">Filter by type, device, and reporting status to understand what telemetry this connection is producing.</p>
+                <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.sensor-readings"}}</h3>
+                <p class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.filter-by-type-device-and-reporting-status-to-un-1dc3f"}}</p>
             </div>
             <div class="fleetops-provider-connections-actions flex min-w-0 flex-wrap items-center gap-2 lg:ml-auto lg:flex-nowrap lg:justify-end">
                 <Layout::Resource::TabularActions
-                    @title="Sensor Readings"
+                    @title={{t "literal.fleet-ops.sensor-readings"}}
                     @searchQuery={{this.query}}
                     @onSearch={{perform this.sensorActions.controllerSearchTask this}}
                     @columns={{this.columns}}
@@ -65,7 +65,7 @@
         {{else}}
             <Layout::Resource::Tabular
                 @resource="sensor"
-                @title="Sensor Readings"
+                @title={{t "literal.fleet-ops.sensor-readings"}}
                 @data={{@model}}
                 @columns={{this.columns}}
                 @page={{this.page}}
@@ -77,11 +77,11 @@
                     "table/empty-state"
                     variant="compact"
                     icon="satellite-dish"
-                    title="No sensor readings"
-                    description="Sensor readings appear after devices sync telemetry from this provider."
-                    filteredTitle="No readings match your filters"
-                    filteredDescription="Adjust the search or filters to find other sensor readings."
-                    primaryText="Refresh"
+                    title=(t "literal.fleet-ops.no-sensor-readings")
+                    description=(t "literal.fleet-ops.sensor-readings-appear-after-devices-sync-teleme-30cde")
+                    filteredTitle=(t "literal.fleet-ops.no-readings-match-your-filters")
+                    filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-other-senso-f4a94")
+                    primaryText=(t "literal.fleet-ops.refresh")
                     primaryIcon="refresh"
                     primaryAction=this.refresh
                 }}

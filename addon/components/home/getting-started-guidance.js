@@ -10,6 +10,7 @@ const ACCENT_CLASS = {
 };
 
 export default class HomeGettingStartedGuidanceComponent extends Component {
+    @service intl;
     @service gettingStarted;
     @service router;
     @service docsPanel;
@@ -52,10 +53,10 @@ export default class HomeGettingStartedGuidanceComponent extends Component {
     @action
     statusText(step) {
         if (step.completed) {
-            return 'Done';
+            return this.intl.t('literal.fleet-ops.done');
         }
 
-        return this.isActiveStep(step) ? 'Next' : 'Not started';
+        return this.isActiveStep(step) ? this.intl.t('literal.fleet-ops.next') : this.intl.t('literal.fleet-ops.not-started');
     }
 
     @action

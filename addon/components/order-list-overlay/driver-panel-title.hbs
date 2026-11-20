@@ -6,6 +6,6 @@
                 <div class="text-sm">{{@context.name}}</div>
             </div>
         </div>
-        <span class="resource-count">{{pluralize @context.orderPanelActiveJobs.length (t "resource.order")}}</span>
+        <span class="resource-count">{{t "literal.fleet-ops.order-count" count=@context.orderPanelActiveJobs.length}}</span>
     </div>
 </div>

@@ -10,6 +10,7 @@ const FILTER_VEHICLES = 'vehicles';
 const FILTER_ONLINE = 'online';
 
 export default class FleetHierarchyTreeComponent extends Component {
+    @service intl;
     @service store;
 
     @tracked expandedFleetIds = new Set();
@@ -27,10 +28,10 @@ export default class FleetHierarchyTreeComponent extends Component {
 
     get filters() {
         return [
-            { id: FILTER_ALL, label: 'All' },
-            { id: FILTER_DRIVERS, label: 'Drivers' },
-            { id: FILTER_VEHICLES, label: 'Vehicles' },
-            { id: FILTER_ONLINE, label: 'Online' },
+            { id: FILTER_ALL, label: this.intl.t('literal.fleet-ops.all') },
+            { id: FILTER_DRIVERS, label: this.intl.t('literal.fleet-ops.drivers') },
+            { id: FILTER_VEHICLES, label: this.intl.t('literal.fleet-ops.vehicles') },
+            { id: FILTER_ONLINE, label: this.intl.t('literal.fleet-ops.online') },
         ];
     }
 
@@ -75,7 +76,7 @@ export default class FleetHierarchyTreeComponent extends Component {
     }
 
     get expandCollapseHelpText() {
-        return this.allFleetNodesExpanded ? 'Collapse all' : 'Expand all';
+        return this.allFleetNodesExpanded ? this.intl.t('literal.fleet-ops.collapse-all') : this.intl.t('literal.fleet-ops.expand-all');
     }
 
     get visibleRows() {
@@ -88,18 +89,18 @@ export default class FleetHierarchyTreeComponent extends Component {
 
     get emptyTitle() {
         if (this.hasControlsApplied) {
-            return 'No matching resources';
+            return this.intl.t('literal.fleet-ops.no-matching-resources');
         }
 
-        return 'No fleet resources assigned';
+        return this.intl.t('literal.fleet-ops.no-fleet-resources-assigned');
     }
 
     get emptyDescription() {
         if (this.hasControlsApplied) {
-            return 'Clear the current search or filter to show the full fleet hierarchy.';
+            return this.intl.t('literal.fleet-ops.clear-the-current-search-or-filter-to-show-the-f-2d75b');
         }
 
-        return 'Assign drivers or vehicles to make this fleet operationally useful.';
+        return this.intl.t('literal.fleet-ops.assign-drivers-or-vehicles-to-make-this-fleet-op-c1baf');
     }
 
     get initialExpandedFleetIds() {
@@ -126,7 +127,7 @@ export default class FleetHierarchyTreeComponent extends Component {
     }
 
     @action displayName(resource) {
-        return resource?.displayName ?? resource?.display_name ?? resource?.name ?? resource?.public_id ?? 'Unnamed resource';
+        return resource?.displayName ?? resource?.display_name ?? resource?.name ?? resource?.public_id ?? this.intl.t('literal.fleet-ops.unnamed-resource');
     }
 
     fleetKey(fleet) {
@@ -182,11 +183,17 @@ export default class FleetHierarchyTreeComponent extends Component {
     }
 
     @action driverSubtitle(driver) {
-        return [driver?.vehicle_name, driver?.status, driver?.public_id].filter(Boolean).join(' - ') || (driver?.online ? 'Online' : 'Offline');
+        return (
+            [driver?.vehicle_name, driver?.status, driver?.public_id].filter(Boolean).join(' - ') ||
+            (driver?.online ? this.intl.t('literal.fleet-ops.online') : this.intl.t('literal.fleet-ops.offline'))
+        );
     }
 
     @action vehicleSubtitle(vehicle) {
-        return [vehicle?.driver_name, vehicle?.plate_number, vehicle?.vin, vehicle?.status, vehicle?.public_id].filter(Boolean).join(' - ') || (vehicle?.online ? 'Online' : 'Offline');
+        return (
+            [vehicle?.driver_name, vehicle?.plate_number, vehicle?.vin, vehicle?.status, vehicle?.public_id].filter(Boolean).join(' - ') ||
+            (vehicle?.online ? this.intl.t('literal.fleet-ops.online') : this.intl.t('literal.fleet-ops.offline'))
+        );
     }
 
     @action fleetHasChildren(fleet) {

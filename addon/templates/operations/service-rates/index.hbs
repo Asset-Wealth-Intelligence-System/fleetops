@@ -13,19 +13,19 @@
     @emptyStateComponent={{component
         "table/empty-state"
         icon="route"
-        title="Set up your first service rate"
-        description="Service rates define how Fleet-Ops prices routes, zones, distance, and other service rules."
-        filteredTitle="No service rates match your filters"
-        filteredDescription="Adjust the search or filters to find another service rate."
-        primaryText="New service rate"
+        title=(t "literal.fleet-ops.set-up-your-first-service-rate")
+        description=(t "literal.fleet-ops.service-rates-define-how-fleet-ops-prices-routes-b7e0b")
+        filteredTitle=(t "literal.fleet-ops.no-service-rates-match-your-filters")
+        filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-ser-1b91b")
+        primaryText=(t "literal.fleet-ops.new-service-rate")
         primaryIcon="plus"
         primaryAction=this.serviceRateActions.transition.create
-        secondaryText="Refresh"
+        secondaryText=(t "literal.fleet-ops.refresh")
         secondaryIcon="refresh"
         secondaryAction=this.serviceRateActions.refresh
         docsSlug="fleet-ops/operations/service-rates/overview"
-        docsTitle="Service rates guide"
-        docsText="Service rates guide"
+        docsTitle=(t "literal.fleet-ops.service-rates-guide")
+        docsText=(t "literal.fleet-ops.service-rates-guide")
         docsSource="fleet-ops-empty-service-rates"
     }}
 />

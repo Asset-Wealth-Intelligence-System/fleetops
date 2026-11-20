@@ -7,6 +7,7 @@ import { task } from 'ember-concurrency';
 const PERIODS = ['7d', '14d', '30d'];
 
 export default class WidgetOrdersByStatusComponent extends Component {
+    @service intl;
     static widgetId = 'fleet-ops-orders-by-status-widget';
 
     @service fetch;
@@ -42,7 +43,7 @@ export default class WidgetOrdersByStatusComponent extends Component {
             this.data = yield this.fetch.get('fleet-ops/analytics/orders-by-status', { period: this.period });
             this.error = null;
         } catch (e) {
-            this.error = e?.message ?? 'Failed to load orders breakdown';
+            this.error = e?.message ?? this.intl.t('literal.fleet-ops.failed-to-load-orders-breakdown');
         }
     }
 

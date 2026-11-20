@@ -15,27 +15,27 @@ export default class ManagementVehiclesIndexDetailsController extends Controller
         return [
             {
                 route: 'management.vehicles.index.details.index',
-                label: 'Overview',
+                label: this.intl.t('literal.fleet-ops.overview'),
             },
             {
                 route: 'management.vehicles.index.details.positions',
-                label: 'Positions',
+                label: this.intl.t('literal.fleet-ops.positions'),
             },
             {
                 route: 'management.vehicles.index.details.devices',
-                label: 'Devices',
+                label: this.intl.t('literal.fleet-ops.devices-c03ca'),
             },
             {
                 route: 'management.vehicles.index.details.schedules',
-                label: 'Schedules',
+                label: this.intl.t('literal.fleet-ops.schedules'),
             },
             {
                 route: 'management.vehicles.index.details.work-orders',
-                label: 'Work Orders',
+                label: this.intl.t('literal.fleet-ops.work-orders'),
             },
             {
                 route: 'management.vehicles.index.details.maintenance-history',
-                label: 'Maintenance',
+                label: this.intl.t('literal.fleet-ops.maintenance'),
             },
             ...(isArray(registeredTabs) ? registeredTabs : []),
         ];

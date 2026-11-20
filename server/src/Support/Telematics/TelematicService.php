@@ -190,9 +190,74 @@ class TelematicService
         return $device;
     }
 
+    /**
+     * Attach a newly discovered device to a matching company vehicle.
+     *
+     * Providers opt in with `auto_attach`. Matching uses an explicit vehicle
+     * uuid first, then Karma/source ids already stored on the vehicle
+     * (`internal_id`, `serial_number`).
+     */
+    protected function autoAttachVehicleIfRequested(Telematic $telematic, Device $device, array $deviceData): void
+    {
+        if (empty($deviceData['auto_attach']) || $device->attachable_uuid) {
+            return;
+        }
+
+        $vehicle = $this->resolveVehicleForDevice($telematic, $device, $deviceData);
+
+        if ($vehicle) {
+            $device->attachTo($vehicle);
+        }
+    }
+
+    protected function resolveVehicleForDevice(Telematic $telematic, Device $device, array $deviceData): ?Vehicle
+    {
+        $explicitUuid = $deviceData['vehicle_uuid'] ?? $deviceData['attachable_uuid'] ?? null;
+        if (is_string($explicitUuid) && $explicitUuid !== '') {
+            $vehicle = Vehicle::query()
+                ->where('company_uuid', $telematic->company_uuid)
+                ->where('uuid', $explicitUuid)
+                ->first();
+
+            if ($vehicle) {
+                return $vehicle;
+            }
+        }
+
+        $internalId = $deviceData['internal_id'] ?? $device->internal_id;
+        $imei       = $deviceData['imei'] ?? $deviceData['serial_number'] ?? $device->imei ?? $device->serial_number;
+
+        if (!$internalId && !$imei) {
+            return null;
+        }
+
+        return Vehicle::query()
+            ->where('company_uuid', $telematic->company_uuid)
+            ->where(function ($query) use ($internalId, $imei) {
+                if ($internalId) {
+                    $query->where('internal_id', (string) $internalId);
+                }
+
+                if ($imei) {
+                    $method = $internalId ? 'orWhere' : 'where';
+                    $query->{$method}('serial_number', (string) $imei);
+                }
+            })
+            ->first();
+    }
+
     public function ingestDeviceSnapshot(Telematic $telematic, TelematicProviderInterface $provider, array $payload): array
     {
-        $device = $this->linkDevice($telematic, $provider->normalizeDevice($payload));
+        $normalized = $provider->normalizeDevice($payload);
+        $device     = $this->linkDevice($telematic, $normalized);
+
+        try {
+            $this->autoAttachVehicleIfRequested($telematic, $device, $normalized);
+            $device->loadMissing('attachable');
+        } catch (\Throwable) {
+            // Auto-attach is best-effort. A snapshot must still store device events
+            // when the vehicle lookup is unavailable (unit tests, missing row).
+        }
 
         $event  = null;
         $events = [];

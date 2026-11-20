@@ -2,6 +2,7 @@ import { inject as service } from '@ember/service';
 import ResourceActionService from '@fleetbase/ember-core/services/resource-action';
 
 export default class DeviceEventActionsService extends ResourceActionService {
+    @service intl;
     @service fetch;
     @service notifications;
 
@@ -14,19 +15,21 @@ export default class DeviceEventActionsService extends ResourceActionService {
         view: (deviceEvent) => this.transitionTo('connectivity.events.details', deviceEvent),
     };
 
-    panel = {
-        view: (deviceEvent) => {
-            return this.resourceContextPanel.open({
-                deviceEvent,
-                tabs: [
-                    {
-                        label: this.intl.t('common.overview'),
-                        component: 'device-event/details',
-                    },
-                ],
-            });
-        },
-    };
+    get panel() {
+        return {
+            view: (deviceEvent) => {
+                return this.resourceContextPanel.open({
+                    deviceEvent,
+                    tabs: [
+                        {
+                            label: this.intl.t('common.overview'),
+                            component: 'device-event/details',
+                        },
+                    ],
+                });
+            },
+        };
+    }
 
     modal = {
         view: (deviceEvent, options = {}) => {
@@ -41,7 +44,7 @@ export default class DeviceEventActionsService extends ResourceActionService {
 
     async markProcessed(deviceEvent) {
         const response = await this.fetch.post(`device-events/${deviceEvent.id}/mark-processed`);
-        this.notifications.success(response?.message ?? 'Event marked processed.');
+        this.notifications.success(response?.message ?? this.intl.t('literal.fleet-ops.event-marked-processed'));
 
         return response;
     }

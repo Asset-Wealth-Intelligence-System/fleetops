@@ -1334,8 +1334,14 @@ test('native telematics providers expose local provider icons with a descriptor 
     foreach ($providers as $provider) {
         $icon = $provider['icon'] ?? null;
 
+        expect($icon)->not->toBeNull();
+
+        if (str_starts_with((string) $icon, 'https://') || str_starts_with((string) $icon, 'http://')) {
+            expect(filter_var($icon, FILTER_VALIDATE_URL))->not->toBeFalse();
+            continue;
+        }
+
         expect($icon)
-            ->not->toBeNull()
             ->not->toContain('http://')
             ->not->toContain('https://');
 
@@ -1345,8 +1351,11 @@ test('native telematics providers expose local provider icons with a descriptor 
     }
 
     $safee = collect($providers)->firstWhere('key', 'safee');
+    $karma = collect($providers)->firstWhere('key', 'karma');
 
     expect($safee['icon'])->toBe($iconPath . 'safee.webp');
+    expect($karma['icon'])->toStartWith('https://');
+    expect(file_exists(__DIR__ . '/../../assets/images/telematics/providers/karma.webp'))->toBeTrue();
 
     $descriptor = new TelematicProviderDescriptor([
         'key'   => 'custom',

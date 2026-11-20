@@ -23,134 +23,8 @@ import { buildRouteTypeSummary } from '../../utils/order-route-summary';
  */
 
 // ── Field sections ─────────────────────────────────────────────────────────────
-const FIELD_SECTIONS = [
-    {
-        key: 'order',
-        label: 'Order Details',
-        fields: [
-            { key: 'order_type', label: 'Order Type', required: false, hint: 'pickup_dropoff or multi_waypoint' },
-            { key: 'order_ref', label: 'Order Reference', required: false, hint: 'Groups rows into one multi-waypoint order' },
-            { key: 'internal_id', label: 'Internal ID', required: false },
-            { key: 'type', label: 'Order Config Slug', required: false, hint: 'e.g. default, delivery, transfer' },
-            { key: 'status', label: 'Status', required: false },
-            { key: 'scheduled_at', label: 'Scheduled At', required: false, hint: 'YYYY-MM-DD HH:mm' },
-            { key: 'notes', label: 'Notes', required: false },
-            { key: 'priority', label: 'Priority (0-100)', required: false },
-            { key: 'time_window_start', label: 'Time Window Start', required: false, hint: 'HH:mm' },
-            { key: 'time_window_end', label: 'Time Window End', required: false, hint: 'HH:mm' },
-            { key: 'service_time_min', label: 'Service Time (min)', required: false },
-            { key: 'required_skills', label: 'Required Skills', required: false, hint: 'Comma-separated' },
-        ],
-    },
-    {
-        key: 'pickup',
-        label: 'Pickup / Origin',
-        fields: [
-            { key: 'pickup_name', label: 'Pickup Name', required: false },
-            { key: 'pickup_street1', label: 'Pickup Street 1', required: false },
-            { key: 'pickup_street2', label: 'Pickup Street 2', required: false },
-            { key: 'pickup_city', label: 'Pickup City', required: false },
-            { key: 'pickup_state', label: 'Pickup State', required: false },
-            { key: 'pickup_postal_code', label: 'Pickup Postal Code', required: false },
-            { key: 'pickup_country', label: 'Pickup Country', required: false, hint: 'ISO 3166-1 alpha-2' },
-            { key: 'pickup_phone', label: 'Pickup Phone', required: false },
-            { key: 'pickup_lat', label: 'Pickup Latitude', required: false },
-            { key: 'pickup_lng', label: 'Pickup Longitude', required: false },
-        ],
-    },
-    {
-        key: 'dropoff',
-        label: 'Dropoff / Destination',
-        fields: [
-            { key: 'dropoff_name', label: 'Dropoff Name', required: false },
-            { key: 'dropoff_street1', label: 'Dropoff Street 1', required: true },
-            { key: 'dropoff_street2', label: 'Dropoff Street 2', required: false },
-            { key: 'dropoff_city', label: 'Dropoff City', required: false },
-            { key: 'dropoff_state', label: 'Dropoff State', required: false },
-            { key: 'dropoff_postal_code', label: 'Dropoff Postal Code', required: false },
-            { key: 'dropoff_country', label: 'Dropoff Country', required: false, hint: 'ISO 3166-1 alpha-2' },
-            { key: 'dropoff_phone', label: 'Dropoff Phone', required: false },
-            { key: 'dropoff_lat', label: 'Dropoff Latitude', required: false },
-            { key: 'dropoff_lng', label: 'Dropoff Longitude', required: false },
-        ],
-    },
-    {
-        key: 'payload',
-        label: 'Payload',
-        fields: [
-            { key: 'weight_kg', label: 'Weight (kg)', required: false },
-            { key: 'volume_m3', label: 'Volume (m3)', required: false },
-            { key: 'parcels', label: 'Parcels', required: false },
-            { key: 'cod_amount', label: 'COD Amount', required: false },
-            { key: 'cod_currency', label: 'COD Currency', required: false, hint: 'ISO 4217, e.g. USD' },
-        ],
-    },
-    {
-        key: 'customer',
-        label: 'Customer',
-        fields: [
-            { key: 'customer_name', label: 'Customer Name', required: false },
-            { key: 'customer_email', label: 'Customer Email', required: false, hint: 'Used to look up or create a contact' },
-            { key: 'customer_phone', label: 'Customer Phone', required: false },
-            { key: 'customer_type', label: 'Customer Type', required: false, hint: 'contact (default) or vendor' },
-        ],
-    },
-    {
-        key: 'facilitator',
-        label: 'Facilitator',
-        fields: [
-            { key: 'facilitator_name', label: 'Facilitator Name', required: false },
-            { key: 'facilitator_email', label: 'Facilitator Email', required: false, hint: 'Used to look up or create a vendor' },
-            { key: 'facilitator_phone', label: 'Facilitator Phone', required: false },
-            { key: 'facilitator_type', label: 'Facilitator Type', required: false, hint: 'contact or vendor (default)' },
-        ],
-    },
-    {
-        key: 'vehicle',
-        label: 'Vehicle',
-        fields: [{ key: 'vehicle_plate', label: 'Vehicle Plate', required: false, hint: 'Looks up vehicle by plate number' }],
-    },
-    {
-        key: 'driver',
-        label: 'Driver',
-        fields: [
-            { key: 'driver_name', label: 'Driver Name', required: false },
-            { key: 'driver_phone', label: 'Driver Phone', required: false, hint: 'Used to look up driver' },
-            { key: 'driver_email', label: 'Driver Email', required: false },
-        ],
-    },
-    {
-        key: 'entity',
-        label: 'Entity (Item / Parcel / Passenger)',
-        fields: [
-            { key: 'entity_name', label: 'Entity Name', required: false, hint: 'Name of the item, parcel or passenger' },
-            { key: 'entity_type', label: 'Entity Type', required: false, hint: 'e.g. parcel, passenger, pallet' },
-            { key: 'entity_description', label: 'Entity Description', required: false },
-            { key: 'entity_sku', label: 'Entity SKU', required: false },
-            { key: 'entity_barcode', label: 'Entity Barcode', required: false },
-            { key: 'entity_internal_id', label: 'Entity Internal ID', required: false },
-            { key: 'entity_declared_value', label: 'Declared Value', required: false },
-            { key: 'entity_currency', label: 'Entity Currency', required: false, hint: 'ISO 4217, e.g. USD' },
-            { key: 'entity_price', label: 'Entity Price', required: false },
-            { key: 'entity_sale_price', label: 'Entity Sale Price', required: false },
-            { key: 'entity_weight', label: 'Entity Weight', required: false },
-            { key: 'entity_weight_unit', label: 'Weight Unit', required: false, hint: 'kg, lb, g, oz' },
-            { key: 'entity_length', label: 'Entity Length', required: false },
-            { key: 'entity_width', label: 'Entity Width', required: false },
-            { key: 'entity_height', label: 'Entity Height', required: false },
-            { key: 'entity_dimensions_unit', label: 'Dimensions Unit', required: false, hint: 'cm, m, in, ft' },
-            {
-                key: 'entity_destination',
-                label: 'Entity Destination',
-                required: false,
-                hint: 'pickup, dropoff, or waypoint index (0,1,2…). Add extra rows with the same order_ref to attach multiple entities to one order.',
-            },
-        ],
-    },
-];
 
 /** Flat list of all target fields (used for column-mapping state). */
-const TARGET_FIELDS = FIELD_SECTIONS.flatMap((s) => s.fields);
 
 /** Auto-mapping aliases: key => array of substrings to match against column names. */
 const ALIASES = {
@@ -225,6 +99,155 @@ const ALIASES = {
 };
 
 export default class OrchestratorImportComponent extends Component {
+    get FIELD_SECTIONS() {
+        return [
+            {
+                key: 'order',
+                label: this.intl.t('literal.fleet-ops.order-details'),
+                fields: [
+                    { key: 'order_type', label: this.intl.t('literal.fleet-ops.order-type-31afa'), required: false, hint: this.intl.t('literal.fleet-ops.pickup-dropoff-or-multi-waypoint') },
+                    {
+                        key: 'order_ref',
+                        label: this.intl.t('literal.fleet-ops.order-reference'),
+                        required: false,
+                        hint: this.intl.t('literal.fleet-ops.groups-rows-into-one-multi-waypoint-order'),
+                    },
+                    { key: 'internal_id', label: this.intl.t('literal.fleet-ops.internal-id'), required: false },
+                    { key: 'type', label: this.intl.t('literal.fleet-ops.order-config-slug'), required: false, hint: this.intl.t('literal.fleet-ops.e-g-default-delivery-transfer') },
+                    { key: 'status', label: this.intl.t('literal.fleet-ops.status-ec53a'), required: false },
+                    { key: 'scheduled_at', label: this.intl.t('literal.fleet-ops.scheduled-at'), required: false, hint: 'YYYY-MM-DD HH:mm' },
+                    { key: 'notes', label: this.intl.t('literal.fleet-ops.notes'), required: false },
+                    { key: 'priority', label: this.intl.t('literal.fleet-ops.priority-0-100'), required: false },
+                    { key: 'time_window_start', label: this.intl.t('literal.fleet-ops.time-window-start'), required: false, hint: 'HH:mm' },
+                    { key: 'time_window_end', label: this.intl.t('literal.fleet-ops.time-window-end'), required: false, hint: 'HH:mm' },
+                    { key: 'service_time_min', label: this.intl.t('literal.fleet-ops.service-time-min'), required: false },
+                    { key: 'required_skills', label: this.intl.t('literal.fleet-ops.required-skills'), required: false, hint: this.intl.t('literal.fleet-ops.comma-separated') },
+                ],
+            },
+            {
+                key: 'pickup',
+                label: this.intl.t('literal.fleet-ops.pickup-origin'),
+                fields: [
+                    { key: 'pickup_name', label: this.intl.t('literal.fleet-ops.pickup-name'), required: false },
+                    { key: 'pickup_street1', label: this.intl.t('literal.fleet-ops.pickup-street-1'), required: false },
+                    { key: 'pickup_street2', label: this.intl.t('literal.fleet-ops.pickup-street-2'), required: false },
+                    { key: 'pickup_city', label: this.intl.t('literal.fleet-ops.pickup-city'), required: false },
+                    { key: 'pickup_state', label: this.intl.t('literal.fleet-ops.pickup-state'), required: false },
+                    { key: 'pickup_postal_code', label: this.intl.t('literal.fleet-ops.pickup-postal-code'), required: false },
+                    { key: 'pickup_country', label: this.intl.t('literal.fleet-ops.pickup-country'), required: false, hint: this.intl.t('literal.fleet-ops.iso-3166-1-alpha-2') },
+                    { key: 'pickup_phone', label: this.intl.t('literal.fleet-ops.pickup-phone'), required: false },
+                    { key: 'pickup_lat', label: this.intl.t('literal.fleet-ops.pickup-latitude'), required: false },
+                    { key: 'pickup_lng', label: this.intl.t('literal.fleet-ops.pickup-longitude'), required: false },
+                ],
+            },
+            {
+                key: 'dropoff',
+                label: this.intl.t('literal.fleet-ops.dropoff-destination'),
+                fields: [
+                    { key: 'dropoff_name', label: this.intl.t('literal.fleet-ops.dropoff-name'), required: false },
+                    { key: 'dropoff_street1', label: this.intl.t('literal.fleet-ops.dropoff-street-1'), required: true },
+                    { key: 'dropoff_street2', label: this.intl.t('literal.fleet-ops.dropoff-street-2'), required: false },
+                    { key: 'dropoff_city', label: this.intl.t('literal.fleet-ops.dropoff-city'), required: false },
+                    { key: 'dropoff_state', label: this.intl.t('literal.fleet-ops.dropoff-state'), required: false },
+                    { key: 'dropoff_postal_code', label: this.intl.t('literal.fleet-ops.dropoff-postal-code'), required: false },
+                    { key: 'dropoff_country', label: this.intl.t('literal.fleet-ops.dropoff-country'), required: false, hint: this.intl.t('literal.fleet-ops.iso-3166-1-alpha-2') },
+                    { key: 'dropoff_phone', label: this.intl.t('literal.fleet-ops.dropoff-phone'), required: false },
+                    { key: 'dropoff_lat', label: this.intl.t('literal.fleet-ops.dropoff-latitude'), required: false },
+                    { key: 'dropoff_lng', label: this.intl.t('literal.fleet-ops.dropoff-longitude'), required: false },
+                ],
+            },
+            {
+                key: 'payload',
+                label: this.intl.t('literal.fleet-ops.payload'),
+                fields: [
+                    { key: 'weight_kg', label: this.intl.t('literal.fleet-ops.weight-kg'), required: false },
+                    { key: 'volume_m3', label: this.intl.t('literal.fleet-ops.volume-m3'), required: false },
+                    { key: 'parcels', label: this.intl.t('literal.fleet-ops.parcels'), required: false },
+                    { key: 'cod_amount', label: this.intl.t('literal.fleet-ops.cod-amount'), required: false },
+                    { key: 'cod_currency', label: this.intl.t('literal.fleet-ops.cod-currency'), required: false, hint: this.intl.t('literal.fleet-ops.iso-4217-e-g-usd') },
+                ],
+            },
+            {
+                key: 'customer',
+                label: this.intl.t('literal.fleet-ops.customer'),
+                fields: [
+                    { key: 'customer_name', label: this.intl.t('literal.fleet-ops.customer-name'), required: false },
+                    {
+                        key: 'customer_email',
+                        label: this.intl.t('literal.fleet-ops.customer-email'),
+                        required: false,
+                        hint: this.intl.t('literal.fleet-ops.used-to-look-up-or-create-a-contact'),
+                    },
+                    { key: 'customer_phone', label: this.intl.t('literal.fleet-ops.customer-phone'), required: false },
+                    { key: 'customer_type', label: this.intl.t('literal.fleet-ops.customer-type'), required: false, hint: this.intl.t('literal.fleet-ops.contact-default-or-vendor') },
+                ],
+            },
+            {
+                key: 'facilitator',
+                label: this.intl.t('literal.fleet-ops.facilitator'),
+                fields: [
+                    { key: 'facilitator_name', label: this.intl.t('literal.fleet-ops.facilitator-name'), required: false },
+                    {
+                        key: 'facilitator_email',
+                        label: this.intl.t('literal.fleet-ops.facilitator-email'),
+                        required: false,
+                        hint: this.intl.t('literal.fleet-ops.used-to-look-up-or-create-a-vendor'),
+                    },
+                    { key: 'facilitator_phone', label: this.intl.t('literal.fleet-ops.facilitator-phone'), required: false },
+                    { key: 'facilitator_type', label: this.intl.t('literal.fleet-ops.facilitator-type'), required: false, hint: this.intl.t('literal.fleet-ops.contact-or-vendor-default') },
+                ],
+            },
+            {
+                key: 'vehicle',
+                label: this.intl.t('literal.fleet-ops.vehicle'),
+                fields: [
+                    { key: 'vehicle_plate', label: this.intl.t('literal.fleet-ops.vehicle-plate'), required: false, hint: this.intl.t('literal.fleet-ops.looks-up-vehicle-by-plate-number') },
+                ],
+            },
+            {
+                key: 'driver',
+                label: this.intl.t('literal.fleet-ops.driver'),
+                fields: [
+                    { key: 'driver_name', label: this.intl.t('literal.fleet-ops.driver-name'), required: false },
+                    { key: 'driver_phone', label: this.intl.t('literal.fleet-ops.driver-phone'), required: false, hint: this.intl.t('literal.fleet-ops.used-to-look-up-driver') },
+                    { key: 'driver_email', label: this.intl.t('literal.fleet-ops.driver-email'), required: false },
+                ],
+            },
+            {
+                key: 'entity',
+                label: this.intl.t('literal.fleet-ops.entity-item-parcel-passenger'),
+                fields: [
+                    { key: 'entity_name', label: this.intl.t('literal.fleet-ops.entity-name'), required: false, hint: this.intl.t('literal.fleet-ops.name-of-the-item-parcel-or-passenger') },
+                    { key: 'entity_type', label: this.intl.t('literal.fleet-ops.entity-type'), required: false, hint: this.intl.t('literal.fleet-ops.e-g-parcel-passenger-pallet') },
+                    { key: 'entity_description', label: this.intl.t('literal.fleet-ops.entity-description'), required: false },
+                    { key: 'entity_sku', label: this.intl.t('literal.fleet-ops.entity-sku'), required: false },
+                    { key: 'entity_barcode', label: this.intl.t('literal.fleet-ops.entity-barcode'), required: false },
+                    { key: 'entity_internal_id', label: this.intl.t('literal.fleet-ops.entity-internal-id'), required: false },
+                    { key: 'entity_declared_value', label: this.intl.t('literal.fleet-ops.declared-value'), required: false },
+                    { key: 'entity_currency', label: this.intl.t('literal.fleet-ops.entity-currency'), required: false, hint: this.intl.t('literal.fleet-ops.iso-4217-e-g-usd') },
+                    { key: 'entity_price', label: this.intl.t('literal.fleet-ops.entity-price'), required: false },
+                    { key: 'entity_sale_price', label: this.intl.t('literal.fleet-ops.entity-sale-price'), required: false },
+                    { key: 'entity_weight', label: this.intl.t('literal.fleet-ops.entity-weight'), required: false },
+                    { key: 'entity_weight_unit', label: this.intl.t('literal.fleet-ops.weight-unit'), required: false, hint: this.intl.t('literal.fleet-ops.kg-lb-g-oz') },
+                    { key: 'entity_length', label: this.intl.t('literal.fleet-ops.entity-length'), required: false },
+                    { key: 'entity_width', label: this.intl.t('literal.fleet-ops.entity-width'), required: false },
+                    { key: 'entity_height', label: this.intl.t('literal.fleet-ops.entity-height'), required: false },
+                    { key: 'entity_dimensions_unit', label: this.intl.t('literal.fleet-ops.dimensions-unit'), required: false, hint: this.intl.t('literal.fleet-ops.cm-m-in-ft') },
+                    {
+                        key: 'entity_destination',
+                        label: this.intl.t('literal.fleet-ops.entity-destination'),
+                        required: false,
+                        hint: this.intl.t('literal.fleet-ops.pickup-dropoff-or-waypoint-index-0-1-2-add-extra-239a4'),
+                    },
+                ],
+            },
+        ];
+    }
+
+    get TARGET_FIELDS() {
+        return this.FIELD_SECTIONS.flatMap((s) => s.fields);
+    }
+
     @service fetch;
     @service notifications;
     @service modalsManager;
@@ -242,7 +265,7 @@ export default class OrchestratorImportComponent extends Component {
 
     // ── Mapping step ──────────────────────────────────────────────────────────
     /** Array of { key, label, required, mappedColumn, hint? } objects. */
-    @tracked columnMappings = TARGET_FIELDS.map((f) => ({ ...f, mappedColumn: null }));
+    @tracked columnMappings = this.TARGET_FIELDS.map((f) => ({ ...f, mappedColumn: null }));
 
     // ── Preview step ──────────────────────────────────────────────────────────
     @tracked mappedRows = [];
@@ -250,7 +273,7 @@ export default class OrchestratorImportComponent extends Component {
 
     // ── Sections (for grouped column-mapping UI) ──────────────────────────────
     get fieldSections() {
-        return FIELD_SECTIONS.map((section) => ({
+        return this.FIELD_SECTIONS.map((section) => ({
             ...section,
             fields: this.columnMappings.filter((m) => section.fields.some((f) => f.key === m.key)),
         }));

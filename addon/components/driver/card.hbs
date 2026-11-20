@@ -43,7 +43,7 @@
             <div class="text-gray-400 dark:text-gray-500 text-xs truncate">
                 <FaIcon @icon="car" @prefix="fas" class="mr-1" />{{n-a this.assignedVehicleLabel}}
             </div>
-            <div class="text-gray-400 dark:text-gray-500 text-xs">Last Modified: {{@resource.updatedAt}}</div>
+            <div class="text-gray-400 dark:text-gray-500 text-xs">{{t "literal.fleet-ops.last-modified"}} {{@resource.updatedAt}}</div>
         </div>
     </Card.footer>
 </Layout::Resource::Card>

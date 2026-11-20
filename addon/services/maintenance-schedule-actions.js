@@ -18,64 +18,68 @@ export default class MaintenanceScheduleActionsService extends ResourceActionSer
         create: () => this.transitionTo('maintenance.schedules.index.new'),
     };
 
-    panel = {
-        create: (attributes = {}) => {
-            const schedule = this.createNewInstance(attributes);
-            return this.resourceContextPanel.open({
-                content: 'maintenance-schedule/form',
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.maintenance-schedule')?.toLowerCase() }),
-                useDefaultSaveTask: true,
-                saveOptions: {
-                    callback: this.refresh,
-                },
-                schedule,
-            });
-        },
-        edit: (schedule) => {
-            return this.resourceContextPanel.open({
-                content: 'maintenance-schedule/form',
-                title: this.intl.t('common.edit-resource-name', { resourceName: schedule.name }),
-                useDefaultSaveTask: true,
-                schedule,
-            });
-        },
-        view: (schedule) => {
-            return this.resourceContextPanel.open({
-                schedule,
-                tabs: [
-                    {
-                        label: this.intl.t('common.overview'),
-                        component: 'maintenance-schedule/details',
+    get panel() {
+        return {
+            create: (attributes = {}) => {
+                const schedule = this.createNewInstance(attributes);
+                return this.resourceContextPanel.open({
+                    content: 'maintenance-schedule/form',
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.maintenance-schedule')?.toLowerCase() }),
+                    useDefaultSaveTask: true,
+                    saveOptions: {
+                        callback: this.refresh,
                     },
-                ],
-            });
-        },
-    };
+                    schedule,
+                });
+            },
+            edit: (schedule) => {
+                return this.resourceContextPanel.open({
+                    content: 'maintenance-schedule/form',
+                    title: this.intl.t('common.edit-resource-name', { resourceName: schedule.name }),
+                    useDefaultSaveTask: true,
+                    schedule,
+                });
+            },
+            view: (schedule) => {
+                return this.resourceContextPanel.open({
+                    schedule,
+                    tabs: [
+                        {
+                            label: this.intl.t('common.overview'),
+                            component: 'maintenance-schedule/details',
+                        },
+                    ],
+                });
+            },
+        };
+    }
 
-    modal = {
-        create: (attributes = {}, options = {}, saveOptions = {}) => {
-            const schedule = this.createNewInstance(attributes);
-            return this.modalsManager.show('modals/resource', {
-                resource: schedule,
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.maintenance-schedule')?.toLowerCase() }),
-                acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.maintenance-schedule') }),
-                component: 'maintenance-schedule/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', schedule, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        edit: (schedule, options = {}, saveOptions = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: schedule,
-                title: this.intl.t('common.edit-resource-name', { resourceName: schedule.name }),
-                acceptButtonText: this.intl.t('common.save-changes'),
-                saveButtonIcon: 'save',
-                component: 'maintenance-schedule/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', schedule, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-    };
+    get modal() {
+        return {
+            create: (attributes = {}, options = {}, saveOptions = {}) => {
+                const schedule = this.createNewInstance(attributes);
+                return this.modalsManager.show('modals/resource', {
+                    resource: schedule,
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.maintenance-schedule')?.toLowerCase() }),
+                    acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.maintenance-schedule') }),
+                    component: 'maintenance-schedule/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', schedule, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            edit: (schedule, options = {}, saveOptions = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: schedule,
+                    title: this.intl.t('common.edit-resource-name', { resourceName: schedule.name }),
+                    acceptButtonText: this.intl.t('common.save-changes'),
+                    saveButtonIcon: 'save',
+                    component: 'maintenance-schedule/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', schedule, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+        };
+    }
 
     /**
      * Pause a maintenance schedule.
@@ -84,7 +88,7 @@ export default class MaintenanceScheduleActionsService extends ResourceActionSer
         try {
             await this.fetch.post(`maintenance-schedules/${schedule.id}/pause`);
             schedule.set('status', 'paused');
-            this.notifications.success('Schedule paused successfully.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.schedule-paused-successfully'));
         } catch (error) {
             this.notifications.serverError(error);
         }
@@ -97,7 +101,7 @@ export default class MaintenanceScheduleActionsService extends ResourceActionSer
         try {
             await this.fetch.post(`maintenance-schedules/${schedule.id}/resume`);
             schedule.set('status', 'active');
-            this.notifications.success('Schedule resumed successfully.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.schedule-resumed-successfully'));
         } catch (error) {
             this.notifications.serverError(error);
         }
@@ -109,7 +113,7 @@ export default class MaintenanceScheduleActionsService extends ResourceActionSer
     @action async triggerNow(schedule) {
         try {
             const response = await this.fetch.post(`maintenance-schedules/${schedule.id}/trigger`);
-            this.notifications.success(`Work order ${response?.work_order?.public_id ?? ''} created from schedule.`);
+            this.notifications.success(this.intl.t('literal.fleet-ops.work-order-created-from-schedule', { value: response?.work_order?.public_id ?? '' }));
             this.refresh();
         } catch (error) {
             this.notifications.serverError(error);

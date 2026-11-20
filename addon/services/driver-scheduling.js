@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 
 export default class DriverSchedulingService extends Service {
+    @service intl;
     @service store;
     @service fetch;
     @service notifications;
@@ -37,7 +38,7 @@ export default class DriverSchedulingService extends Service {
                 ...data,
             });
             yield schedule.save();
-            this.notifications.success('Schedule created successfully');
+            this.notifications.success(this.intl.t('literal.fleet-ops.schedule-created-successfully'));
             return schedule;
         } catch (error) {
             this.notifications.serverError(error);
@@ -52,7 +53,7 @@ export default class DriverSchedulingService extends Service {
         try {
             const item = this.store.createRecord('schedule-item', data);
             yield item.save();
-            this.notifications.success('Schedule item created successfully');
+            this.notifications.success(this.intl.t('literal.fleet-ops.schedule-item-created-successfully'));
             return item;
         } catch (error) {
             this.notifications.serverError(error);
@@ -67,7 +68,7 @@ export default class DriverSchedulingService extends Service {
         try {
             item.setProperties(data);
             yield item.save();
-            this.notifications.success('Schedule item updated successfully');
+            this.notifications.success(this.intl.t('literal.fleet-ops.schedule-item-updated-successfully'));
             return item;
         } catch (error) {
             this.notifications.serverError(error);
@@ -81,7 +82,7 @@ export default class DriverSchedulingService extends Service {
     @task *deleteScheduleItem(item) {
         try {
             yield item.destroyRecord();
-            this.notifications.success('Schedule item deleted successfully');
+            this.notifications.success(this.intl.t('literal.fleet-ops.schedule-item-deleted-successfully'));
         } catch (error) {
             this.notifications.serverError(error);
             throw error;
@@ -131,7 +132,7 @@ export default class DriverSchedulingService extends Service {
         try {
             const availability = this.store.createRecord('schedule-availability', data);
             yield availability.save();
-            this.notifications.success('Availability set successfully');
+            this.notifications.success(this.intl.t('literal.fleet-ops.availability-set-successfully'));
             return availability;
         } catch (error) {
             this.notifications.serverError(error);

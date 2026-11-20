@@ -17,74 +17,78 @@ export default class ServiceAreaActionsService extends ResourceActionService {
         create: () => this.transitionTo('operations.orders.index', { queryParams: { creating: 'service_area' } }),
     };
 
-    panel = {
-        create: (attributes = {}) => {
-            const serviceArea = this.createNewInstance(attributes);
-            return this.resourceContextPanel.open({
-                content: 'service-area/form',
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.service area')?.toLowerCase() }),
-                useDefaultSaveTask: true,
-                saveOptions: {
-                    callback: this.refresh,
-                },
-                serviceArea,
-            });
-        },
-        edit: (serviceArea) => {
-            return this.resourceContextPanel.open({
-                content: 'service-area/form',
-                title: this.intl.t('common.edit-resource-name', { resourceName: serviceArea.name }),
-                useDefaultSaveTask: true,
-                serviceArea,
-            });
-        },
-        view: (serviceArea) => {
-            return this.resourceContextPanel.open({
-                serviceArea,
-                tabs: [
-                    {
-                        label: this.intl.t('common.overview'),
-                        component: 'service-area/details',
+    get panel() {
+        return {
+            create: (attributes = {}) => {
+                const serviceArea = this.createNewInstance(attributes);
+                return this.resourceContextPanel.open({
+                    content: 'service-area/form',
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.service area')?.toLowerCase() }),
+                    useDefaultSaveTask: true,
+                    saveOptions: {
+                        callback: this.refresh,
                     },
-                ],
-            });
-        },
-    };
+                    serviceArea,
+                });
+            },
+            edit: (serviceArea) => {
+                return this.resourceContextPanel.open({
+                    content: 'service-area/form',
+                    title: this.intl.t('common.edit-resource-name', { resourceName: serviceArea.name }),
+                    useDefaultSaveTask: true,
+                    serviceArea,
+                });
+            },
+            view: (serviceArea) => {
+                return this.resourceContextPanel.open({
+                    serviceArea,
+                    tabs: [
+                        {
+                            label: this.intl.t('common.overview'),
+                            component: 'service-area/details',
+                        },
+                    ],
+                });
+            },
+        };
+    }
 
-    modal = {
-        create: (attributes = {}, options = {}, saveOptions = {}) => {
-            const serviceArea = this.createNewInstance(attributes);
-            saveOptions = { ...(options.saveOptions ?? {}), ...(saveOptions ?? {}) };
-            return this.modalsManager.show('modals/resource', {
-                resource: serviceArea,
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.service-area')?.toLowerCase() }),
-                acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.service-area') }),
-                component: 'service-area/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', serviceArea, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        edit: (serviceArea, options = {}, saveOptions = {}) => {
-            saveOptions = { ...(options.saveOptions ?? {}), ...(saveOptions ?? {}) };
-            return this.modalsManager.show('modals/resource', {
-                resource: serviceArea,
-                title: this.intl.t('common.edit-resource-name', { resourceName: serviceArea.name }),
-                acceptButtonText: this.intl.t('common.save-changes'),
-                saveButtonIcon: 'save',
-                component: 'service-area/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', serviceArea, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        view: (serviceArea, options = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: serviceArea,
-                title: serviceArea.name,
-                component: 'service-area/details',
-                ...options,
-            });
-        },
-    };
+    get modal() {
+        return {
+            create: (attributes = {}, options = {}, saveOptions = {}) => {
+                const serviceArea = this.createNewInstance(attributes);
+                saveOptions = { ...(options.saveOptions ?? {}), ...(saveOptions ?? {}) };
+                return this.modalsManager.show('modals/resource', {
+                    resource: serviceArea,
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.service-area')?.toLowerCase() }),
+                    acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.service-area') }),
+                    component: 'service-area/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', serviceArea, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            edit: (serviceArea, options = {}, saveOptions = {}) => {
+                saveOptions = { ...(options.saveOptions ?? {}), ...(saveOptions ?? {}) };
+                return this.modalsManager.show('modals/resource', {
+                    resource: serviceArea,
+                    title: this.intl.t('common.edit-resource-name', { resourceName: serviceArea.name }),
+                    acceptButtonText: this.intl.t('common.save-changes'),
+                    saveButtonIcon: 'save',
+                    component: 'service-area/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', serviceArea, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            view: (serviceArea, options = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: serviceArea,
+                    title: serviceArea.name,
+                    component: 'service-area/details',
+                    ...options,
+                });
+            },
+        };
+    }
 
     @task *loadAll() {
         try {

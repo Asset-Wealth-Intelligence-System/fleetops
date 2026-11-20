@@ -1,25 +1,25 @@
 <div class="maintenance-form" ...attributes>
 
     {{! ===== IDENTIFICATION ===== }}
-    <ContentPanel @title="Identification" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.identification"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-2 no-input-group-padding text-xs">
             <div class="col-span-1 lg:col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-1">
-                Maintenance Details
+                {{t "literal.fleet-ops.maintenance-details"}}
             </div>
-            <InputGroup @name="Summary" @wrapperClass="col-span-2">
-                <Input @value={{@resource.summary}} @type="text" class="w-full form-input" placeholder="Brief summary of the maintenance activity" disabled={{cannot-write @resource}} />
+            <InputGroup @name={{t "literal.fleet-ops.summary"}} @wrapperClass="col-span-2">
+                <Input @value={{@resource.summary}} @type="text" class="w-full form-input" placeholder={{t "literal.fleet-ops.brief-summary-of-the-maintenance-activity"}} disabled={{cannot-write @resource}} />
             </InputGroup>
 
             <div class="col-span-1 lg:col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Type, Status & Priority
+                {{t "literal.fleet-ops.type-status-priority"}}
             </div>
-            <InputGroup @name="Type">
+            <InputGroup @name={{t "literal.fleet-ops.type"}}>
                 <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                     <PowerSelect
                         @options={{this.maintenanceTypeOptions}}
                         @selected={{@resource.type}}
                         @onChange={{fn (mut @resource.type)}}
-                        @placeholder="Select Maintenance Type"
+                        @placeholder={{t "literal.fleet-ops.select-maintenance-type"}}
                         @triggerClass="form-select form-input"
                         @disabled={{cannot-write @resource}}
                         as |type|
@@ -28,13 +28,13 @@
                     </PowerSelect>
                 </div>
             </InputGroup>
-            <InputGroup @name="Status">
+            <InputGroup @name={{t "literal.fleet-ops.status-ec53a"}}>
                 <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                     <PowerSelect
                         @options={{this.statusOptions}}
                         @selected={{@resource.status}}
                         @onChange={{fn (mut @resource.status)}}
-                        @placeholder="Select Status"
+                        @placeholder={{t "literal.fleet-ops.select-status"}}
                         @triggerClass="form-select form-input"
                         @disabled={{cannot-write @resource}}
                         as |status|
@@ -43,13 +43,13 @@
                     </PowerSelect>
                 </div>
             </InputGroup>
-            <InputGroup @name="Priority">
+            <InputGroup @name={{t "literal.fleet-ops.priority"}}>
                 <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                     <PowerSelect
                         @options={{this.priorityOptions}}
                         @selected={{@resource.priority}}
                         @onChange={{fn (mut @resource.priority)}}
-                        @placeholder="Select Priority"
+                        @placeholder={{t "literal.fleet-ops.select-priority"}}
                         @triggerClass="form-select form-input"
                         @disabled={{cannot-write @resource}}
                         as |priority|
@@ -62,18 +62,18 @@
     </ContentPanel>
 
     {{! ===== ASSET & WORK ORDER ===== }}
-    <ContentPanel @title="Asset & Work Order" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.asset-work-order"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-2 no-input-group-padding text-xs">
             <div class="col-span-1 lg:col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-1">
-                Maintainable Asset
+                {{t "literal.fleet-ops.maintainable-asset"}}
             </div>
-            <InputGroup @name="Asset Type">
+            <InputGroup @name={{t "literal.fleet-ops.asset-type"}}>
                 <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                     <PowerSelect
                         @options={{this.maintainableTypeOptions}}
                         @selected={{this.selectedMaintainableType}}
                         @onChange={{this.onMaintainableTypeChange}}
-                        @placeholder="Select asset type (Vehicle, Equipment…)"
+                        @placeholder={{t "literal.fleet-ops.select-asset-type-vehicle-equipment"}}
                         @triggerClass="form-select form-input"
                         @disabled={{cannot-write @resource}}
                         as |option|
@@ -83,11 +83,11 @@
                 </div>
             </InputGroup>
             {{#if this.maintainableModelName}}
-                <InputGroup @name="Asset">
+                <InputGroup @name={{t "literal.fleet-ops.asset"}}>
                     <ModelSelect
                         @modelName={{this.maintainableModelName}}
                         @selectedModel={{@resource.maintainable}}
-                        @placeholder="Select asset"
+                        @placeholder={{t "literal.fleet-ops.select-asset"}}
                         @triggerClass="form-select form-input"
                         @infiniteScroll={{false}}
                         @renderInPlace={{true}}
@@ -101,15 +101,15 @@
             {{/if}}
 
             <div class="col-span-1 lg:col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Performed By
+                {{t "literal.fleet-ops.performed-by"}}
             </div>
-            <InputGroup @name="Performed By Type">
+            <InputGroup @name={{t "literal.fleet-ops.performed-by-type"}}>
                 <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                     <PowerSelect
                         @options={{this.performedByTypeOptions}}
                         @selected={{this.selectedPerformedByType}}
                         @onChange={{this.onPerformedByTypeChange}}
-                        @placeholder="Select performer type (Vendor, Driver, User…)"
+                        @placeholder={{t "literal.fleet-ops.select-performer-type-vendor-driver-user"}}
                         @triggerClass="form-select form-input"
                         @disabled={{cannot-write @resource}}
                         as |option|
@@ -119,11 +119,11 @@
                 </div>
             </InputGroup>
             {{#if this.performedByModelName}}
-                <InputGroup @name="Performed By">
+                <InputGroup @name={{t "literal.fleet-ops.performed-by"}}>
                     <ModelSelect
                         @modelName={{this.performedByModelName}}
                         @selectedModel={{@resource.performed_by}}
-                        @placeholder="Select performer"
+                        @placeholder={{t "literal.fleet-ops.select-performer"}}
                         @triggerClass="form-select form-input"
                         @infiniteScroll={{false}}
                         @renderInPlace={{true}}
@@ -137,13 +137,13 @@
             {{/if}}
 
             <div class="col-span-1 lg:col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Linked Work Order
+                {{t "literal.fleet-ops.linked-work-order"}}
             </div>
-            <InputGroup @name="Work Order" @wrapperClass="col-span-2">
+            <InputGroup @name={{t "literal.fleet-ops.work-order"}} @wrapperClass="col-span-2">
                 <ModelSelect
                     @modelName="work-order"
                     @selectedModel={{@resource.work_order}}
-                    @placeholder="Link to a Work Order (optional)"
+                    @placeholder={{t "literal.fleet-ops.link-to-a-work-order-optional"}}
                     @triggerClass="form-select form-input"
                     @infiniteScroll={{false}}
                     @renderInPlace={{true}}
@@ -159,12 +159,12 @@
     </ContentPanel>
 
     {{! ===== SCHEDULING & READINGS ===== }}
-    <ContentPanel @title="Scheduling & Readings" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.scheduling-readings"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-2 no-input-group-padding text-xs">
             <div class="col-span-1 lg:col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-1">
-                Dates
+                {{t "literal.fleet-ops.dates"}}
             </div>
-            <InputGroup @name="Scheduled At">
+            <InputGroup @name={{t "literal.fleet-ops.scheduled-at"}}>
                 <DatePicker
                     @value={{or (format-date-fns @resource.scheduled_at "dd-MM-yyyy") null}}
                     @onChange={{fn (mut @resource.scheduled_at)}}
@@ -172,7 +172,7 @@
                     class="filter-date-input w-full flex-1"
                 />
             </InputGroup>
-            <InputGroup @name="Started At">
+            <InputGroup @name={{t "literal.fleet-ops.started-at"}}>
                 <DatePicker
                     @value={{or (format-date-fns @resource.started_at "dd-MM-yyyy") null}}
                     @onChange={{fn (mut @resource.started_at)}}
@@ -180,7 +180,7 @@
                     class="filter-date-input w-full flex-1"
                 />
             </InputGroup>
-            <InputGroup @name="Completed At">
+            <InputGroup @name={{t "literal.fleet-ops.completed-at"}}>
                 <DatePicker
                     @value={{or (format-date-fns @resource.completed_at "dd-MM-yyyy") null}}
                     @onChange={{fn (mut @resource.completed_at)}}
@@ -190,13 +190,13 @@
             </InputGroup>
 
             <div class="col-span-1 lg:col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Asset Readings at Service
+                {{t "literal.fleet-ops.asset-readings-at-service"}}
             </div>
-            <InputGroup @name="Odometer (km)">
-                <Input @value={{@resource.odometer}} @type="number" class="w-full form-input" placeholder="Odometer reading at service" disabled={{cannot-write @resource}} />
+            <InputGroup @name={{t "literal.fleet-ops.odometer-km"}}>
+                <Input @value={{@resource.odometer}} @type="number" class="w-full form-input" placeholder={{t "literal.fleet-ops.odometer-reading-at-service"}} disabled={{cannot-write @resource}} />
             </InputGroup>
-            <InputGroup @name="Engine Hours">
-                <Input @value={{@resource.engine_hours}} @type="number" class="w-full form-input" placeholder="Engine hours at service" disabled={{cannot-write @resource}} />
+            <InputGroup @name={{t "literal.fleet-ops.engine-hours"}}>
+                <Input @value={{@resource.engine_hours}} @type="number" class="w-full form-input" placeholder={{t "literal.fleet-ops.engine-hours-at-service"}} disabled={{cannot-write @resource}} />
             </InputGroup>
         </div>
     </ContentPanel>
@@ -205,15 +205,15 @@
     <Maintenance::CostPanel @resource={{@resource}} @disabled={{cannot-write @resource}} />
 
     {{! ===== NOTES ===== }}
-    <ContentPanel @title="Notes" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.notes"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 gap-2 no-input-group-padding text-xs">
-            <InputGroup @name="Notes">
+            <InputGroup @name={{t "literal.fleet-ops.notes"}}>
                 <Textarea
                     @value={{@resource.notes}}
-                    aria-label="Notes"
+                    aria-label={{t "literal.fleet-ops.notes"}}
                     class="w-full form-input"
                     disabled={{cannot-write @resource}}
-                    placeholder="Additional notes about this maintenance activity"
+                    placeholder={{t "literal.fleet-ops.additional-notes-about-this-maintenance-activity"}}
                     rows={{4}}
                 />
             </InputGroup>
@@ -228,7 +228,7 @@
     <RegistryYield @registry="fleet-ops:component:maintenance:form" as |RegistryComponent|>
         <RegistryComponent @resource={{@resource}} @controller={{@controller}} @permission={{get-write-permission @resource}} />
     </RegistryYield>
-    <ContentPanel @title="Metadata" @open={{false}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.metadata"}} @open={{false}} @wrapperClass="bordered-top">
         <MetadataEditor @value={{@resource.meta}} @onChange={{fn (mut @resource.meta)}} />
     </ContentPanel>
 </div>

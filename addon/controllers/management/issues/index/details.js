@@ -3,13 +3,14 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class ManagementIssuesIndexDetailsController extends Controller {
+    @service intl;
     @service hostRouter;
     @service issueActions;
 
     @tracked tabs = [
         {
             route: 'management.issues.index.details.index',
-            label: 'Overview',
+            label: this.intl.t('literal.fleet-ops.overview'),
         },
     ];
 
@@ -20,12 +21,12 @@ export default class ManagementIssuesIndexDetailsController extends Controller {
     get actionButtons() {
         const workflowItems = [
             {
-                label: 'Change Status',
+                label: this.intl.t('literal.fleet-ops.change-status'),
                 icon: 'arrows-rotate',
                 fn: () => this.issueActions.openStatusModal(this.model, { onSaved: () => this.refreshIssue() }),
             },
             {
-                label: 'Assign Issue',
+                label: this.intl.t('literal.fleet-ops.assign-issue'),
                 icon: 'user-check',
                 fn: () => this.issueActions.openAssignModal(this.model, { onSaved: () => this.refreshIssue() }),
             },
@@ -33,13 +34,13 @@ export default class ManagementIssuesIndexDetailsController extends Controller {
 
         if (this.isClosed) {
             workflowItems.push({
-                label: 'Re-open Issue',
+                label: this.intl.t('literal.fleet-ops.re-open-issue'),
                 icon: 'rotate-left',
                 fn: () => this.issueActions.confirmReopenIssue(this.model, { onSaved: () => this.refreshIssue() }),
             });
         } else {
             workflowItems.push({
-                label: 'Close Issue',
+                label: this.intl.t('literal.fleet-ops.close-issue'),
                 icon: 'circle-check',
                 class: 'text-green-600 dark:text-green-400',
                 fn: () => this.issueActions.openCloseIssueModal(this.model, { onSaved: () => this.refreshIssue() }),

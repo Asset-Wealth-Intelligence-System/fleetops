@@ -21,19 +21,19 @@ export default class ActivityLogicBuilderComponent extends Component {
         return [
             {
                 type: 'and',
-                description: this.intl?.t?.('activity.form.logic-builder.types.and') ?? 'Logical AND: True if all conditions are true',
+                description: this.intl?.t?.('activity.form.logic-builder.types.and') ?? this.intl.t('literal.fleet-ops.logical-and-true-if-all-conditions-are-true'),
             },
             {
                 type: 'or',
-                description: this.intl?.t?.('activity.form.logic-builder.types.or') ?? 'Logical OR: True if at least one condition is true',
+                description: this.intl?.t?.('activity.form.logic-builder.types.or') ?? this.intl.t('literal.fleet-ops.logical-or-true-if-at-least-one-condition-is-tru-ef2e9'),
             },
             {
                 type: 'not',
-                description: this.intl?.t?.('activity.form.logic-builder.types.not') ?? 'Logical NOT: Inverts the truth value of the condition',
+                description: this.intl?.t?.('activity.form.logic-builder.types.not') ?? this.intl.t('literal.fleet-ops.logical-not-inverts-the-truth-value-of-the-condi-9f91e'),
             },
             {
                 type: 'if',
-                description: this.intl?.t?.('activity.form.logic-builder.types.if') ?? 'Conditional logic: Executes the following action if the condition is true',
+                description: this.intl?.t?.('activity.form.logic-builder.types.if') ?? this.intl.t('literal.fleet-ops.conditional-logic-executes-the-following-action-a2fcb'),
             },
         ];
     }
@@ -49,7 +49,7 @@ export default class ActivityLogicBuilderComponent extends Component {
         return {
             equal: {
                 symbol: '==',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.equal') ?? 'Checks if two values are equal',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.equal') ?? this.intl.t('literal.fleet-ops.checks-if-two-values-are-equal'),
                 operandType: 'any',
                 inputCount: 2,
                 leftOperand: true,
@@ -57,7 +57,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             notEqual: {
                 symbol: '!=',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.not-equal') ?? 'Checks if two values are not equal',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.not-equal') ?? this.intl.t('literal.fleet-ops.checks-if-two-values-are-not-equal'),
                 operandType: 'any',
                 inputCount: 2,
                 leftOperand: true,
@@ -65,7 +65,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             greaterThan: {
                 symbol: '>',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.greater-than') ?? 'Checks if a value is greater than another',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.greater-than') ?? this.intl.t('literal.fleet-ops.checks-if-a-value-is-greater-than-another'),
                 operandType: 'number',
                 inputCount: 2,
                 leftOperand: true,
@@ -73,7 +73,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             lessThan: {
                 symbol: '<',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.less-than') ?? 'Checks if a value is less than another',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.less-than') ?? this.intl.t('literal.fleet-ops.checks-if-a-value-is-less-than-another'),
                 operandType: 'number',
                 inputCount: 2,
                 leftOperand: true,
@@ -81,7 +81,8 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             greaterThanOrEqual: {
                 symbol: '>=',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.greater-than-or-equal') ?? 'Checks if a value is greater than or equal to another',
+                description:
+                    this.intl?.t?.('activity.form.logic-builder.operators.greater-than-or-equal') ?? this.intl.t('literal.fleet-ops.checks-if-a-value-is-greater-than-or-equal-to-an-a4750'),
                 operandType: 'number',
                 inputCount: 2,
                 leftOperand: true,
@@ -89,7 +90,8 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             lessThanOrEqual: {
                 symbol: '<=',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.less-than-or-equal') ?? 'Checks if a value is less than or equal to another',
+                description:
+                    this.intl?.t?.('activity.form.logic-builder.operators.less-than-or-equal') ?? this.intl.t('literal.fleet-ops.checks-if-a-value-is-less-than-or-equal-to-anoth-40e7e'),
                 operandType: 'number',
                 inputCount: 2,
                 leftOperand: true,
@@ -97,7 +99,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             exists: {
                 symbol: 'exists',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.exists') ?? 'Checks if a field or value exists',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.exists') ?? this.intl.t('literal.fleet-ops.checks-if-a-field-or-value-exists'),
                 operandType: 'any',
                 inputCount: 1,
                 leftOperand: false,
@@ -105,7 +107,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             has: {
                 symbol: 'has',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.has') ?? 'Checks if an object has a specific property or if a collection contains a specific element',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.has') ?? this.intl.t('literal.fleet-ops.checks-if-an-object-has-a-specific-property-or-i-7c8de'),
                 operandType: 'object/array',
                 inputCount: 2,
                 leftOperand: true,
@@ -113,7 +115,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             contains: {
                 symbol: 'contains',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.contains') ?? 'Checks if a string contains another string, or if an array includes a specific element',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.contains') ?? this.intl.t('literal.fleet-ops.checks-if-a-string-contains-another-string-or-if-dfee5'),
                 operandType: 'string/array',
                 inputCount: 2,
                 leftOperand: true,
@@ -121,7 +123,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             beginsWith: {
                 symbol: 'begins with',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.begins-with') ?? 'Checks if a string begins with a specified substring',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.begins-with') ?? this.intl.t('literal.fleet-ops.checks-if-a-string-begins-with-a-specified-subst-5fac4'),
                 operandType: 'string',
                 inputCount: 2,
                 leftOperand: true,
@@ -129,7 +131,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             endsWith: {
                 symbol: 'ends with',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.ends-with') ?? 'Checks if a string ends with a specified substring',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.ends-with') ?? this.intl.t('literal.fleet-ops.checks-if-a-string-ends-with-a-specified-substri-5e61a'),
                 operandType: 'string',
                 inputCount: 2,
                 leftOperand: true,
@@ -137,7 +139,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             in: {
                 symbol: 'in',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.in') ?? 'Checks if a value is within a given set or range',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.in') ?? this.intl.t('literal.fleet-ops.checks-if-a-value-is-within-a-given-set-or-range'),
                 operandType: 'any',
                 inputCount: 2,
                 leftOperand: true,
@@ -145,7 +147,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             notIn: {
                 symbol: 'not in',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.not-in') ?? 'Checks if a value is not within a given set or range',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.not-in') ?? this.intl.t('literal.fleet-ops.checks-if-a-value-is-not-within-a-given-set-or-r-76d31'),
                 operandType: 'any',
                 inputCount: 2,
                 leftOperand: true,
@@ -153,7 +155,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             and: {
                 symbol: '&&',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.and') ?? 'Logical AND, true if both operands are true',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.and') ?? this.intl.t('literal.fleet-ops.logical-and-true-if-both-operands-are-true'),
                 operandType: 'boolean',
                 inputCount: 2,
                 leftOperand: true,
@@ -161,7 +163,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             or: {
                 symbol: '||',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.or') ?? 'Logical OR, true if at least one operand is true',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.or') ?? this.intl.t('literal.fleet-ops.logical-or-true-if-at-least-one-operand-is-true'),
                 operandType: 'boolean',
                 inputCount: 2,
                 leftOperand: true,
@@ -169,7 +171,7 @@ export default class ActivityLogicBuilderComponent extends Component {
             },
             not: {
                 symbol: '!',
-                description: this.intl?.t?.('activity.form.logic-builder.operators.not') ?? 'Logical NOT, inverts the truth value',
+                description: this.intl?.t?.('activity.form.logic-builder.operators.not') ?? this.intl.t('literal.fleet-ops.logical-not-inverts-the-truth-value'),
                 operandType: 'boolean',
                 inputCount: 1,
                 leftOperand: false,

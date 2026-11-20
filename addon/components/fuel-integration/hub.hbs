@@ -4,18 +4,18 @@
             <div class="mx-auto flex w-full max-w-7xl flex-col gap-3 md:flex-row md:items-start md:justify-between">
                 <div class="min-w-0">
                     <div class="flex flex-wrap items-center gap-2">
-                        <h1 class="text-lg font-bold text-gray-900 dark:text-gray-100">Fuel Integrations</h1>
+                        <h1 class="text-lg font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.fuel-integrations"}}</h1>
                         <Badge @status={{if this.syncErrorCount "warning" "success"}} @hideStatusDot={{true}}>
-                            {{this.syncErrorCount}} sync issues
+                            {{this.syncErrorCount}} {{t "literal.fleet-ops.sync-issues"}}
                         </Badge>
                     </div>
                     <p class="mt-1 max-w-3xl text-sm leading-5 text-gray-500 dark:text-gray-300">
-                        Connect fuel card providers or fuel management systems, import provider bills as fuel transactions, match them to vehicles and trips, then create linked fuel reports for operations.
+                        {{t "literal.fleet-ops.connect-fuel-card-providers-or-fuel-management-s-ec541"}}
                     </p>
                 </div>
                 <div class="flex flex-shrink-0 items-center gap-2 whitespace-nowrap">
                     <Button @icon="refresh" @size="sm" @helpText={{t "common.reload"}} @onClick={{@onRefresh}} />
-                    <Button @icon="plus" @text="Connect Integration" @type="primary" @size="sm" @onClick={{this.createIntegration}} />
+                    <Button @icon="plus" @text={{t "literal.fleet-ops.connect-integration"}} @type="primary" @size="sm" @onClick={{this.createIntegration}} />
                 </div>
             </div>
         </section>
@@ -51,12 +51,12 @@
                 <section class="fleetops-provider-connections-panel min-w-0 overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
                     <div class="fleetops-provider-connections-header border-b border-gray-200 px-4 py-3 dark:border-gray-700">
                         <div class="min-w-0 max-w-md">
-                            <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Connected Fuel Systems</h2>
-                            <p class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-300">Manage credentials, connection health, sync windows, and imported transaction status for each fuel integration.</p>
+                            <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.connected-fuel-systems"}}</h2>
+                            <p class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.manage-credentials-connection-health-sync-window-05a30"}}</p>
                         </div>
                         <div class="fleetops-provider-connections-actions flex min-w-0 flex-wrap items-center gap-2 lg:ml-auto lg:flex-nowrap lg:justify-end">
                             <Layout::Resource::TabularActions
-                                @title="Connected Fuel Systems"
+                                @title={{t "literal.fleet-ops.connected-fuel-systems"}}
                                 @searchQuery={{@searchQuery}}
                                 @onSearch={{@onSearch}}
                                 @columns={{this.columns}}
@@ -86,8 +86,8 @@
                             "table/empty-state"
                             variant="compact"
                             icon="gas-pump"
-                            title="No fuel connections"
-                            description="Connect a fuel provider to import transactions and match them to reports."
+                            title=(t "literal.fleet-ops.no-fuel-connections")
+                            description=(t "literal.fleet-ops.connect-a-fuel-provider-to-import-transactions-a-a064a")
                             primaryText="Connect provider"
                             primaryIcon="plus"
                             primaryAction=this.createIntegration
@@ -99,22 +99,22 @@
                     <div class="mx-auto flex h-11 w-11 items-center justify-center rounded-md bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-300">
                         <FaIcon @icon="gas-pump" />
                     </div>
-                    <h2 class="mt-3 text-sm font-bold text-gray-900 dark:text-gray-100">No fuel integrations connected yet</h2>
+                    <h2 class="mt-3 text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.no-fuel-integrations-connected-yet"}}</h2>
                     <p class="mx-auto mt-1 max-w-2xl text-xs leading-5 text-gray-500 dark:text-gray-300">
-                        Start by connecting PetroApp or another fuel card/fuel management system. Provider bills import into Fuel Transactions, match to vehicles and trips, and create linked Fuel Reports once matched.
+                        {{t "literal.fleet-ops.start-by-connecting-petroapp-or-another-fuel-car-4b2dd"}}
                     </p>
-                    <Button class="mt-4" @icon="plus" @text="Connect Integration" @type="primary" @size="sm" @onClick={{this.createIntegration}} />
+                    <Button class="mt-4" @icon="plus" @text={{t "literal.fleet-ops.connect-integration"}} @type="primary" @size="sm" @onClick={{this.createIntegration}} />
                 </section>
             {{/if}}
 
             <section class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
                 <div class="mb-3 flex flex-col gap-1 md:flex-row md:items-end md:justify-between">
                     <div>
-                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Available Fuel Integrations</h2>
-                        <p class="text-xs leading-5 text-gray-500 dark:text-gray-300">Connect providers that supply fuel card bills, purchase transactions, vehicle identifiers, station locations, or trip references.</p>
+                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.available-fuel-integrations"}}</h2>
+                        <p class="text-xs leading-5 text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.connect-providers-that-supply-fuel-card-bills-pu-c3b59"}}</p>
                     </div>
                     {{#if @providersLoading}}
-                        <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-300"><Spinner /> Loading integrations</div>
+                        <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-300"><Spinner /> {{t "literal.fleet-ops.loading-integrations"}}</div>
                     {{/if}}
                 </div>
 
@@ -132,7 +132,7 @@
                                     </div>
                                 </div>
                                 <Badge @status={{if provider.connected "success" "info"}} @hideStatusDot={{true}}>
-                                    {{if provider.connected "Connected" "Available"}}
+                                    {{if provider.connected (t "literal.fleet-ops.connected") (t "literal.fleet-ops.available")}}
                                 </Badge>
                             </div>
                             <p class="mt-3 line-clamp-2 text-xs leading-5 text-gray-500 dark:text-gray-300">{{provider.description}}</p>
@@ -142,7 +142,7 @@
                                 {{/each}}
                             </div>
                             <div class="mt-auto flex items-center justify-between pt-3 text-xs font-semibold text-blue-600 dark:text-blue-300">
-                                <span>{{if provider.connected "Manage integration" "Connect integration"}}</span>
+                                <span>{{if provider.connected (t "literal.fleet-ops.manage-integration") (t "literal.fleet-ops.connect-integration-eb663")}}</span>
                                 <FaIcon @icon="arrow-right" class="transition group-hover:translate-x-0.5" />
                             </div>
                         </button>

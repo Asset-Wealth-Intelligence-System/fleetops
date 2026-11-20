@@ -61,6 +61,7 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
 const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default class MaintenanceScheduleDetailsComponent extends Component {
+    @service intl;
     @service fetch;
     @tracked calendarYear;
     @tracked calendarMonth;
@@ -147,7 +148,7 @@ export default class MaintenanceScheduleDetailsComponent extends Component {
      * Open the Google Calendar "add event" URL for this schedule's next due date.
      */
     @action addToGoogleCalendar(schedule) {
-        const title = encodeURIComponent(schedule.name ?? 'Maintenance Schedule');
+        const title = encodeURIComponent(schedule.name ?? this.intl.t('literal.fleet-ops.maintenance-schedule'));
         const dueDate = schedule.next_due_date ? new Date(schedule.next_due_date) : new Date();
         const pad = (n) => String(n).padStart(2, '0');
         const dateStr = `${dueDate.getFullYear()}${pad(dueDate.getMonth() + 1)}${pad(dueDate.getDate())}`;

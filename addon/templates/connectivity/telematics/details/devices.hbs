@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-4 p-4 md:p-6">
     <div class="flex flex-col gap-1">
-        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">Device Inventory</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-300">Review synced provider devices, connection state, and vehicle mapping from this connection.</p>
+        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.device-inventory"}}</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.review-synced-provider-devices-connection-state-dba29"}}</p>
     </div>
 
     <section class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -23,12 +23,12 @@
     <section class="overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <div class="fleetops-provider-connections-header border-b border-gray-200 px-4 py-3 dark:border-gray-700">
             <div>
-                <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">Synced Devices</h3>
-                <p class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-300">Search provider identifiers, filter attachment state, and open devices for troubleshooting.</p>
+                <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.synced-devices-b1ec4"}}</h3>
+                <p class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.search-provider-identifiers-filter-attachment-st-bcd40"}}</p>
             </div>
             <div class="fleetops-provider-connections-actions flex min-w-0 flex-wrap items-center gap-1 lg:ml-auto lg:flex-nowrap lg:justify-end">
                 <Layout::Resource::TabularActions
-                    @title="Synced Devices"
+                    @title={{t "literal.fleet-ops.synced-devices-b1ec4"}}
                     @searchQuery={{this.query}}
                     @onSearch={{perform this.deviceActions.controllerSearchTask this}}
                     @columns={{this.columns}}
@@ -65,7 +65,7 @@
         {{else}}
             <Layout::Resource::Tabular
                 @resource="device"
-                @title="Synced Devices"
+                @title={{t "literal.fleet-ops.synced-devices-b1ec4"}}
                 @data={{@model}}
                 @columns={{this.columns}}
                 @page={{this.page}}
@@ -77,11 +77,11 @@
                     "table/empty-state"
                     variant="compact"
                     icon="tablet-screen-button"
-                    title="No synced devices"
-                    description="Run a provider sync or adjust filters to review devices from this connection."
-                    filteredTitle="No devices match your filters"
-                    filteredDescription="Adjust the search or filters to find another synced device."
-                    primaryText="Refresh"
+                    title=(t "literal.fleet-ops.no-synced-devices")
+                    description=(t "literal.fleet-ops.run-a-provider-sync-or-adjust-filters-to-review-96d0f")
+                    filteredTitle=(t "literal.fleet-ops.no-devices-match-your-filters")
+                    filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-syn-31710")
+                    primaryText=(t "literal.fleet-ops.refresh")
                     primaryIcon="refresh"
                     primaryAction=this.refresh
                 }}

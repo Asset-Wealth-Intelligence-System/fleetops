@@ -21,6 +21,7 @@ import { debug } from '@ember/debug';
  *   // In JS: this.geofenceEventBus.on('geofence.entered', this.handleEntry);
  */
 export default class GeofenceEventBusService extends Service {
+    @service intl;
     @service socket;
     @service currentUser;
     @service universe;
@@ -200,7 +201,7 @@ export default class GeofenceEventBusService extends Service {
     normalizeEvent(eventType, raw) {
         const subject = raw.subject ?? null;
         const subjectType = subject?.type ?? (raw.vehicle && !raw.driver ? 'vehicle' : 'driver');
-        const subjectName = subject?.name ?? raw.driver?.name ?? raw.vehicle?.name ?? raw.vehicle?.plate ?? 'Unknown Subject';
+        const subjectName = subject?.name ?? raw.driver?.name ?? raw.vehicle?.name ?? raw.vehicle?.plate ?? this.intl.t('literal.fleet-ops.unknown-subject');
         return {
             id: raw.id ?? raw.uuid ?? `${Date.now()}-${Math.random()}`,
             eventType,
@@ -211,7 +212,7 @@ export default class GeofenceEventBusService extends Service {
             driverUuid: raw.driver?.uuid ?? null,
             vehicleName: raw.vehicle?.name ?? null,
             vehiclePlate: raw.vehicle?.plate ?? null,
-            geofenceName: raw.geofence?.name ?? 'Unknown Geofence',
+            geofenceName: raw.geofence?.name ?? this.intl.t('literal.fleet-ops.unknown-geofence'),
             geofenceUuid: raw.geofence?.uuid ?? null,
             geofenceType: raw.geofence?.type ?? 'zone',
             orderPublicId: raw.order?.id ?? null,

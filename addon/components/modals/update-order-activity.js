@@ -140,12 +140,12 @@ export default class ModalsUpdateOrderActivityComponent extends Component {
 
         if (this.selectedActivityRequiresPod && this.uploadProofFile.isRunning) {
             modal.stopLoading();
-            return this.notifications.warning('Photo proof of delivery is still uploading.');
+            return this.notifications.warning(this.intl.t('literal.fleet-ops.photo-proof-of-delivery-is-still-uploading'));
         }
 
         if (this.selectedActivityRequiresPod && !this.hasUploadedProof && !this.bypassProof) {
             modal.stopLoading();
-            return this.notifications.warning('Upload photo proof of delivery or choose to bypass proof of delivery.');
+            return this.notifications.warning(this.intl.t('literal.fleet-ops.upload-photo-proof-of-delivery-or-choose-to-bypa-1183c'));
         }
 
         try {
@@ -169,7 +169,7 @@ export default class ModalsUpdateOrderActivityComponent extends Component {
 
             this.modalsManager.setOption('activityCreated', activity);
             this.modalsManager.setOption('proofCreated', this.hasUploadedProof ? this.proof : null);
-            this.notifications.success(`Order activity has been updated to ${activity.status}`);
+            this.notifications.success(this.intl.t('literal.fleet-ops.order-activity-has-been-updated-to', { status: activity.status }));
             modal.done();
         } catch (error) {
             this.notifications.serverError(error);
@@ -213,7 +213,7 @@ export default class ModalsUpdateOrderActivityComponent extends Component {
 
         try {
             this.proof = this.normalizeProofResponse(yield this.capturePhotoProof.perform());
-            this.notifications.success('Photo proof of delivery uploaded.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.photo-proof-of-delivery-uploaded'));
         } catch (error) {
             this.proof = null;
             this.proofFiles = [];

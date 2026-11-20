@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class GettingStartedService extends Service {
+    @service intl;
     @service fetch;
 
     @tracked data = null;
@@ -38,7 +39,7 @@ export default class GettingStartedService extends Service {
             this.data = yield this.fetch.get('fleet-ops/getting-started/status');
             this.error = null;
         } catch (error) {
-            this.error = error?.message ?? 'Failed to load getting started status';
+            this.error = error?.message ?? this.intl.t('literal.fleet-ops.failed-to-load-getting-started-status');
         }
     }
 }

@@ -4,6 +4,7 @@ import { action } from '@ember/object';
 import { normalizeProvider, buildIntegrationPayload } from '../utils/vendor-integration';
 
 export default class VendorActionsService extends ResourceActionService {
+    @service intl;
     @service placeActions;
 
     constructor() {
@@ -19,80 +20,84 @@ export default class VendorActionsService extends ResourceActionService {
         create: () => this.transitionTo('management.vendors.index.new'),
     };
 
-    panel = {
-        create: (attributes = {}) => {
-            const vendor = this.createNewInstance(attributes);
-            return this.resourceContextPanel.open({
-                content: 'vendor/form',
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.vendor')?.toLowerCase() }),
-                useDefaultSaveTask: true,
-                saveOptions: {
-                    callback: this.refresh,
-                },
-                vendor,
-            });
-        },
-        edit: (vendor) => {
-            return this.resourceContextPanel.open({
-                content: 'vendor/form',
-                title: this.intl.t('common.edit-resource-name', { resourceName: vendor.name }),
-                useDefaultSaveTask: true,
-                vendor,
-            });
-        },
-        view: (vendor) => {
-            return this.resourceContextPanel.open({
-                vendor,
-                header: 'vendor/panel-header',
-                tabs: [
-                    {
-                        key: 'overview',
-                        id: 'overview',
-                        label: this.intl.t('common.overview'),
-                        component: 'vendor/details',
+    get panel() {
+        return {
+            create: (attributes = {}) => {
+                const vendor = this.createNewInstance(attributes);
+                return this.resourceContextPanel.open({
+                    content: 'vendor/form',
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.vendor')?.toLowerCase() }),
+                    useDefaultSaveTask: true,
+                    saveOptions: {
+                        callback: this.refresh,
                     },
-                ],
-            });
-        },
-    };
+                    vendor,
+                });
+            },
+            edit: (vendor) => {
+                return this.resourceContextPanel.open({
+                    content: 'vendor/form',
+                    title: this.intl.t('common.edit-resource-name', { resourceName: vendor.name }),
+                    useDefaultSaveTask: true,
+                    vendor,
+                });
+            },
+            view: (vendor) => {
+                return this.resourceContextPanel.open({
+                    vendor,
+                    header: 'vendor/panel-header',
+                    tabs: [
+                        {
+                            key: 'overview',
+                            id: 'overview',
+                            label: this.intl.t('common.overview'),
+                            component: 'vendor/details',
+                        },
+                    ],
+                });
+            },
+        };
+    }
 
-    modal = {
-        create: (attributes = {}, options = {}, saveOptions = {}) => {
-            const vendor = this.createNewInstance(attributes);
-            return this.modalsManager.show('modals/resource', {
-                resource: vendor,
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.vendor')?.toLowerCase() }),
-                acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.vendor') }),
-                component: 'vendor/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', vendor, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        edit: (vendor, options = {}, saveOptions = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: vendor,
-                title: this.intl.t('common.edit-resource-name', { resourceName: vendor.name }),
-                acceptButtonText: this.intl.t('common.save-changes'),
-                saveButtonIcon: 'save',
-                component: 'vendor/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', vendor, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        view: (vendor, options = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: vendor,
-                title: vendor.name,
-                component: 'vendor/details',
-                ...options,
-            });
-        },
-    };
+    get modal() {
+        return {
+            create: (attributes = {}, options = {}, saveOptions = {}) => {
+                const vendor = this.createNewInstance(attributes);
+                return this.modalsManager.show('modals/resource', {
+                    resource: vendor,
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.vendor')?.toLowerCase() }),
+                    acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.vendor') }),
+                    component: 'vendor/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', vendor, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            edit: (vendor, options = {}, saveOptions = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: vendor,
+                    title: this.intl.t('common.edit-resource-name', { resourceName: vendor.name }),
+                    acceptButtonText: this.intl.t('common.save-changes'),
+                    saveButtonIcon: 'save',
+                    component: 'vendor/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', vendor, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            view: (vendor, options = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: vendor,
+                    title: vendor.name,
+                    component: 'vendor/details',
+                    ...options,
+                });
+            },
+        };
+    }
 
     @action createVendorIntegration(provider, opts = {}) {
         const normalized = normalizeProvider(provider);
         if (!normalized) {
-            this.notifications.error('Invalid vendor provider configuration.');
+            this.notifications.error(this.intl.t('literal.fleet-ops.invalid-vendor-provider-configuration'));
             return null;
         }
 
@@ -102,7 +107,7 @@ export default class VendorActionsService extends ResourceActionService {
         if (opts.autoSave) {
             // Return a promise if caller wants immediate persistence
             return record.save().catch((e) => {
-                this.notifications.error('Failed to create integration.');
+                this.notifications.error(this.intl.t('literal.fleet-ops.failed-to-create-integration'));
                 // bubble up so caller can handle
                 throw e;
             });

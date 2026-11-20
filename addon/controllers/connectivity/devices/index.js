@@ -83,7 +83,7 @@ export default class ConnectivityDevicesIndexController extends Controller {
     /** bulk action buttons */
     @tracked bulkActions = [
         {
-            label: 'Delete selected...',
+            label: this.intl.t('literal.fleet-ops.delete-selected'),
             class: 'text-red-500',
             fn: this.deviceActions.bulkDelete,
         },

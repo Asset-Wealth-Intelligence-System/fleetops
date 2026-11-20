@@ -13,19 +13,19 @@
     @emptyStateComponent={{component
         "table/empty-state"
         icon="satellite-dish"
-        title="Add your first sensor"
-        description="Sensors capture telemetry signals that can power events, conditions, and operational visibility."
-        filteredTitle="No sensors match your filters"
-        filteredDescription="Adjust the search or filters to find another sensor."
-        primaryText="New sensor"
+        title=(t "literal.fleet-ops.add-your-first-sensor")
+        description=(t "literal.fleet-ops.sensors-capture-telemetry-signals-that-can-power-d6de1")
+        filteredTitle=(t "literal.fleet-ops.no-sensors-match-your-filters")
+        filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-sen-e63f2")
+        primaryText=(t "literal.fleet-ops.new-sensor")
         primaryIcon="plus"
         primaryAction=this.sensorActions.transition.create
-        secondaryText="Import"
+        secondaryText=(t "literal.fleet-ops.import")
         secondaryIcon="upload"
         secondaryAction=this.sensorActions.import
         docsSlug="fleet-ops/connectivity/sensors/overview"
-        docsTitle="Sensors guide"
-        docsText="Sensors guide"
+        docsTitle=(t "literal.fleet-ops.sensors-guide")
+        docsText=(t "literal.fleet-ops.sensors-guide")
         docsSource="fleet-ops-empty-sensors"
     }}
 />

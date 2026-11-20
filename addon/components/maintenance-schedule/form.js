@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { isArray } from '@ember/array';
 import { action } from '@ember/object';
 
+import { inject as service } from '@ember/service';
 /**
  * Maps a polymorphic type string to the Ember Data model name used by ModelSelect.
  */
@@ -44,24 +45,32 @@ const ASSIGNEE_MODEL_TO_TYPE = {
     driver: 'fleet-ops:driver',
 };
 
-const SUBJECT_TYPE_OPTIONS = [
-    { label: 'Vehicle', value: 'fleet-ops:vehicle' },
-    { label: 'Equipment', value: 'fleet-ops:equipment' },
-];
-
-const ASSIGNEE_TYPE_OPTIONS = [
-    { label: 'Vendor', value: 'fleet-ops:vendor' },
-    { label: 'Contact', value: 'fleet-ops:contact' },
-    { label: 'Driver', value: 'fleet-ops:driver' },
-];
-
-const INTERVAL_METHOD_OPTIONS = [
-    { label: 'Time-Based (days / weeks / months)', value: 'time' },
-    { label: 'Distance-Based (km / miles)', value: 'distance' },
-    { label: 'Engine Hours-Based', value: 'engine_hours' },
-];
-
 export default class MaintenanceScheduleFormComponent extends Component {
+    @service intl;
+
+    get SUBJECT_TYPE_OPTIONS() {
+        return [
+            { label: this.intl.t('literal.fleet-ops.vehicle'), value: 'fleet-ops:vehicle' },
+            { label: this.intl.t('literal.fleet-ops.equipment'), value: 'fleet-ops:equipment' },
+        ];
+    }
+
+    get ASSIGNEE_TYPE_OPTIONS() {
+        return [
+            { label: this.intl.t('literal.fleet-ops.vendor'), value: 'fleet-ops:vendor' },
+            { label: this.intl.t('literal.fleet-ops.contact'), value: 'fleet-ops:contact' },
+            { label: this.intl.t('literal.fleet-ops.driver'), value: 'fleet-ops:driver' },
+        ];
+    }
+
+    get INTERVAL_METHOD_OPTIONS() {
+        return [
+            { label: this.intl.t('literal.fleet-ops.time-based-days-weeks-months'), value: 'time' },
+            { label: this.intl.t('literal.fleet-ops.distance-based-km-miles'), value: 'distance' },
+            { label: this.intl.t('literal.fleet-ops.engine-hours-based'), value: 'engine_hours' },
+        ];
+    }
+
     @tracked selectedSubjectType = null;
     @tracked selectedAssigneeType = null;
     @tracked subjectModelName = null;
@@ -70,9 +79,9 @@ export default class MaintenanceScheduleFormComponent extends Component {
     @tracked reminderOffsets = [];
     @tracked newReminderOffset = '';
 
-    subjectTypeOptions = SUBJECT_TYPE_OPTIONS;
-    assigneeTypeOptions = ASSIGNEE_TYPE_OPTIONS;
-    intervalMethodOptions = INTERVAL_METHOD_OPTIONS;
+    subjectTypeOptions = this.SUBJECT_TYPE_OPTIONS;
+    assigneeTypeOptions = this.ASSIGNEE_TYPE_OPTIONS;
+    intervalMethodOptions = this.INTERVAL_METHOD_OPTIONS;
 
     statusOptions = ['active', 'paused', 'completed'];
     priorityOptions = ['low', 'normal', 'high', 'critical'];
@@ -103,7 +112,7 @@ export default class MaintenanceScheduleFormComponent extends Component {
                 const modelName = subject.constructor?.modelName ?? subject.modelName;
                 const typeValue = MODEL_TO_TYPE[modelName] ?? null;
                 if (typeValue) {
-                    this.selectedSubjectType = SUBJECT_TYPE_OPTIONS.find((o) => o.value === typeValue) ?? null;
+                    this.selectedSubjectType = this.SUBJECT_TYPE_OPTIONS.find((o) => o.value === typeValue) ?? null;
                     this.subjectModelName = TYPE_TO_MODEL[typeValue] ?? null;
                 }
             }
@@ -113,7 +122,7 @@ export default class MaintenanceScheduleFormComponent extends Component {
                 const modelName = defaultAssignee.constructor?.modelName ?? defaultAssignee.modelName;
                 const typeValue = ASSIGNEE_MODEL_TO_TYPE[modelName] ?? null;
                 if (typeValue) {
-                    this.selectedAssigneeType = ASSIGNEE_TYPE_OPTIONS.find((o) => o.value === typeValue) ?? null;
+                    this.selectedAssigneeType = this.ASSIGNEE_TYPE_OPTIONS.find((o) => o.value === typeValue) ?? null;
                     this.assigneeModelName = TYPE_TO_MODEL[typeValue] ?? null;
                 }
             }
@@ -123,13 +132,13 @@ export default class MaintenanceScheduleFormComponent extends Component {
             }
             // Restore interval method from stored interval_method field, or infer from populated fields
             if (resource.interval_method) {
-                this.selectedIntervalMethod = INTERVAL_METHOD_OPTIONS.find((o) => o.value === resource.interval_method) ?? null;
+                this.selectedIntervalMethod = this.INTERVAL_METHOD_OPTIONS.find((o) => o.value === resource.interval_method) ?? null;
             } else if (resource.interval_distance) {
-                this.selectedIntervalMethod = INTERVAL_METHOD_OPTIONS.find((o) => o.value === 'distance') ?? null;
+                this.selectedIntervalMethod = this.INTERVAL_METHOD_OPTIONS.find((o) => o.value === 'distance') ?? null;
             } else if (resource.interval_engine_hours) {
-                this.selectedIntervalMethod = INTERVAL_METHOD_OPTIONS.find((o) => o.value === 'engine_hours') ?? null;
+                this.selectedIntervalMethod = this.INTERVAL_METHOD_OPTIONS.find((o) => o.value === 'engine_hours') ?? null;
             } else if (resource.interval_value) {
-                this.selectedIntervalMethod = INTERVAL_METHOD_OPTIONS.find((o) => o.value === 'time') ?? null;
+                this.selectedIntervalMethod = this.INTERVAL_METHOD_OPTIONS.find((o) => o.value === 'time') ?? null;
             }
         }
     }

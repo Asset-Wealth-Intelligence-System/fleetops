@@ -6,6 +6,7 @@ import { registerDestructor } from '@ember/destroyable';
 import { task } from 'ember-concurrency';
 
 export default class LayoutFleetOpsSidebarOperationsMonitorComponent extends Component {
+    @service intl;
     @service store;
     @service fetch;
     @service universe;
@@ -88,11 +89,11 @@ export default class LayoutFleetOpsSidebarOperationsMonitorComponent extends Com
     }
 
     get driverOnlineSummary() {
-        return `${this.onlineDriverCount} drivers online`;
+        return this.intl.t('literal.fleet-ops.drivers-online', { onlineDriverCount: this.onlineDriverCount });
     }
 
     get vehicleOnlineSummary() {
-        return `${this.onlineVehicleCount} vehicles online`;
+        return this.intl.t('literal.fleet-ops.vehicles-online', { onlineVehicleCount: this.onlineVehicleCount });
     }
 
     get activeResources() {
@@ -101,18 +102,18 @@ export default class LayoutFleetOpsSidebarOperationsMonitorComponent extends Com
 
     get emptyMessage() {
         if (this.query) {
-            return 'No resources match this search.';
+            return this.intl.t('literal.fleet-ops.no-resources-match-this-search-e183d');
         }
 
-        return `No ${this.activeTab} available.`;
+        return this.intl.t('literal.fleet-ops.no-available', { activeTab: this.activeTab });
     }
 
     get emptyState() {
         if (this.hasQuery) {
             return {
                 icon: 'magnifying-glass',
-                title: 'No resources match this search',
-                description: 'Try another driver, vehicle, fleet, public ID, status, or assignment.',
+                title: this.intl.t('literal.fleet-ops.no-resources-match-this-search'),
+                description: this.intl.t('literal.fleet-ops.try-another-driver-vehicle-fleet-public-id-statu-cc010'),
                 action: 'Clear filter',
             };
         }
@@ -120,20 +121,20 @@ export default class LayoutFleetOpsSidebarOperationsMonitorComponent extends Com
         return {
             drivers: {
                 icon: 'id-card',
-                title: 'No drivers yet',
-                description: 'Create drivers so dispatchers can assign orders and track active work on the live map.',
+                title: this.intl.t('literal.fleet-ops.no-drivers-yet'),
+                description: this.intl.t('literal.fleet-ops.create-drivers-so-dispatchers-can-assign-orders-803c2'),
                 action: 'Create driver',
             },
             vehicles: {
                 icon: 'truck',
-                title: 'No vehicles yet',
-                description: 'Add vehicles to power live map visibility, driver assignments, and fleet tracking.',
+                title: this.intl.t('literal.fleet-ops.no-vehicles-yet'),
+                description: this.intl.t('literal.fleet-ops.add-vehicles-to-power-live-map-visibility-driver-12e80'),
                 action: 'Create vehicle',
             },
             fleets: {
                 icon: 'user-group',
-                title: 'No fleets yet',
-                description: 'Create fleets to organize drivers and vehicles into operational groups.',
+                title: this.intl.t('literal.fleet-ops.no-fleets-yet'),
+                description: this.intl.t('literal.fleet-ops.create-fleets-to-organize-drivers-and-vehicles-i-aba22'),
                 action: 'Create fleet',
             },
         }[this.activeTab];
@@ -141,9 +142,9 @@ export default class LayoutFleetOpsSidebarOperationsMonitorComponent extends Com
 
     get tabs() {
         return [
-            { id: 'fleets', label: 'Fleets' },
-            { id: 'drivers', label: 'Drivers' },
-            { id: 'vehicles', label: 'Vehicles' },
+            { id: 'fleets', label: this.intl.t('literal.fleet-ops.fleets') },
+            { id: 'drivers', label: this.intl.t('literal.fleet-ops.drivers') },
+            { id: 'vehicles', label: this.intl.t('literal.fleet-ops.vehicles') },
         ];
     }
 
@@ -224,7 +225,7 @@ export default class LayoutFleetOpsSidebarOperationsMonitorComponent extends Com
     }
 
     @action fleetSubtitle(fleet) {
-        return `${this.fleetDriverCount(fleet)} drivers - ${this.fleetVehicleCount(fleet)} vehicles`;
+        return this.intl.t('literal.fleet-ops.drivers-vehicles', { fleetDriverCount: this.fleetDriverCount(fleet), fleetVehicleCount: this.fleetVehicleCount(fleet) });
     }
 
     @action isFleetExpanded(fleet) {

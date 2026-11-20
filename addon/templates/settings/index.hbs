@@ -1,9 +1,9 @@
 <div class="fleet-ops-control-hub fleet-ops-settings-control-hub" data-test-fleet-ops-settings-hub>
     <section class="fleet-ops-control-hub-header">
         <div class="fleet-ops-control-hub-header-copy">
-            <div class="fleet-ops-control-hub-eyebrow">Settings</div>
-            <h1 class="fleet-ops-control-hub-title">Fleet-Ops Settings</h1>
-            <p class="fleet-ops-control-hub-subtitle">Configure the operator, driver, routing, notification, and data rules that shape Fleet-Ops workflows.</p>
+            <div class="fleet-ops-control-hub-eyebrow">{{t "literal.fleet-ops.settings"}}</div>
+            <h1 class="fleet-ops-control-hub-title">{{t "literal.fleet-ops.fleet-ops-settings"}}</h1>
+            <p class="fleet-ops-control-hub-subtitle">{{t "literal.fleet-ops.configure-the-operator-driver-routing-notificati-bd8a6"}}</p>
         </div>
     </section>
 
@@ -39,13 +39,13 @@
                 <div class="fleet-ops-control-hub-panel">
                     <div class="fleet-ops-control-hub-panel-header">
                         <div>
-                            <h2>Setup Focus</h2>
-                            <p>Compact next steps for operators.</p>
+                            <h2>{{t "literal.fleet-ops.setup-focus"}}</h2>
+                            <p>{{t "literal.fleet-ops.compact-next-steps-for-operators"}}</p>
                         </div>
                     </div>
 
                     <div class="fleet-ops-control-hub-action-list">
-                        {{#each this.actions as |action|}}
+                        {{#each this.quickActions as |action|}}
                             <LinkTo @route={{action.route}} class="fleet-ops-control-hub-action fleet-ops-control-hub-tone-{{action.tone}}">
                                 <FaIcon @icon={{action.icon}} />
                                 <span>
@@ -60,15 +60,15 @@
                 <div class="fleet-ops-control-hub-doc-note">
                     <div class="fleet-ops-control-hub-doc-note-heading">
                         <FaIcon @icon="lightbulb" />
-                        <span>Guides</span>
+                        <span>{{t "literal.fleet-ops.guides"}}</span>
                     </div>
-                    <p class="fleet-ops-control-hub-doc-note-copy">Read the guide before changing settings.</p>
+                    <p class="fleet-ops-control-hub-doc-note-copy">{{t "literal.fleet-ops.read-the-guide-before-changing-settings"}}</p>
                     <div class="fleet-ops-control-hub-doc-grid">
                         {{#each this.docs as |doc|}}
                             <button type="button" class="fleet-ops-control-hub-doc-link" {{on "click" (fn this.openDocs doc)}}>
                                 <FaIcon @icon={{doc.icon}} />
                                 <span class="fleet-ops-control-hub-doc-copy">
-                                    <strong>Read the guide on {{doc.label}}</strong>
+                                    <strong>{{t "literal.fleet-ops.read-the-guide-on"}} {{doc.label}}</strong>
                                     <small>{{doc.description}}</small>
                                 </span>
                             </button>

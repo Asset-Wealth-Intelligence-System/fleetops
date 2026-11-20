@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
+import { inject as service } from '@ember/service';
 /**
  * Maps a polymorphic type value to the Ember Data model name used by ModelSelect.
  */
@@ -40,6 +41,7 @@ const PERFORMED_BY_MODEL_TO_TYPE = {
 };
 
 export default class MaintenanceFormComponent extends Component {
+    @service intl;
     /** Maintenance type options — the category of maintenance activity. */
     maintenanceTypeOptions = ['preventive', 'corrective', 'predictive', 'routine', 'emergency', 'inspection', 'repair', 'replacement', 'calibration'];
 
@@ -54,21 +56,25 @@ export default class MaintenanceFormComponent extends Component {
      * Uses label/value objects so the PowerSelect trigger shows a human-readable
      * label instead of the raw model type string.
      */
-    maintainableTypeOptions = [
-        { value: 'fleet-ops:vehicle', label: 'Vehicle' },
-        { value: 'fleet-ops:equipment', label: 'Equipment' },
-    ];
+    get maintainableTypeOptions() {
+        return [
+            { value: 'fleet-ops:vehicle', label: this.intl.t('literal.fleet-ops.vehicle') },
+            { value: 'fleet-ops:equipment', label: this.intl.t('literal.fleet-ops.equipment') },
+        ];
+    }
 
     /**
      * Polymorphic performed-by type options — who carried out the maintenance.
      * Uses label/value objects so the PowerSelect trigger shows a human-readable
      * label instead of the raw model type string.
      */
-    performedByTypeOptions = [
-        { value: 'fleet-ops:vendor', label: 'Vendor' },
-        { value: 'fleet-ops:driver', label: 'Driver' },
-        { value: 'Auth:User', label: 'User' },
-    ];
+    get performedByTypeOptions() {
+        return [
+            { value: 'fleet-ops:vendor', label: this.intl.t('literal.fleet-ops.vendor') },
+            { value: 'fleet-ops:driver', label: this.intl.t('literal.fleet-ops.driver') },
+            { value: 'Auth:User', label: this.intl.t('literal.fleet-ops.user') },
+        ];
+    }
 
     /** The currently selected maintainable type option object. */
     @tracked selectedMaintainableType = null;

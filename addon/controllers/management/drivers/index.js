@@ -89,7 +89,7 @@ export default class ManagementDriversIndexController extends Controller {
                     },
                 ],
                 renderInPlace: true,
-                helpText: 'Change the layout',
+                helpText: this.intl.t('literal.fleet-ops.change-the-layout'),
             },
             {
                 icon: 'refresh',
@@ -216,7 +216,7 @@ export default class ManagementDriversIndexController extends Controller {
                 resizable: true,
                 filterable: true,
                 filterComponent: 'filter/model',
-                filterComponentPlaceholder: 'Select vehicle to filter by',
+                filterComponentPlaceholder: this.intl.t('literal.fleet-ops.select-vehicle-to-filter-by'),
                 filterParam: 'vehicle',
                 model: 'vehicle',
             },
@@ -249,7 +249,7 @@ export default class ManagementDriversIndexController extends Controller {
                 resizable: true,
                 filterable: true,
                 filterComponent: 'filter/model',
-                filterComponentPlaceholder: 'Select vendor to filter by',
+                filterComponentPlaceholder: this.intl.t('literal.fleet-ops.select-vendor-to-filter-by'),
                 filterParam: 'vendor',
                 model: 'vendor',
             },
@@ -263,7 +263,7 @@ export default class ManagementDriversIndexController extends Controller {
                 hidden: true,
                 filterable: true,
                 filterComponent: 'filter/model',
-                filterComponentPlaceholder: 'Select fleet to filter by',
+                filterComponentPlaceholder: this.intl.t('literal.fleet-ops.select-fleet-to-filter-by'),
                 filterParam: 'fleet',
                 model: 'fleet',
             },
@@ -407,7 +407,7 @@ export default class ManagementDriversIndexController extends Controller {
         this.issueActions.modal.create({
             driver,
             driver_uuid: driver.id,
-            title: `Issue reported for ${driver.name}`,
+            title: this.intl.t('literal.fleet-ops.issue-reported-for', { name: driver.name }),
         });
     }
 }

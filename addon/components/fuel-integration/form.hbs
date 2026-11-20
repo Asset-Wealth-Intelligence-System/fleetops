@@ -22,8 +22,8 @@
             {{#if (eq this.activeStep 0)}}
                 <section class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
                     <div class="mb-3">
-                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Choose Fuel Integration</h2>
-                        <p class="text-xs text-gray-500 dark:text-gray-300">Select the system to connect for fuel card bills, purchase transactions, station locations, or vehicle fuel identifiers.</p>
+                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.choose-fuel-integration"}}</h2>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.select-the-system-to-connect-for-fuel-card-bills-e79da"}}</p>
                     </div>
 
                     {{#if this.loadProviders.isRunning}}
@@ -43,7 +43,7 @@
                                             </div>
                                         </div>
                                         {{#if provider.selected}}
-                                            <Badge @status="success" @hideStatusDot={{true}}>Selected</Badge>
+                                            <Badge @status="success" @hideStatusDot={{true}}>{{t "literal.fleet-ops.selected"}}</Badge>
                                         {{/if}}
                                     </div>
                                     <p class="mt-3 line-clamp-2 flex-1 text-xs leading-5 text-gray-500 dark:text-gray-300">{{provider.description}}</p>
@@ -61,8 +61,8 @@
                 <section class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                     <div class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 lg:col-span-2">
                         <div class="mb-3">
-                            <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Credentials</h2>
-                            <p class="text-xs text-gray-500 dark:text-gray-300">These credentials are stored on the connection and used to test and import provider transactions.</p>
+                            <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.credentials"}}</h2>
+                            <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.these-credentials-are-stored-on-the-connection-a-6c8f0"}}</p>
                         </div>
 
                         {{#if this.selectedProvider}}
@@ -73,7 +73,7 @@
                             </div>
                         {{else}}
                             <div class="rounded-md border border-dashed border-gray-300 p-6 text-center text-xs text-gray-500 dark:border-gray-700 dark:text-gray-300">
-                                Choose a fuel integration before entering credentials.
+                                {{t "literal.fleet-ops.choose-a-fuel-integration-before-entering-creden-dda5b"}}
                             </div>
                         {{/if}}
                     </div>
@@ -100,8 +100,8 @@
             {{else if (eq this.activeStep 2)}}
                 <section class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
                     <div class="mb-3">
-                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Test Connection</h2>
-                        <p class="text-xs text-gray-500 dark:text-gray-300">Confirm the provider accepts the credentials before saving this fuel integration.</p>
+                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.test-connection"}}</h2>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.confirm-the-provider-accepts-the-credentials-bef-ae6bb"}}</p>
                     </div>
 
                     <div class="rounded-md border p-4 text-xs transition {{if (eq this.connectionState 'success') 'border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/10'}} {{if (eq this.connectionState 'failed') 'border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/10'}} {{if (eq this.connectionState 'testing') 'border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-900/10'}} {{if (eq this.connectionState 'idle') 'border-dashed border-gray-300 bg-white dark:border-gray-700 dark:bg-gray-800'}}">
@@ -126,18 +126,18 @@
                                 </div>
                             </div>
 
-                            <Button @icon="plug" @text={{if (eq this.connectionState "success") "Test Again" "Test Connection"}} @size="xs" @isLoading={{this.testConnection.isRunning}} @disabled={{this.testConnection.isRunning}} @onClick={{perform this.testConnection}} />
+                            <Button @icon="plug" @text={{if (eq this.connectionState "success") (t "literal.fleet-ops.test-again") (t "literal.fleet-ops.test-connection")}} @size="xs" @isLoading={{this.testConnection.isRunning}} @disabled={{this.testConnection.isRunning}} @onClick={{perform this.testConnection}} />
                         </div>
 
                         <div class="mt-4 border-t border-gray-200 pt-3 dark:border-gray-700">
                             <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                                 <button type="button" class="inline-flex items-center gap-2 text-xs font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-300 dark:hover:text-blue-200" {{on "click" (fn (mut this.showDiagnostics) (not this.showDiagnostics))}}>
                                     <FaIcon @icon={{if this.showDiagnostics "chevron-up" "chevron-down"}} class="text-[10px]" />
-                                    <span>{{if this.showDiagnostics "Hide diagnostics" "Show diagnostics"}}</span>
+                                    <span>{{if this.showDiagnostics (t "literal.fleet-ops.hide-diagnostics") (t "literal.fleet-ops.show-diagnostics")}}</span>
                                 </button>
 
                                 {{#if this.showDiagnostics}}
-                                    <Button @icon="copy" @text="Copy diagnostics" @size="xs" @onClick={{this.copyDiagnostics}} />
+                                    <Button @icon="copy" @text={{t "literal.fleet-ops.copy-diagnostics"}} @size="xs" @onClick={{this.copyDiagnostics}} />
                                 {{/if}}
                             </div>
 
@@ -157,26 +157,26 @@
             {{else if (eq this.activeStep 3)}}
                 <section class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
                     <div class="mb-3">
-                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Sync Settings</h2>
-                        <p class="text-xs text-gray-500 dark:text-gray-300">Choose how fuel transactions are imported from this system.</p>
+                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.sync-settings"}}</h2>
+                        <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.choose-how-fuel-transactions-are-imported-from-t-f33a2"}}</p>
                     </div>
 
                     <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 no-input-group-padding text-xs">
-                        <InputGroup @name="Integration name" @value={{@resource.name}} {{on "input" this.setName}} />
-                        <InputGroup @name="Default sync window" @helpText="Number of days to import when no explicit date range is provided.">
+                        <InputGroup @name={{t "literal.fleet-ops.integration-name"}} @value={{@resource.name}} {{on "input" this.setName}} />
+                        <InputGroup @name={{t "literal.fleet-ops.default-sync-window"}} @helpText={{t "literal.fleet-ops.number-of-days-to-import-when-no-explicit-date-r-012f6"}}>
                             <Input @type="number" min="1" max="90" class="form-input w-full" @value={{this.syncSettings.window_days}} {{on "input" (fn this.setSyncSetting "window_days")}} />
                         </InputGroup>
                         <div class="rounded-md border border-gray-200 p-3 dark:border-gray-700 lg:col-span-2">
-                            <Checkbox @value={{this.syncSettings.auto_create_fuel_reports}} @label="Create Fuel Reports after vehicle match" @onToggle={{fn this.setSyncSetting "auto_create_fuel_reports"}} @alignItems="center" @labelClass="mb-0i" />
-                            <p class="mt-2 text-xs leading-5 text-gray-500 dark:text-gray-300">Provider bills remain in Fuel Transactions. Fuel Reports are created only when a transaction is matched to a vehicle.</p>
+                            <Checkbox @value={{this.syncSettings.auto_create_fuel_reports}} @label={{t "literal.fleet-ops.create-fuel-reports-after-vehicle-match"}} @onToggle={{fn this.setSyncSetting "auto_create_fuel_reports"}} @alignItems="center" @labelClass="mb-0i" />
+                            <p class="mt-2 text-xs leading-5 text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.provider-bills-remain-in-fuel-transactions-fuel-8ba35"}}</p>
                         </div>
                     </div>
                 </section>
             {{else}}
                 <section class="rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
                     <div class="mb-3">
-                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">Vehicle Matching Priority</h2>
-                        <p class="text-xs leading-5 text-gray-500 dark:text-gray-300">Choose which provider identifiers should be used for automatic matching and put the most reliable identifier first.</p>
+                        <h2 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.vehicle-matching-priority"}}</h2>
+                        <p class="text-xs leading-5 text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.choose-which-provider-identifiers-should-be-used-ed5e4"}}</p>
                     </div>
 
                     <FuelIntegration::MatchingPriority @order={{this.matchingOrder}} @onChange={{this.setMatchingOrder}} @editable={{true}} />
@@ -188,13 +188,13 @@
     <div class="flex flex-shrink-0 items-center justify-between border-t border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-900 md:px-6">
         <div class="text-xs text-gray-500 dark:text-gray-300">{{@footerHelp}}</div>
         <div class="flex items-center gap-2">
-            <Button @icon="arrow-left" @text="Back" @size="sm" @disabled={{eq this.activeStep 0}} @onClick={{this.previousStep}} />
+            <Button @icon="arrow-left" @text={{t "literal.fleet-ops.back"}} @size="sm" @disabled={{eq this.activeStep 0}} @onClick={{this.previousStep}} />
             {{#if (eq this.activeStep 4)}}
                 <Button @icon="save" @text={{@saveLabel}} @type="primary" @size="sm" @isLoading={{@isSaving}} @disabled={{@isSaving}} @onClick={{@onSave}} />
             {{else}}
-                <Button @icon="arrow-right" @text="Next" @type="primary" @size="sm" @onClick={{this.nextStep}} />
+                <Button @icon="arrow-right" @text={{t "literal.fleet-ops.next"}} @type="primary" @size="sm" @onClick={{this.nextStep}} />
             {{/if}}
-            <Button @icon="times" @text="Cancel" @size="sm" @onClick={{@onCancel}} />
+            <Button @icon="times" @text={{t "literal.fleet-ops.cancel"}} @size="sm" @onClick={{@onCancel}} />
         </div>
     </div>
 </div>

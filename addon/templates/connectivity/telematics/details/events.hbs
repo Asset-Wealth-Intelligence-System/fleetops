@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-4 p-4 md:p-6">
     <div class="flex flex-col gap-1">
-        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">Event Review + Triage</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-300">Review provider events, warning signals, and unprocessed telemetry for this connection.</p>
+        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.event-review-triage"}}</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.review-provider-events-warning-signals-and-unpro-48558"}}</p>
     </div>
 
     <section class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -23,12 +23,12 @@
     <section class="overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <div class="fleetops-provider-connections-header border-b border-gray-200 px-4 py-3 dark:border-gray-700">
             <div>
-                <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">Telemetry Events</h3>
-                <p class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-300">Filter events by severity, device, type, and processed state before opening details.</p>
+                <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.telemetry-events"}}</h3>
+                <p class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.filter-events-by-severity-device-type-and-proces-7b77e"}}</p>
             </div>
             <div class="fleetops-provider-connections-actions flex min-w-0 flex-wrap items-center gap-1 lg:ml-auto lg:flex-nowrap lg:justify-end">
                 <Layout::Resource::TabularActions
-                    @title="Telemetry Events"
+                    @title={{t "literal.fleet-ops.telemetry-events"}}
                     @searchQuery={{this.query}}
                     @onSearch={{perform this.deviceEventActions.controllerSearchTask this}}
                     @columns={{this.columns}}
@@ -68,9 +68,9 @@
                     <Telematic::TabEmptyState
                         @tone="success"
                         @icon="check"
-                        @title="No warning or unprocessed events"
-                        @message="Recent telemetry is reviewed and no warning-level events are currently visible in this connection."
-                        @primaryText="Refresh"
+                        @title={{t "literal.fleet-ops.no-warning-or-unprocessed-events"}}
+                        @message={{t "literal.fleet-ops.recent-telemetry-is-reviewed-and-no-warning-leve-a9258"}}
+                        @primaryText={{t "literal.fleet-ops.refresh"}}
                         @primaryIcon="refresh"
                         @primaryAction={{this.refresh}}
                     />
@@ -78,7 +78,7 @@
             {{/if}}
             <Layout::Resource::Tabular
                 @resource="device-event"
-                @title="Telemetry Events"
+                @title={{t "literal.fleet-ops.telemetry-events"}}
                 @data={{@model}}
                 @columns={{this.columns}}
                 @page={{this.page}}
@@ -90,11 +90,11 @@
                     "table/empty-state"
                     variant="compact"
                     icon="bolt"
-                    title="No telemetry events"
-                    description="Events appear after synced devices report provider activity."
-                    filteredTitle="No events match your filters"
-                    filteredDescription="Adjust the search, severity, or date filters to review other events."
-                    primaryText="Refresh"
+                    title=(t "literal.fleet-ops.no-telemetry-events")
+                    description=(t "literal.fleet-ops.events-appear-after-synced-devices-report-provid-1969b")
+                    filteredTitle=(t "literal.fleet-ops.no-events-match-your-filters")
+                    filteredDescription=(t "literal.fleet-ops.adjust-the-search-severity-or-date-filters-to-re-16685")
+                    primaryText=(t "literal.fleet-ops.refresh")
                     primaryIcon="refresh"
                     primaryAction=this.refresh
                 }}

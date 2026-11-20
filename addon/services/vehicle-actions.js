@@ -6,6 +6,7 @@ import { isArray } from '@ember/array';
 import { dasherize } from '@ember/string';
 
 export default class VehicleActionsService extends ResourceActionService {
+    @service intl;
     @service('universe/menu-service') menuService;
     @service fetch;
     @service maintenanceScheduleActions;
@@ -29,32 +30,32 @@ export default class VehicleActionsService extends ResourceActionService {
         return [
             {
                 key: 'overview',
-                label: 'Overview',
+                label: this.intl.t('literal.fleet-ops.overview'),
                 component: 'vehicle/details',
             },
             {
                 key: 'positions',
-                label: 'Positions',
+                label: this.intl.t('literal.fleet-ops.positions'),
                 component: 'positions-replay',
             },
             {
                 key: 'devices',
-                label: 'Devices',
+                label: this.intl.t('literal.fleet-ops.devices-c03ca'),
                 component: 'device/manager',
             },
             {
                 key: 'schedules',
-                label: 'Schedules',
+                label: this.intl.t('literal.fleet-ops.schedules'),
                 component: 'vehicle/details/schedules',
             },
             {
                 key: 'work-orders',
-                label: 'Work Orders',
+                label: this.intl.t('literal.fleet-ops.work-orders'),
                 component: 'vehicle/details/work-orders',
             },
             {
                 key: 'maintenance-history',
-                label: 'Maintenance',
+                label: this.intl.t('literal.fleet-ops.maintenance'),
                 component: 'vehicle/details/maintenance-history',
             },
             ...this.registeredTabs,
@@ -92,97 +93,101 @@ export default class VehicleActionsService extends ResourceActionService {
         create: () => this.transitionTo('management.vehicles.index.new'),
     };
 
-    panel = {
-        create: (attributes = {}, options = {}) => {
-            const vehicle = this.createNewInstance(attributes);
-            return this.resourceContextPanel.open({
-                content: 'vehicle/form',
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.vehicle')?.toLowerCase() }),
-                saveOptions: {
-                    callback: this.refresh,
-                },
-                useDefaultSaveTask: true,
-                vehicle,
-                ...options,
-            });
-        },
-        edit: async (vehicle, options = {}) => {
-            vehicle = await this.reloadIndexResource(await this.resolveVehicleResource(vehicle));
-
-            return this.resourceContextPanel.open({
-                content: 'vehicle/form',
-                title: this.intl.t('common.edit-resource-name', { resourceName: vehicle.name }),
-                actionButtons: [
-                    {
-                        icon: 'eye',
-                        fn: async () => {
-                            await this.resourceContextPanel.closeAll();
-                            this.panel.view(vehicle);
-                        },
+    get panel() {
+        return {
+            create: (attributes = {}, options = {}) => {
+                const vehicle = this.createNewInstance(attributes);
+                return this.resourceContextPanel.open({
+                    content: 'vehicle/form',
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.vehicle')?.toLowerCase() }),
+                    saveOptions: {
+                        callback: this.refresh,
                     },
-                ],
-                useDefaultSaveTask: true,
-                vehicle,
-                ...options,
-            });
-        },
-        view: async (vehicle, options = {}) => {
-            vehicle = await this.reloadIndexResource(await this.resolveVehicleResource(vehicle));
+                    useDefaultSaveTask: true,
+                    vehicle,
+                    ...options,
+                });
+            },
+            edit: async (vehicle, options = {}) => {
+                vehicle = await this.reloadIndexResource(await this.resolveVehicleResource(vehicle));
 
-            return this.resourceContextPanel.open({
-                vehicle,
-                header: 'vehicle/panel-header',
-                actionButtons: [
-                    {
-                        icon: 'pencil',
-                        fn: async () => {
-                            await this.resourceContextPanel.closeAll();
-                            this.panel.edit(vehicle);
+                return this.resourceContextPanel.open({
+                    content: 'vehicle/form',
+                    title: this.intl.t('common.edit-resource-name', { resourceName: vehicle.name }),
+                    actionButtons: [
+                        {
+                            icon: 'eye',
+                            fn: async () => {
+                                await this.resourceContextPanel.closeAll();
+                                this.panel.view(vehicle);
+                            },
                         },
-                    },
-                ],
-                tabs: this.panelTabs,
-                ...options,
-            });
-        },
-    };
+                    ],
+                    useDefaultSaveTask: true,
+                    vehicle,
+                    ...options,
+                });
+            },
+            view: async (vehicle, options = {}) => {
+                vehicle = await this.reloadIndexResource(await this.resolveVehicleResource(vehicle));
 
-    modal = {
-        create: (attributes = {}, options = {}, saveOptions = {}) => {
-            const vehicle = this.createNewInstance(attributes);
-            return this.modalsManager.show('modals/resource', {
-                resource: vehicle,
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.vehicle')?.toLowerCase() }),
-                acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.vehicle') }),
-                component: 'vehicle/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', vehicle, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        edit: async (vehicle, options = {}, saveOptions = {}) => {
-            vehicle = await this.reloadIndexResource(await this.resolveVehicleResource(vehicle));
+                return this.resourceContextPanel.open({
+                    vehicle,
+                    header: 'vehicle/panel-header',
+                    actionButtons: [
+                        {
+                            icon: 'pencil',
+                            fn: async () => {
+                                await this.resourceContextPanel.closeAll();
+                                this.panel.edit(vehicle);
+                            },
+                        },
+                    ],
+                    tabs: this.panelTabs,
+                    ...options,
+                });
+            },
+        };
+    }
 
-            return this.modalsManager.show('modals/resource', {
-                resource: vehicle,
-                title: this.intl.t('common.edit-resource-name', { resourceName: vehicle.name }),
-                acceptButtonText: this.intl.t('common.save-changes'),
-                saveButtonIcon: 'save',
-                component: 'vehicle/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', vehicle, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        view: async (vehicle, options = {}) => {
-            vehicle = await this.reloadIndexResource(await this.resolveVehicleResource(vehicle));
+    get modal() {
+        return {
+            create: (attributes = {}, options = {}, saveOptions = {}) => {
+                const vehicle = this.createNewInstance(attributes);
+                return this.modalsManager.show('modals/resource', {
+                    resource: vehicle,
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.vehicle')?.toLowerCase() }),
+                    acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.vehicle') }),
+                    component: 'vehicle/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', vehicle, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            edit: async (vehicle, options = {}, saveOptions = {}) => {
+                vehicle = await this.reloadIndexResource(await this.resolveVehicleResource(vehicle));
 
-            return this.modalsManager.show('modals/resource', {
-                resource: vehicle,
-                title: vehicle.name,
-                component: 'vehicle/details',
-                ...options,
-            });
-        },
-    };
+                return this.modalsManager.show('modals/resource', {
+                    resource: vehicle,
+                    title: this.intl.t('common.edit-resource-name', { resourceName: vehicle.name }),
+                    acceptButtonText: this.intl.t('common.save-changes'),
+                    saveButtonIcon: 'save',
+                    component: 'vehicle/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', vehicle, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            view: async (vehicle, options = {}) => {
+                vehicle = await this.reloadIndexResource(await this.resolveVehicleResource(vehicle));
+
+                return this.modalsManager.show('modals/resource', {
+                    resource: vehicle,
+                    title: vehicle.name,
+                    component: 'vehicle/details',
+                    ...options,
+                });
+            },
+        };
+    }
 
     @action async scheduleMaintenance(vehicle, options = {}, saveOptions = {}) {
         vehicle = await this.resolveVehicleResource(vehicle);

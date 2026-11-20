@@ -6,6 +6,7 @@ import { action } from '@ember/object';
 const WARNING_STATUSES = ['error', 'disabled'];
 
 export default class FuelIntegrationHubComponent extends Component {
+    @service intl;
     @service fuelIntegrationActions;
     @service currentUser;
     @tracked table;
@@ -36,7 +37,7 @@ export default class FuelIntegrationHubComponent extends Component {
                 connection,
                 connected: Boolean(connection),
                 status: connection?.status ?? 'available',
-                categoryLabel: provider.category ?? provider.metadata?.category ?? 'Fuel card integration',
+                categoryLabel: provider.category ?? provider.metadata?.category ?? this.intl.t('literal.fleet-ops.fuel-card-integration'),
             };
         });
     }
@@ -68,41 +69,41 @@ export default class FuelIntegrationHubComponent extends Component {
             .sort()
             .pop();
 
-        return syncedAt ? new Date(syncedAt).toLocaleString() : 'Not synced';
+        return syncedAt ? new Date(syncedAt).toLocaleString() : this.intl.t('literal.fleet-ops.not-synced');
     }
 
     get kpiWidgets() {
         return [
             {
                 icon: 'gas-pump',
-                label: 'Connected integrations',
+                label: this.intl.t('literal.fleet-ops.connected-integrations'),
                 value: this.activeConnectionCount,
-                help: 'Fuel card and fuel management accounts',
+                help: this.intl.t('literal.fleet-ops.fuel-card-and-fuel-management-accounts'),
                 action: 'Connect integration',
                 actionType: 'create',
                 accentClass: 'fleetops-connectivity-kpi-accent-blue',
             },
             {
                 icon: 'clock-rotate-left',
-                label: 'Last sync',
+                label: this.intl.t('literal.fleet-ops.last-sync-b6113'),
                 value: this.lastSyncLabel,
-                help: 'Most recent completed import',
+                help: this.intl.t('literal.fleet-ops.most-recent-completed-import'),
                 action: 'Review sync',
                 actionType: 'review',
                 accentClass: 'fleetops-connectivity-kpi-accent-green',
             },
             {
                 icon: 'triangle-exclamation',
-                label: 'Unmatched transactions',
+                label: this.intl.t('literal.fleet-ops.unmatched-transactions'),
                 value: this.unmatchedTransactionsCount,
-                help: this.unmatchedTransactionsCount > 0 ? 'Need vehicle or trip matching' : 'No unmatched count',
+                help: this.unmatchedTransactionsCount > 0 ? this.intl.t('literal.fleet-ops.need-vehicle-or-trip-matching') : this.intl.t('literal.fleet-ops.no-unmatched-count'),
                 action: 'Review matches',
                 actionType: 'transactions',
                 accentClass: 'fleetops-connectivity-kpi-accent-amber',
             },
             {
                 icon: 'receipt',
-                label: 'Imported spend',
+                label: this.intl.t('literal.fleet-ops.imported-spend'),
                 value: this.formatSpend,
                 help: `${this.formatLiters} imported`,
                 action: 'Open ledger',

@@ -3,17 +3,18 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class ConnectivityFuelProvidersIndexDetailsController extends Controller {
+    @service intl;
     @service hostRouter;
     @service fetch;
     @service notifications;
 
     get tabs() {
         return [
-            { route: 'connectivity.fuel-providers.details.index', label: 'Overview' },
-            { route: 'connectivity.fuel-providers.details.sync', label: 'Sync' },
-            { route: 'connectivity.fuel-providers.details.matching', label: 'Matching' },
-            { route: 'connectivity.fuel-providers.details.transactions', label: 'Transactions' },
-            { route: 'connectivity.fuel-providers.details.settings', label: 'Settings' },
+            { route: 'connectivity.fuel-providers.details.index', label: this.intl.t('literal.fleet-ops.overview') },
+            { route: 'connectivity.fuel-providers.details.sync', label: this.intl.t('literal.fleet-ops.sync') },
+            { route: 'connectivity.fuel-providers.details.matching', label: this.intl.t('literal.fleet-ops.matching') },
+            { route: 'connectivity.fuel-providers.details.transactions', label: this.intl.t('literal.fleet-ops.transactions') },
+            { route: 'connectivity.fuel-providers.details.settings', label: this.intl.t('literal.fleet-ops.settings') },
         ].map((tab) => ({
             ...tab,
             active: this.hostRouter.currentRouteName?.endsWith(tab.route),
@@ -23,19 +24,19 @@ export default class ConnectivityFuelProvidersIndexDetailsController extends Con
     get statusLabel() {
         switch (this.model?.status) {
             case 'draft':
-                return 'Draft';
+                return this.intl.t('literal.fleet-ops.draft');
             case 'configured':
-                return 'Configured';
+                return this.intl.t('literal.fleet-ops.configured');
             case 'connected':
-                return 'Connected';
+                return this.intl.t('literal.fleet-ops.connected');
             case 'active':
-                return 'Active';
+                return this.intl.t('literal.fleet-ops.active');
             case 'error':
-                return 'Needs attention';
+                return this.intl.t('literal.fleet-ops.needs-attention');
             case 'disabled':
-                return 'Disabled';
+                return this.intl.t('literal.fleet-ops.disabled');
             default:
-                return 'Unknown';
+                return this.intl.t('literal.fleet-ops.unknown');
         }
     }
 
@@ -50,7 +51,7 @@ export default class ConnectivityFuelProvidersIndexDetailsController extends Con
     @task *testConnection() {
         try {
             const result = yield this.fetch.post(`fuel-provider-connections/${this.model.id}/test-connection`);
-            this.notifications.success(result.message ?? 'Fuel integration connection tested.');
+            this.notifications.success(result.message ?? this.intl.t('literal.fleet-ops.fuel-integration-connection-tested'));
             yield this.hostRouter.refresh();
         } catch (error) {
             this.notifications.serverError(error);
@@ -60,7 +61,7 @@ export default class ConnectivityFuelProvidersIndexDetailsController extends Con
     @task *syncTransactions(options = {}) {
         try {
             yield this.fetch.post(`fuel-provider-connections/${this.model.id}/sync`, { async: true, ...options });
-            this.notifications.success('Fuel transaction sync queued.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.fuel-transaction-sync-queued'));
             yield this.hostRouter.refresh();
         } catch (error) {
             this.notifications.serverError(error);

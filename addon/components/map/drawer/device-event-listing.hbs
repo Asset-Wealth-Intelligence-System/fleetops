@@ -4,7 +4,7 @@
             <ModelSelect
                 @modelName="telematic"
                 @selectedModel={{this.telematic}}
-                @placeholder="Filter by Telematic"
+                @placeholder={{t "literal.fleet-ops.filter-by-telematic"}}
                 @triggerClass="form-select form-input form-input-sm w-48"
                 @infiniteScroll={{false}}
                 @renderInPlace={{true}}
@@ -28,7 +28,7 @@
             <ModelSelect
                 @modelName="device"
                 @selectedModel={{this.device}}
-                @placeholder="Filter by Device"
+                @placeholder={{t "literal.fleet-ops.filter-by-device"}}
                 @triggerClass="form-select form-input form-input-sm w-48"
                 @infiniteScroll={{false}}
                 @renderInPlace={{true}}
@@ -48,7 +48,7 @@
                 @range={{true}}
                 @onSelect={{this.onDateRangeChanged}}
                 @autoClose={{true}}
-                @placeholder="Select date range"
+                @placeholder={{t "literal.fleet-ops.select-date-range"}}
                 class="w-full form-input form-input-sm w-48"
             />
         </div>
@@ -67,8 +67,8 @@
         "table/empty-state"
         variant="compact"
         icon="bolt"
-        title="No device events"
-        description="Events appear here after connected devices report activity for the selected filters."
+        title=(t "literal.fleet-ops.no-device-events")
+        description=(t "literal.fleet-ops.events-appear-here-after-connected-devices-repor-ec529")
     }}
 />
 <Spacer @height="200px" />

@@ -31,16 +31,16 @@
                 @emptyStateComponent={{component
                     "table/empty-state"
                     icon="credit-card"
-                    title="No payment transactions yet"
-                    description="Completed customer payments will appear here once Stripe starts sending transaction records."
-                    filteredTitle="No payments match your filters"
-                    filteredDescription="Adjust filters or refresh the page to review other payment transactions."
-                    primaryText="Refresh"
+                    title=(t "literal.fleet-ops.no-payment-transactions-yet")
+                    description=(t "literal.fleet-ops.completed-customer-payments-will-appear-here-onc-b0d7a")
+                    filteredTitle=(t "literal.fleet-ops.no-payments-match-your-filters")
+                    filteredDescription=(t "literal.fleet-ops.adjust-filters-or-refresh-the-page-to-review-oth-8e384")
+                    primaryText=(t "literal.fleet-ops.refresh")
                     primaryIcon="refresh"
                     primaryAction=this.refreshPayments
                     docsSlug="fleet-ops/settings/payments"
-                    docsTitle="Payments guide"
-                    docsText="Payments guide"
+                    docsTitle=(t "literal.fleet-ops.payments-guide")
+                    docsText=(t "literal.fleet-ops.payments-guide")
                 }}
             />
         {{else}}
@@ -60,7 +60,7 @@
                                         @type="primary"
                                         @size="lg"
                                         @icon="flag-checkered"
-                                        @text="Start payments onboard"
+                                        @text={{t "literal.fleet-ops.start-payments-onboard"}}
                                         @onClick={{transition-to "settings.payments.onboard"}}
                                         @permission="fleet-ops onboard payments"
                                         @wrapperClass="mt-4 mb-1"

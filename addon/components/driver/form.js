@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class DriverFormComponent extends Component {
+    @service intl;
     @service store;
     @service fetch;
     @service currentUser;
@@ -26,7 +27,7 @@ export default class DriverFormComponent extends Component {
                     });
 
                     this.modalsManager.show('modals/user-form', {
-                        title: 'Create a new user',
+                        title: this.intl.t('literal.fleet-ops.create-a-new-user'),
                         user,
                         formPermission: 'iam create user',
                         uploadNewPhoto: (file) => {
@@ -52,7 +53,7 @@ export default class DriverFormComponent extends Component {
 
                             try {
                                 await user.save();
-                                this.notifications.success('New user created successfully!');
+                                this.notifications.success(this.intl.t('literal.fleet-ops.new-user-created-successfully'));
                                 modal.done();
                             } catch (error) {
                                 this.notifications.serverError(error);

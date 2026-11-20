@@ -3,28 +3,28 @@
         <div class="issue-close-modal-summary">
             {{#if this.vehicleLabel}}
                 <div>
-                    <span>Vehicle</span>
+                    <span>{{t "literal.fleet-ops.vehicle"}}</span>
                     <strong>{{this.vehicleLabel}}</strong>
                 </div>
             {{/if}}
             {{#if this.orderLabel}}
                 <div>
-                    <span>Order</span>
+                    <span>{{t "literal.fleet-ops.order"}}</span>
                     <strong>{{this.orderLabel}}</strong>
                 </div>
             {{/if}}
             <div>
-                <span>Summary</span>
+                <span>{{t "literal.fleet-ops.summary"}}</span>
                 <strong>{{n-a this.issue.title}}</strong>
             </div>
             <div>
-                <span>Description</span>
-                <strong>{{n-a this.issue.report "No report was provided."}}</strong>
+                <span>{{t "literal.fleet-ops.description-b5a7a"}}</span>
+                <strong>{{n-a this.issue.report (t "literal.fleet-ops.no-report-was-provided")}}</strong>
             </div>
         </div>
 
-        <InputGroup @name="Close Note" @helpText="Describe why this issue is being closed.">
-            <Textarea @value={{this.note}} class="form-input w-full" rows={{5}} placeholder="Resolution note" />
+        <InputGroup @name={{t "literal.fleet-ops.close-note"}} @helpText={{t "literal.fleet-ops.describe-why-this-issue-is-being-closed"}}>
+            <Textarea @value={{this.note}} class="form-input w-full" rows={{5}} placeholder={{t "literal.fleet-ops.resolution-note"}} />
         </InputGroup>
     </div>
 </Modal::Default>

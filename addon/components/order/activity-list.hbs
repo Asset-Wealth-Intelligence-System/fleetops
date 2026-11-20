@@ -8,8 +8,8 @@
                     </div>
                 </div>
                 <div>
-                    <div class="text-sm font-semibold text-gray-900 dark:text-white">{{trackingStatus.status}}</div>
-                    <div class="text-xs text-gray-400 dark:text-gray-500">{{trackingStatus.details}}</div>
+                    <div class="text-sm font-semibold text-gray-900 dark:text-white">{{t-literal trackingStatus.status ns="status"}}</div>
+                    <div class="text-xs text-gray-400 dark:text-gray-500">{{t-literal trackingStatus.details ns="status"}}</div>
                 </div>
             </div>
             <div class="flex flex-col">
@@ -22,10 +22,10 @@
                 <div class="text-center">
                     <FaIcon @icon="layer-group" @size="2x" class="text-gray-400 mb-2" />
                     <div class="text-sm text-gray-600 dark:text-gray-400 font-medium">
-                        No order activity
+                        {{t "literal.fleet-ops.no-order-activity"}}
                     </div>
                     <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                        Dispatch or update the order to create activity
+                        {{t "literal.fleet-ops.dispatch-or-update-the-order-to-create-activity"}}
                     </div>
                 </div>
             </div>

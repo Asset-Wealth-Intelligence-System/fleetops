@@ -1,4 +1,4 @@
-<ContentPanel @title="Details" @open={{true}} @isLoading={{@isLoading}} @actionButtons={{this.actionButtons}} @wrapperClass="bordered-top">
+<ContentPanel @title={{t "literal.fleet-ops.details"}} @open={{true}} @isLoading={{@isLoading}} @actionButtons={{this.actionButtons}} @wrapperClass="bordered-top">
     <:title>
         <div class="ml-2 flex flex-row space-x-1">
             {{#if @resource.dispatched}}
@@ -19,7 +19,7 @@
                     <Driver::Pill
                         @driver={{@resource.driver_assigned}}
                         @onClick={{this.focusOrderAssignedDriver}}
-                        @titleFallback="No driver assigned"
+                        @titleFallback={{t "literal.fleet-ops.no-driver-assigned"}}
                         @titleClass={{unless @resource.driver_assigned "text-gray-300"}}
                     />
                 </div>
@@ -29,7 +29,7 @@
                     <span>{{t "order.fields.vehicle-assigned"}}</span>
                 </div>
                 <div class="field-value">
-                    <Vehicle::Pill @vehicle={{@resource.vehicle_assigned}} @titleFallback="No vehicle assigned" @titleClass={{unless @resource.vehicle_assigned "text-gray-300"}} />
+                    <Vehicle::Pill @vehicle={{@resource.vehicle_assigned}} @titleFallback={{t "literal.fleet-ops.no-vehicle-assigned"}} @titleClass={{unless @resource.vehicle_assigned "text-gray-300"}} />
                 </div>
             </div>
             <div class="field-info-container">
@@ -53,8 +53,8 @@
                                 />
                             </div>
                             <div>
-                                <div class="text-sm {{unless @resource.customer 'text-gray-300'}}">{{n-a @resource.customer.name "No customer"}}</div>
-                                <div class="text-xs text-gray-400 dark:text-gray-500">{{n-a @resource.customer.phone "No phone"}}</div>
+                                <div class="text-sm {{unless @resource.customer 'text-gray-300'}}">{{n-a @resource.customer.name (t "literal.fleet-ops.no-customer-18214")}}</div>
+                                <div class="text-xs text-gray-400 dark:text-gray-500">{{n-a @resource.customer.phone (t "literal.fleet-ops.no-phone")}}</div>
                             </div>
                         </div>
                     </div>
@@ -75,8 +75,8 @@
                             />
                         </div>
                         <div>
-                            <div class="text-sm {{unless @resource.facilitator 'text-gray-300'}}">{{n-a @resource.facilitator.name "No facilitator"}}</div>
-                            <div class="text-xs text-gray-400 dark:text-gray-500">{{n-a @resource.facilitator.phone "No phone"}}</div>
+                            <div class="text-sm {{unless @resource.facilitator 'text-gray-300'}}">{{n-a @resource.facilitator.name (t "literal.fleet-ops.no-facilitator")}}</div>
+                            <div class="text-xs text-gray-400 dark:text-gray-500">{{n-a @resource.facilitator.phone (t "literal.fleet-ops.no-phone")}}</div>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@
             </div>
             <div class="field-info-container field-vertical-container dashed-bottom">
                 <div class="field-name">{{t "common.type"}}</div>
-                <div class="field-value">{{n-a (humanize @resource.type)}}</div>
+                <div class="field-value">{{t-literal (n-a (humanize @resource.type)) ns="registry"}}</div>
             </div>
             {{#if @resource.pod_required}}
                 <div class="field-info-container field-vertical-container">
@@ -123,27 +123,27 @@
 
 {{! ORCHESTRATOR CONSTRAINTS (read-only view) }}
 {{#if (or @resource.time_window_start @resource.time_window_end @resource.required_skills.length @resource.orchestrator_priority)}}
-    <ContentPanel @title="Orchestrator Constraints" @open={{true}} @isLoading={{@isLoading}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.orchestrator-constraints"}} @open={{true}} @isLoading={{@isLoading}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-2 gap-2 text-xs dark:text-gray-100">
             {{#if (or @resource.time_window_start @resource.time_window_end)}}
                 <div class="field-info-container">
-                    <div class="field-name">Earliest Arrival</div>
+                    <div class="field-name">{{t "literal.fleet-ops.earliest-arrival"}}</div>
                     <div class="field-value">{{n-a @resource.time_window_start}}</div>
                 </div>
                 <div class="field-info-container">
-                    <div class="field-name">Latest Arrival</div>
+                    <div class="field-name">{{t "literal.fleet-ops.latest-arrival"}}</div>
                     <div class="field-value">{{n-a @resource.time_window_end}}</div>
                 </div>
             {{/if}}
             {{#if @resource.required_skills.length}}
                 <div class="field-info-container col-span-2">
-                    <div class="field-name">Required Skills</div>
+                    <div class="field-name">{{t "literal.fleet-ops.required-skills"}}</div>
                     <div class="field-value">{{join @resource.required_skills ", "}}</div>
                 </div>
             {{/if}}
             {{#if @resource.orchestrator_priority}}
                 <div class="field-info-container">
-                    <div class="field-name">Priority</div>
+                    <div class="field-name">{{t "literal.fleet-ops.priority"}}</div>
                     <div class="field-value">{{@resource.orchestrator_priority}}</div>
                 </div>
             {{/if}}

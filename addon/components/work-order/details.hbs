@@ -1,15 +1,15 @@
 <div class="next-content-panel-wrapper" ...attributes>
 
     {{! ===== OVERVIEW ===== }}
-    <ContentPanel @title="Overview" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.overview"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 text-xs dark:text-gray-100">
 
             {{! — Identity — }}
             <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-1">
-                Identity
+                {{t "literal.fleet-ops.identity"}}
             </div>
             <div class="field-info-container">
-                <div class="field-name">Code</div>
+                <div class="field-name">{{t "literal.fleet-ops.code"}}</div>
                 <ClickToCopy @value={{@resource.code}} class="field-value font-mono">{{n-a @resource.code}}</ClickToCopy>
             </div>
             <div class="field-info-container">
@@ -17,106 +17,106 @@
                 <ClickToCopy @value={{@resource.public_id}} class="field-value font-mono">{{n-a @resource.public_id}}</ClickToCopy>
             </div>
             <div class="field-info-container col-span-2">
-                <div class="field-name">Subject</div>
+                <div class="field-name">{{t "literal.fleet-ops.subject"}}</div>
                 <div class="field-value">{{n-a @resource.subject}}</div>
             </div>
             <div class="field-info-container col-span-2">
-                <div class="field-name">Category</div>
+                <div class="field-name">{{t "literal.fleet-ops.category"}}</div>
                 <div class="field-value">{{n-a (smart-humanize @resource.category)}}</div>
             </div>
 
             {{! — Status & Priority — }}
             <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Status & Priority
+                {{t "literal.fleet-ops.status-priority"}}
             </div>
             <div class="field-info-container">
-                <div class="field-name">Status</div>
+                <div class="field-name">{{t "literal.fleet-ops.status-ec53a"}}</div>
                 <div class="field-value">
                     <Badge @status={{@resource.status}}>{{smart-humanize @resource.status}}</Badge>
                 </div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Priority</div>
+                <div class="field-name">{{t "literal.fleet-ops.priority"}}</div>
                 <div class="field-value">
                     {{#if (eq @resource.priority "critical")}}
-                        <Badge @status="danger">Critical</Badge>
+                        <Badge @status="danger">{{t "literal.fleet-ops.critical"}}</Badge>
                     {{else if (eq @resource.priority "high")}}
-                        <Badge @status="warning">High</Badge>
+                        <Badge @status="warning">{{t "literal.fleet-ops.high"}}</Badge>
                     {{else if (eq @resource.priority "medium")}}
-                        <Badge @status="info">Medium</Badge>
+                        <Badge @status="info">{{t "literal.fleet-ops.medium"}}</Badge>
                     {{else}}
-                        <Badge @status="default">Low</Badge>
+                        <Badge @status="default">{{t "literal.fleet-ops.low"}}</Badge>
                     {{/if}}
                 </div>
             </div>
 
             {{! — Assignment — }}
             <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Assignment
+                {{t "literal.fleet-ops.assignment"}}
             </div>
             <div class="field-info-container">
-                <div class="field-name">Target Asset</div>
+                <div class="field-name">{{t "literal.fleet-ops.target-asset"}}</div>
                 <div class="field-value">{{n-a (or @resource.target.displayName @resource.target.name @resource.target_name)}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Assigned Vendor</div>
+                <div class="field-name">{{t "literal.fleet-ops.assigned-vendor"}}</div>
                 <div class="field-value">{{n-a (or @resource.assignee.displayName @resource.assignee.name @resource.assignee_name)}}</div>
             </div>
             {{#if @resource.schedule}}
                 <div class="field-info-container">
-                    <div class="field-name">Linked Schedule</div>
+                    <div class="field-name">{{t "literal.fleet-ops.linked-schedule"}}</div>
                     <div class="field-value">{{n-a @resource.schedule.name}}</div>
                 </div>
             {{/if}}
 
             {{! — Scheduling — }}
             <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Scheduling
+                {{t "literal.fleet-ops.scheduling"}}
             </div>
             <div class="field-info-container">
-                <div class="field-name">Opened At</div>
+                <div class="field-name">{{t "literal.fleet-ops.opened-at"}}</div>
                 <div class="field-value">{{n-a (format-date-fns @resource.opened_at "dd MMM yyyy, HH:mm")}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Due At</div>
+                <div class="field-name">{{t "literal.fleet-ops.due-at"}}</div>
                 <div class="field-value">{{n-a (format-date-fns @resource.due_at "dd MMM yyyy, HH:mm")}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Closed At</div>
+                <div class="field-name">{{t "literal.fleet-ops.closed-at"}}</div>
                 <div class="field-value">{{n-a (format-date-fns @resource.closed_at "dd MMM yyyy, HH:mm")}}</div>
             </div>
         </div>
     </ContentPanel>
 
     {{! ===== BUDGET ===== }}
-    <ContentPanel @title="Budget" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.budget"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 text-xs dark:text-gray-100">
             <div class="field-info-container">
-                <div class="field-name">Estimated Cost</div>
+                <div class="field-name">{{t "literal.fleet-ops.estimated-cost"}}</div>
                 <div class="field-value">{{format-currency @resource.estimated_cost @resource.currency}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Approved Budget</div>
+                <div class="field-name">{{t "literal.fleet-ops.approved-budget"}}</div>
                 <div class="field-value">{{format-currency @resource.approved_budget @resource.currency}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Actual Cost</div>
+                <div class="field-name">{{t "literal.fleet-ops.actual-cost"}}</div>
                 <div class="field-value font-semibold">{{format-currency @resource.actual_cost @resource.currency}}</div>
             </div>
             {{#if @resource.cost_center}}
                 <div class="field-info-container">
-                    <div class="field-name">Cost Centre</div>
+                    <div class="field-name">{{t "literal.fleet-ops.cost-centre"}}</div>
                     <div class="field-value">{{n-a @resource.cost_center}}</div>
                 </div>
             {{/if}}
             {{#if @resource.budget_code}}
                 <div class="field-info-container">
-                    <div class="field-name">Budget Code</div>
+                    <div class="field-name">{{t "literal.fleet-ops.budget-code"}}</div>
                     <div class="field-value font-mono">{{n-a @resource.budget_code}}</div>
                 </div>
             {{/if}}
             <div class="field-info-container">
-                <div class="field-name">Currency</div>
+                <div class="field-name">{{t "literal.fleet-ops.currency"}}</div>
                 <div class="field-value">{{n-a @resource.currency}}</div>
             </div>
         </div>
@@ -124,7 +124,7 @@
 
     {{! ===== INSTRUCTIONS ===== }}
     {{#if @resource.instructions}}
-        <ContentPanel @title="Instructions" @open={{false}} @wrapperClass="bordered-top">
+        <ContentPanel @title={{t "literal.fleet-ops.instructions"}} @open={{false}} @wrapperClass="bordered-top">
             <div class="text-xs text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
                 {{@resource.instructions}}
             </div>
@@ -133,14 +133,14 @@
 
     {{! ===== COMPLETION & COST BREAKDOWN (only when closed) ===== }}
     {{#if (eq @resource.status "closed")}}
-        <ContentPanel @title="Completion & Cost Breakdown" @open={{true}} @wrapperClass="bordered-top">
+        <ContentPanel @title={{t "literal.fleet-ops.completion-cost-breakdown"}} @open={{true}} @wrapperClass="bordered-top">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 text-xs dark:text-gray-100">
 
                 <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-1">
-                    Asset Readings at Completion
+                    {{t "literal.fleet-ops.asset-readings-at-completion"}}
                 </div>
                 <div class="field-info-container">
-                    <div class="field-name">Odometer</div>
+                    <div class="field-name">{{t "literal.fleet-ops.odometer"}}</div>
                     <div class="field-value">
                         {{#if @resource.meta.completion_data.odometer}}
                             {{@resource.meta.completion_data.odometer}}
@@ -151,33 +151,33 @@
                     </div>
                 </div>
                 <div class="field-info-container">
-                    <div class="field-name">Engine Hours</div>
+                    <div class="field-name">{{t "literal.fleet-ops.engine-hours"}}</div>
                     <div class="field-value">{{n-a @resource.meta.completion_data.engine_hours}}</div>
                 </div>
 
                 <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                    Cost Breakdown
+                    {{t "literal.fleet-ops.cost-breakdown"}}
                 </div>
                 <div class="field-info-container">
-                    <div class="field-name">Labour Cost</div>
+                    <div class="field-name">{{t "literal.fleet-ops.labour-cost"}}</div>
                     <div class="field-value">{{format-currency @resource.meta.completion_data.labor_cost @resource.meta.completion_data.currency}}</div>
                 </div>
                 <div class="field-info-container">
-                    <div class="field-name">Parts Cost</div>
+                    <div class="field-name">{{t "literal.fleet-ops.parts-cost"}}</div>
                     <div class="field-value">{{format-currency @resource.meta.completion_data.parts_cost @resource.meta.completion_data.currency}}</div>
                 </div>
                 <div class="field-info-container">
-                    <div class="field-name">Tax</div>
+                    <div class="field-name">{{t "literal.fleet-ops.tax"}}</div>
                     <div class="field-value">{{format-currency @resource.meta.completion_data.tax @resource.meta.completion_data.currency}}</div>
                 </div>
                 <div class="field-info-container col-span-2 border-t border-gray-200 dark:border-gray-700 pt-2 mt-1">
-                    <div class="field-name font-semibold">Total Cost</div>
+                    <div class="field-name font-semibold">{{t "literal.fleet-ops.total-cost"}}</div>
                     <div class="field-value font-semibold">{{format-currency @resource.meta.completion_data.total_cost @resource.meta.completion_data.currency}}</div>
                 </div>
 
                 {{#if @resource.meta.completion_data.notes}}
                     <div class="field-info-container col-span-2 mt-2">
-                        <div class="field-name">Completion Notes</div>
+                        <div class="field-name">{{t "literal.fleet-ops.completion-notes"}}</div>
                         <div class="field-value whitespace-pre-wrap">{{@resource.meta.completion_data.notes}}</div>
                     </div>
                 {{/if}}

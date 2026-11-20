@@ -1,11 +1,11 @@
 <div class="form-wrapper" ...attributes>
-    <ContentPanel @title="Integration" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.integration"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-2 no-input-group-padding text-xs">
             <InputGroup @name={{t "device.fields.telematic"}}>
                 <ModelSelect
                     @modelName="telematic"
                     @selectedModel={{@resource.telematic}}
-                    @placeholder="Select Telematic"
+                    @placeholder={{t "literal.fleet-ops.select-telematic"}}
                     @triggerClass="form-select form-input"
                     @infiniteScroll={{false}}
                     @renderInPlace={{true}}
@@ -26,11 +26,11 @@
                 </ModelSelect>
             </InputGroup>
 
-            <InputGroup @name="Device">
+            <InputGroup @name={{t "literal.fleet-ops.device"}}>
                 <ModelSelect
                     @modelName="device"
                     @selectedModel={{@resource.device}}
-                    @placeholder="Select Device"
+                    @placeholder={{t "literal.fleet-ops.select-device"}}
                     @triggerClass="form-select form-input"
                     @infiniteScroll={{false}}
                     @renderInPlace={{true}}
@@ -46,25 +46,25 @@
                 </ModelSelect>
             </InputGroup>
 
-            <InputGroup @name="Report Frequency (Seconds)" @type="number">
+            <InputGroup @name={{t "literal.fleet-ops.report-frequency-seconds"}} @type="number">
                 <Input
                     @value={{@resource.report_frequency_sec}}
                     @type="number"
                     class="w-full form-input"
-                    placeholder="Frequency of sensor reporting in seconds"
+                    placeholder={{t "literal.fleet-ops.frequency-of-sensor-reporting-in-seconds"}}
                     disabled={{cannot-write @resource}}
                 />
             </InputGroup>
         </div>
     </ContentPanel>
 
-    <ContentPanel @title="Identity" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.identity"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-2 no-input-group-padding text-xs">
-            <InputGroup @name="Name" @value={{@resource.name}} @wrapperClass="col-span-2" disabled={{cannot-write @resource}} />
-            <InputGroup @name="Serial Number" @value={{@resource.serial_number}} @wrapperClass="col-span-2" disabled={{cannot-write @resource}} />
-            <InputGroup @name="Internal ID" @value={{@resource.internal_id}} disabled={{cannot-write @resource}} />
-            <InputGroup @name="Unit" @value={{@resource.unit}} disabled={{cannot-write @resource}} />
-            <InputGroup @name="Type" @wrapperClass="col-span-2">
+            <InputGroup @name={{t "literal.fleet-ops.name"}} @value={{@resource.name}} @wrapperClass="col-span-2" disabled={{cannot-write @resource}} />
+            <InputGroup @name={{t "literal.fleet-ops.serial-number"}} @value={{@resource.serial_number}} @wrapperClass="col-span-2" disabled={{cannot-write @resource}} />
+            <InputGroup @name={{t "literal.fleet-ops.internal-id"}} @value={{@resource.internal_id}} disabled={{cannot-write @resource}} />
+            <InputGroup @name={{t "literal.fleet-ops.unit"}} @value={{@resource.unit}} disabled={{cannot-write @resource}} />
+            <InputGroup @name={{t "literal.fleet-ops.type"}} @wrapperClass="col-span-2">
                 <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                     <PowerSelect
                         @options={{get-fleet-ops-options "sensorTypes"}}
@@ -85,9 +85,9 @@
         </div>
     </ContentPanel>
 
-    <ContentPanel @title="Threshold" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.threshold"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-2 no-input-group-padding text-xs">
-            <InputGroup @name="Min Threshold" @type="number">
+            <InputGroup @name={{t "literal.fleet-ops.min-threshold"}} @type="number">
                 <Input
                     @value={{@resource.min_threshold}}
                     @type="number"
@@ -97,7 +97,7 @@
                 />
             </InputGroup>
 
-            <InputGroup @name="Max Threshold" @type="number">
+            <InputGroup @name={{t "literal.fleet-ops.max-threshold"}} @type="number">
                 <Input
                     @value={{@resource.max_threshold}}
                     @type="number"
@@ -109,13 +109,13 @@
 
             <div class="col-span-2">
                 <div class="mt-2">
-                    <Checkbox @value={{@resource.threshold_inclusive}} @onChange={{fn (mut @resource.threshold_inclusive)}}>Threshold Inclusive</Checkbox>
+                    <Checkbox @value={{@resource.threshold_inclusive}} @onChange={{fn (mut @resource.threshold_inclusive)}}>{{t "literal.fleet-ops.threshold-inclusive"}}</Checkbox>
                 </div>
             </div>
         </div>
     </ContentPanel>
 
-    <ContentPanel @title="Warranty & Status" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.warranty-status"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-2 no-input-group-padding text-xs">
             <InputGroup @name={{t "common.status"}}>
                 <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
@@ -136,11 +136,11 @@
                 </div>
             </InputGroup>
 
-            <InputGroup @name="Warranty">
+            <InputGroup @name={{t "literal.fleet-ops.warranty"}}>
                 <ModelSelect
                     @modelName="warranty"
                     @selectedModel={{@resource.warranty}}
-                    @placeholder="Select Warranty"
+                    @placeholder={{t "literal.fleet-ops.select-warranty"}}
                     @triggerClass="form-select form-input"
                     @infiniteScroll={{false}}
                     @renderInPlace={{true}}

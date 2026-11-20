@@ -1,4 +1,4 @@
-<Layout::Section::Header @title="Fleet-Ops Routing & Tracking">
+<Layout::Section::Header @title={{t "literal.fleet-ops.fleet-ops-routing-tracking"}}>
     <Button
         @type="primary"
         @size="sm"
@@ -25,14 +25,14 @@
                         class="w-full"
                     />
                 </InputGroup>
-                <InputGroup @name="Routing Optimization Engine" @helpText="Choose which engine should optimize stop order before the route is rendered.">
+                <InputGroup @name={{t "literal.fleet-ops.routing-optimization-engine"}} @helpText={{t "literal.fleet-ops.choose-which-engine-should-optimize-stop-order-b-a64d3"}}>
                     <Select
                         @value={{this.optimizationEngine}}
                         @options={{this.routeOptimization.availableServices}}
                         @optionLabel="name"
                         @optionValue="key"
                         @onSelect={{fn (mut this.optimizationEngine)}}
-                        @placeholder="Select route optimization engine"
+                        @placeholder={{t "literal.fleet-ops.select-route-optimization-engine"}}
                         class="w-full"
                     />
                 </InputGroup>
@@ -48,19 +48,19 @@
                     />
                 </InputGroup>
             </ContentPanel>
-            <ContentPanel @title="Tracking Intelligence" @open={{true}} @wrapperClass="bordered-classic">
-                <InputGroup @name="Tracking Provider" @helpText="Choose the provider used for live tracking intelligence and ETA calculations.">
+            <ContentPanel @title={{t "literal.fleet-ops.tracking-intelligence"}} @open={{true}} @wrapperClass="bordered-classic">
+                <InputGroup @name={{t "literal.fleet-ops.tracking-provider"}} @helpText={{t "literal.fleet-ops.choose-the-provider-used-for-live-tracking-intel-9cc6c"}}>
                     <Select
                         @value={{this.trackingProvider}}
                         @options={{this.trackingProviderOptions}}
                         @optionLabel="label"
                         @optionValue="value"
                         @onSelect={{fn (mut this.trackingProvider)}}
-                        @placeholder="Select tracking provider"
+                        @placeholder={{t "literal.fleet-ops.select-tracking-provider"}}
                         class="w-full"
                     />
                 </InputGroup>
-                <InputGroup @name="Fallback Providers" @helpText="Providers used when the selected tracking provider is unavailable.">
+                <InputGroup @name={{t "literal.fleet-ops.fallback-providers"}} @helpText={{t "literal.fleet-ops.providers-used-when-the-selected-tracking-provid-777b7"}}>
                     <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                         <PowerSelectMultiple
                             @searchEnabled={{true}}
@@ -68,7 +68,7 @@
                             @options={{this.trackingProviderOptions}}
                             @selected={{this.selectedTrackingFallbackOptions}}
                             @onChange={{this.setTrackingFallbacks}}
-                            @placeholder="Select fallback providers"
+                            @placeholder={{t "literal.fleet-ops.select-fallback-providers"}}
                             @triggerClass="form-select form-input flex-1"
                             as |provider|
                         >
@@ -81,49 +81,49 @@
                         @type="default"
                         @size="xs"
                         @icon={{if this.showTrackingAdvancedSettings "chevron-up" "chevron-down"}}
-                        @text="Advanced Settings"
+                        @text={{t "literal.fleet-ops.advanced-settings"}}
                         @onClick={{this.toggleTrackingAdvancedSettings}}
                     />
                 </div>
                 {{#if this.showTrackingAdvancedSettings}}
                     <div class="mt-2 space-y-4 rounded-md border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-gray-800">
-                        <InputGroup @name="Traffic-Aware ETA" @helpText="Use provider traffic data when supported.">
+                        <InputGroup @name={{t "literal.fleet-ops.traffic-aware-eta"}} @helpText={{t "literal.fleet-ops.use-provider-traffic-data-when-supported"}}>
                             <Toggle @isToggled={{this.trackingTrafficEnabled}} @onToggle={{fn (mut this.trackingTrafficEnabled)}} />
                         </InputGroup>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <InputGroup @name="Summary Cache TTL" @helpText="Seconds to cache the final tracking summary.">
+                            <InputGroup @name={{t "literal.fleet-ops.summary-cache-ttl"}} @helpText={{t "literal.fleet-ops.seconds-to-cache-the-final-tracking-summary"}}>
                                 <Input @type="number" @value={{this.trackingCacheTtlSeconds}} min="15" max="300" class="form-input w-full" />
                             </InputGroup>
-                            <InputGroup @name="Route Cache TTL" @helpText="Seconds to cache provider route responses.">
+                            <InputGroup @name={{t "literal.fleet-ops.route-cache-ttl"}} @helpText={{t "literal.fleet-ops.seconds-to-cache-provider-route-responses"}}>
                                 <Input @type="number" @value={{this.trackingRouteCacheTtlSeconds}} min="60" max="1800" class="form-input w-full" />
                             </InputGroup>
-                            <InputGroup @name="Stale Location Threshold" @helpText="Seconds before driver location is marked stale.">
+                            <InputGroup @name={{t "literal.fleet-ops.stale-location-threshold"}} @helpText={{t "literal.fleet-ops.seconds-before-driver-location-is-marked-stale"}}>
                                 <Input @type="number" @value={{this.trackingStaleLocationThresholdSeconds}} min="30" max="3600" class="form-input w-full" />
                             </InputGroup>
-                            <InputGroup @name="Fallback Speed" @helpText="Kilometers per hour used by the calculated provider.">
+                            <InputGroup @name={{t "literal.fleet-ops.fallback-speed"}} @helpText={{t "literal.fleet-ops.kilometers-per-hour-used-by-the-calculated-provi-6ed6f"}}>
                                 <Input @type="number" @value={{this.trackingDefaultVehicleSpeedKph}} min="1" max="160" class="form-input w-full" />
                             </InputGroup>
                         </div>
                     </div>
                 {{/if}}
             </ContentPanel>
-            <ContentPanel @title="Operational Alerts" @open={{true}} @wrapperClass="bordered-classic">
-                <InputGroup @name="Late Departures" @helpText="Notify when an order has not departed after the scheduled pickup window plus the configured grace period.">
+            <ContentPanel @title={{t "literal.fleet-ops.operational-alerts"}} @open={{true}} @wrapperClass="bordered-classic">
+                <InputGroup @name={{t "literal.fleet-ops.late-departures"}} @helpText={{t "literal.fleet-ops.notify-when-an-order-has-not-departed-after-the-58c34"}}>
                     <Toggle @isToggled={{this.lateDepartureAlertsEnabled}} @onToggle={{fn (mut this.lateDepartureAlertsEnabled)}} />
                 </InputGroup>
-                <InputGroup @name="Late Departure Grace Period" @helpText="Minutes after scheduled pickup before the order is considered late to depart.">
+                <InputGroup @name={{t "literal.fleet-ops.late-departure-grace-period"}} @helpText={{t "literal.fleet-ops.minutes-after-scheduled-pickup-before-the-order-70c77"}}>
                     <Input @type="number" @value={{this.lateDepartureGracePeriodMinutes}} min="0" max="1440" class="form-input w-full" />
                 </InputGroup>
-                <InputGroup @name="Route Deviations" @helpText="Notify when tracked vehicle location drifts beyond the configured distance from the active route.">
+                <InputGroup @name={{t "literal.fleet-ops.route-deviations"}} @helpText={{t "literal.fleet-ops.notify-when-tracked-vehicle-location-drifts-beyo-953f6"}}>
                     <Toggle @isToggled={{this.routeDeviationAlertsEnabled}} @onToggle={{fn (mut this.routeDeviationAlertsEnabled)}} />
                 </InputGroup>
-                <InputGroup @name="Route Deviation Threshold" @helpText="Meters from the active route before a deviation alert is eligible.">
+                <InputGroup @name={{t "literal.fleet-ops.route-deviation-threshold"}} @helpText={{t "literal.fleet-ops.meters-from-the-active-route-before-a-deviation-4db7a"}}>
                     <Input @type="number" @value={{this.routeDeviationDistanceThresholdMeters}} min="0" max="100000" class="form-input w-full" />
                 </InputGroup>
-                <InputGroup @name="Prolonged Stoppages" @helpText="Notify when a vehicle remains stopped beyond the configured duration during an active trip.">
+                <InputGroup @name={{t "literal.fleet-ops.prolonged-stoppages"}} @helpText={{t "literal.fleet-ops.notify-when-a-vehicle-remains-stopped-beyond-the-4fd79"}}>
                     <Toggle @isToggled={{this.prolongedStoppageAlertsEnabled}} @onToggle={{fn (mut this.prolongedStoppageAlertsEnabled)}} />
                 </InputGroup>
-                <InputGroup @name="Prolonged Stoppage Duration" @helpText="Minutes stopped before a stoppage alert is eligible.">
+                <InputGroup @name={{t "literal.fleet-ops.prolonged-stoppage-duration"}} @helpText={{t "literal.fleet-ops.minutes-stopped-before-a-stoppage-alert-is-eligi-ce994"}}>
                     <Input @type="number" @value={{this.prolongedStoppageDurationThresholdMinutes}} min="0" max="1440" class="form-input w-full" />
                 </InputGroup>
             </ContentPanel>

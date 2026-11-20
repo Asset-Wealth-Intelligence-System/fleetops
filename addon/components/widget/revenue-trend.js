@@ -9,6 +9,7 @@ import formatMoney from '@fleetbase/ember-accounting/utils/format-money';
 const PERIODS = ['7d', '30d', '90d'];
 
 export default class WidgetRevenueTrendComponent extends Component {
+    @service intl;
     static widgetId = 'fleet-ops-revenue-trend-widget';
 
     @service fetch;
@@ -92,7 +93,7 @@ export default class WidgetRevenueTrendComponent extends Component {
                                 return `Revenue: ${this.formatChartCurrency(context.parsed?.y ?? context.raw)}`;
                             }
 
-                            return `${context.dataset?.label ?? 'Value'}: ${context.parsed?.y ?? context.raw}`;
+                            return `${context.dataset?.label ?? this.intl.t('literal.fleet-ops.value')}: ${context.parsed?.y ?? context.raw}`;
                         },
                     },
                 },
@@ -128,7 +129,7 @@ export default class WidgetRevenueTrendComponent extends Component {
             this.data = yield this.fetch.get('fleet-ops/analytics/revenue-trend', { period: this.period });
             this.error = null;
         } catch (e) {
-            this.error = e?.message ?? 'Failed to load revenue trend';
+            this.error = e?.message ?? this.intl.t('literal.fleet-ops.failed-to-load-revenue-trend');
         }
     }
 

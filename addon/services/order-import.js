@@ -6,6 +6,7 @@ import { debug } from '@ember/debug';
 import { task } from 'ember-concurrency';
 
 export default class OrderImportService extends Service {
+    @service intl;
     @service fetch;
     @service modalsManager;
     @service notifications;
@@ -15,17 +16,17 @@ export default class OrderImportService extends Service {
 
     @action promptImport(order, options = {}) {
         return this.modalsManager.show('modals/order-import', {
-            title: 'Import order(s) with spreadsheets',
-            acceptButtonText: 'Start Upload',
+            title: this.intl.t('literal.fleet-ops.import-order-s-with-spreadsheets'),
+            acceptButtonText: this.intl.t('literal.fleet-ops.start-upload'),
             acceptButtonScheme: 'magic',
             acceptButtonIcon: 'upload',
             acceptButtonDisabled: true,
             isProcessing: false,
             fileQueueColumns: [
                 { name: 'Type', valuePath: 'extension', key: 'type' },
-                { name: 'File Name', valuePath: 'name', key: 'fileName' },
-                { name: 'File Size', valuePath: 'size', key: 'fileSize' },
-                { name: 'Upload Date', valuePath: 'file.lastModifiedDate', key: 'uploadDate' },
+                { name: this.intl.t('literal.fleet-ops.file-name'), valuePath: 'name', key: 'fileName' },
+                { name: this.intl.t('literal.fleet-ops.file-size'), valuePath: 'size', key: 'fileSize' },
+                { name: this.intl.t('literal.fleet-ops.upload-date'), valuePath: 'file.lastModifiedDate', key: 'uploadDate' },
                 { name: '', valuePath: '', key: 'delete' },
             ],
             acceptedFileTypes: ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv'],

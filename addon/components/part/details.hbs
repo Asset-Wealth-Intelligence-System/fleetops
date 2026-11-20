@@ -1,7 +1,7 @@
 <div class="next-content-panel-wrapper" ...attributes>
 
     {{! ===== OVERVIEW ===== }}
-    <ContentPanel @title="Overview" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.overview"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 text-xs dark:text-gray-100">
 
             {{! — Photo — }}
@@ -24,7 +24,7 @@
 
             {{! — Identity & Classification — }}
             <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-1">
-                Identity & Classification
+                {{t "literal.fleet-ops.identity-classification"}}
             </div>
             <div class="field-info-container">
                 <div class="field-name">ID</div>
@@ -35,61 +35,61 @@
                 <ClickToCopy @value={{@resource.sku}} class="field-value font-mono">{{n-a @resource.sku}}</ClickToCopy>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Name</div>
+                <div class="field-name">{{t "literal.fleet-ops.name"}}</div>
                 <div class="field-value">{{n-a @resource.name}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Type</div>
+                <div class="field-name">{{t "literal.fleet-ops.type"}}</div>
                 <div class="field-value">{{n-a (smart-humanize @resource.type)}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Barcode</div>
+                <div class="field-name">{{t "literal.fleet-ops.barcode"}}</div>
                 <div class="field-value font-mono">{{n-a @resource.barcode}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Serial Number</div>
+                <div class="field-name">{{t "literal.fleet-ops.serial-number"}}</div>
                 <div class="field-value font-mono">{{n-a @resource.serial_number}}</div>
             </div>
 
             {{! — Make & Model — }}
             <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Make & Model
+                {{t "literal.fleet-ops.make-model"}}
             </div>
             <div class="field-info-container">
-                <div class="field-name">Manufacturer</div>
+                <div class="field-name">{{t "literal.fleet-ops.manufacturer"}}</div>
                 <div class="field-value">{{n-a @resource.manufacturer}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Model</div>
+                <div class="field-name">{{t "literal.fleet-ops.model"}}</div>
                 <div class="field-value">{{n-a @resource.model}}</div>
             </div>
 
             {{! — Inventory — }}
             <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Inventory
+                {{t "literal.fleet-ops.inventory"}}
             </div>
             <div class="field-info-container">
-                <div class="field-name">Status</div>
+                <div class="field-name">{{t "literal.fleet-ops.status-ec53a"}}</div>
                 <div class="field-value">
                     <Badge @status={{@resource.status}}>{{smart-humanize @resource.status}}</Badge>
                 </div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Quantity on Hand</div>
+                <div class="field-name">{{t "literal.fleet-ops.quantity-on-hand"}}</div>
                 <div class="field-value flex items-center gap-2">
                     {{n-a @resource.quantity_on_hand}}
                     {{#if @resource.is_low_stock}}
-                        <Badge @status="warning">Low Stock</Badge>
+                        <Badge @status="warning">{{t "literal.fleet-ops.low-stock"}}</Badge>
                     {{else if @resource.is_in_stock}}
-                        <Badge @status="success">In Stock</Badge>
+                        <Badge @status="success">{{t "literal.fleet-ops.in-stock"}}</Badge>
                     {{else}}
-                        <Badge @status="danger">Out of Stock</Badge>
+                        <Badge @status="danger">{{t "literal.fleet-ops.out-of-stock"}}</Badge>
                     {{/if}}
                 </div>
             </div>
             {{#if @resource.asset_name}}
                 <div class="field-info-container">
-                    <div class="field-name">Fitted To</div>
+                    <div class="field-name">{{t "literal.fleet-ops.fitted-to"}}</div>
                     <div class="field-value">{{n-a @resource.asset_name}}</div>
                 </div>
             {{/if}}
@@ -97,10 +97,10 @@
     </ContentPanel>
 
     {{! ===== PRICING ===== }}
-    <ContentPanel @title="Pricing" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.pricing"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 text-xs dark:text-gray-100">
             <div class="field-info-container">
-                <div class="field-name">Unit Cost</div>
+                <div class="field-name">{{t "literal.fleet-ops.unit-cost"}}</div>
                 <div class="field-value">{{format-currency @resource.unit_cost @resource.currency}}</div>
             </div>
             <div class="field-info-container">
@@ -108,11 +108,11 @@
                 <div class="field-value">{{format-currency @resource.msrp @resource.currency}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Total Inventory Value</div>
+                <div class="field-name">{{t "literal.fleet-ops.total-inventory-value"}}</div>
                 <div class="field-value font-semibold">{{format-currency @resource.total_value @resource.currency}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Currency</div>
+                <div class="field-name">{{t "literal.fleet-ops.currency"}}</div>
                 <div class="field-value">{{n-a @resource.currency}}</div>
             </div>
         </div>
@@ -120,17 +120,17 @@
 
     {{! ===== SUPPLIER & WARRANTY ===== }}
     {{#if (or @resource.vendor_name @resource.warranty_name)}}
-        <ContentPanel @title="Supplier & Warranty" @open={{true}} @wrapperClass="bordered-top">
+        <ContentPanel @title={{t "literal.fleet-ops.supplier-warranty"}} @open={{true}} @wrapperClass="bordered-top">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 text-xs dark:text-gray-100">
                 {{#if @resource.vendor_name}}
                     <div class="field-info-container">
-                        <div class="field-name">Supplier / Vendor</div>
+                        <div class="field-name">{{t "literal.fleet-ops.supplier-vendor"}}</div>
                         <div class="field-value">{{n-a @resource.vendor_name}}</div>
                     </div>
                 {{/if}}
                 {{#if @resource.warranty_name}}
                     <div class="field-info-container">
-                        <div class="field-name">Warranty</div>
+                        <div class="field-name">{{t "literal.fleet-ops.warranty"}}</div>
                         <div class="field-value">{{n-a @resource.warranty_name}}</div>
                     </div>
                 {{/if}}
@@ -140,7 +140,7 @@
 
     {{! ===== DESCRIPTION ===== }}
     {{#if @resource.description}}
-        <ContentPanel @title="Description" @open={{false}} @wrapperClass="bordered-top">
+        <ContentPanel @title={{t "literal.fleet-ops.description-b5a7a"}} @open={{false}} @wrapperClass="bordered-top">
             <div class="text-xs text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
                 {{@resource.description}}
             </div>

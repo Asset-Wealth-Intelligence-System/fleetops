@@ -91,7 +91,7 @@ export default class OrderConfigManagerDetailsComponent extends Component {
     @task *deleteConfig() {
         try {
             yield this.config.destroyRecord();
-            this.notifications.success(`Order config ${this.config.name} was deleted.`);
+            this.notifications.success(this.intl.t('literal.fleet-ops.order-config-was-deleted', { name: this.config.name }));
 
             if (typeof this.args.onConfigDeleted === 'function') {
                 this.args.onConfigDeleted();

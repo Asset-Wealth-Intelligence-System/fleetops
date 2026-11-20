@@ -14,6 +14,7 @@ const TYPE_TO_MODEL = {
 };
 
 export default class PartFormComponent extends Component {
+    @service intl;
     @service fetch;
     @service currentUser;
     @service notifications;
@@ -45,10 +46,12 @@ export default class PartFormComponent extends Component {
      * Polymorphic asset type options — the asset this part is compatible with.
      * Each entry has a `value` (stored on the model) and a `label` (displayed in the UI).
      */
-    assetTypeOptions = [
-        { value: 'fleet-ops:vehicle', label: 'Vehicle' },
-        { value: 'fleet-ops:equipment', label: 'Equipment' },
-    ];
+    get assetTypeOptions() {
+        return [
+            { value: 'fleet-ops:vehicle', label: this.intl.t('literal.fleet-ops.vehicle') },
+            { value: 'fleet-ops:equipment', label: this.intl.t('literal.fleet-ops.equipment') },
+        ];
+    }
 
     /** Derived Ember Data model name for the currently selected asset type. */
     @tracked assetModelName = null;

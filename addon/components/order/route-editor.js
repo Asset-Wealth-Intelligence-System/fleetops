@@ -46,7 +46,7 @@ export default class OrderRouteEditorComponent extends Component {
         }
 
         if (this.intermediateWaypoints.length) {
-            segments.push(`${this.intermediateWaypoints.length} ${this.intermediateWaypoints.length === 1 ? 'Stop' : 'Stops'}`);
+            segments.push(`${this.intermediateWaypoints.length} ${this.intermediateWaypoints.length === 1 ? this.intl.t('literal.fleet-ops.stop') : this.intl.t('literal.fleet-ops.stops')}`);
         }
 
         if (this.payload?.dropoff) {
@@ -71,7 +71,7 @@ export default class OrderRouteEditorComponent extends Component {
     get returnStop() {
         return {
             label: 'R',
-            title: 'Return',
+            title: this.intl.t('literal.fleet-ops.return'),
             badgeStyle: this.badgeStyleForColor('#6B7280'),
         };
     }

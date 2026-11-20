@@ -599,7 +599,7 @@ export default class OperationsSchedulerIndexController extends Controller {
                 try {
                     if (options.isRecurring) {
                         const template = this.store.createRecord('schedule-template', {
-                            name: options.templateName || `${targetDriver?.name} Recurring Schedule`,
+                            name: options.templateName || this.intl.t('literal.fleet-ops.recurring-schedule', { name: targetDriver?.name }),
                             rrule: options.rrule,
                             start_time: options.shiftStartTime,
                             end_time: options.shiftEndTime,

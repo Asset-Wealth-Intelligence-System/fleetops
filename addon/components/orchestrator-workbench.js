@@ -200,9 +200,9 @@ export default class OrchestratorWorkbenchComponent extends Component {
     @task *loadEngines() {
         try {
             const result = yield this.fetch.get('fleet-ops/orchestrator/engines');
-            this.availableEngines = result?.engines ?? [{ id: 'greedy', name: 'Greedy (built-in)' }];
+            this.availableEngines = result?.engines ?? [{ id: 'greedy', name: this.intl.t('literal.fleet-ops.greedy-built-in') }];
         } catch {
-            this.availableEngines = [{ id: 'greedy', name: 'Greedy (built-in)' }];
+            this.availableEngines = [{ id: 'greedy', name: this.intl.t('literal.fleet-ops.greedy-built-in') }];
         }
     }
 
@@ -400,7 +400,7 @@ export default class OrchestratorWorkbenchComponent extends Component {
         return {
             id: 'legacy',
             mode: 'allocate',
-            label: 'Allocate',
+            label: this.intl.t('literal.fleet-ops.allocate'),
             engine: 'greedy',
             allocationStrategy: 'route_aware',
             orderStatuses: ['created'],

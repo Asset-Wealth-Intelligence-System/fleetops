@@ -48,11 +48,11 @@ export default class ConnectivityDevicesIndexDetailsSensorsController extends Co
 
     get metrics() {
         return [
-            { label: 'Sensors', value: this.totalSensors, icon: 'gauge-high', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
-            { label: 'Active', value: this.activeSensorsCount, icon: 'signal', accentClass: 'fleetops-connectivity-kpi-accent-green' },
-            { label: 'Reporting', value: this.reportingSensorsCount, icon: 'chart-line', accentClass: 'fleetops-connectivity-kpi-accent-amber' },
+            { label: this.intl.t('literal.fleet-ops.sensors'), value: this.totalSensors, icon: 'gauge-high', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
+            { label: this.intl.t('literal.fleet-ops.active'), value: this.activeSensorsCount, icon: 'signal', accentClass: 'fleetops-connectivity-kpi-accent-green' },
+            { label: this.intl.t('literal.fleet-ops.reporting'), value: this.reportingSensorsCount, icon: 'chart-line', accentClass: 'fleetops-connectivity-kpi-accent-amber' },
             {
-                label: 'Out of range',
+                label: this.intl.t('literal.fleet-ops.out-of-range-63811'),
                 value: this.outOfRangeSensorsCount,
                 icon: 'triangle-exclamation',
                 accentClass: this.outOfRangeSensorsCount ? 'fleetops-connectivity-kpi-accent-rose' : 'fleetops-connectivity-kpi-accent-green',
@@ -90,7 +90,7 @@ export default class ConnectivityDevicesIndexDetailsSensorsController extends Co
                 filterComponent: 'filter/string',
             },
             {
-                label: 'Type',
+                label: this.intl.t('literal.fleet-ops.type'),
                 valuePath: 'type',
                 resizable: true,
                 sortable: true,
@@ -100,19 +100,19 @@ export default class ConnectivityDevicesIndexDetailsSensorsController extends Co
                 filterOptions: fleetOpsOptions('sensorTypes'),
             },
             {
-                label: 'Value',
+                label: this.intl.t('literal.fleet-ops.value'),
                 valuePath: 'last_value',
                 resizable: true,
                 sortable: true,
             },
             {
-                label: 'Unit',
+                label: this.intl.t('literal.fleet-ops.unit'),
                 valuePath: 'unit',
                 resizable: true,
                 sortable: true,
             },
             {
-                label: 'Threshold',
+                label: this.intl.t('literal.fleet-ops.threshold'),
                 valuePath: 'threshold_status',
                 cellComponent: 'table/cell/status',
                 resizable: true,
@@ -130,7 +130,7 @@ export default class ConnectivityDevicesIndexDetailsSensorsController extends Co
                 filterOptions: fleetOpsOptions('sensorStatuses'),
             },
             {
-                label: 'Last Reading',
+                label: this.intl.t('literal.fleet-ops.last-reading'),
                 valuePath: 'lastReadingAt',
                 sortParam: 'last_reading_at',
                 resizable: true,

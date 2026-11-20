@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default class AdminRoutingSettingsComponent extends Component {
+    @service intl;
     @service fetch;
     @service notifications;
     @tracked trackingProvider = 'google_routes';
@@ -18,7 +19,7 @@ export default class AdminRoutingSettingsComponent extends Component {
     @tracked trackingProviderOptions = [
         { value: 'google_routes', label: 'Google Routes' },
         { value: 'osrm', label: 'OSRM' },
-        { value: 'calculated', label: 'Calculated' },
+        { value: 'calculated', label: this.intl.t('literal.fleet-ops.calculated') },
     ];
 
     constructor() {
@@ -45,7 +46,7 @@ export default class AdminRoutingSettingsComponent extends Component {
     @task *saveSettings() {
         try {
             yield this.fetch.post('fleet-ops/settings/admin-tracking-settings', this.trackingSettingsPayload);
-            this.notifications.success('Tracking defaults saved.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.tracking-defaults-saved'));
         } catch (error) {
             this.notifications.serverError(error);
         }

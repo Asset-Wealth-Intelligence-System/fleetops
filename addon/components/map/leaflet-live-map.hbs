@@ -76,7 +76,7 @@
                         @publicId={{driver.public_id}}
                         @location={{point-to-coordinates driver.location}}
                         @rotationAngle={{driver.heading}}
-                        @icon={{icon iconUrl=driver.vehicle_avatar iconSize=(array 24 24)}}
+                        @icon={{icon iconUrl=driver.vehicle_avatar iconSize=(array 32 32)}}
                         @onAdd={{fn this.trigger "onDriverAdded" driver}}
                         @onClick={{fn this.trigger "onDriverClicked" driver}}
                         @draggable={{false}}
@@ -101,31 +101,31 @@
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.public_id driver.id}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Phone</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.phone"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.phone}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Vehicle</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.vehicle"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.vehicle_name}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Email</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.email"}}</div>
                                         <div class="text-[11px] text-white leading-tight truncate min-w-0 w-full">{{n-a driver.email}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Order</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.order"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.meta.current_order_reference}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Speed</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.speed-44877"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.meta.speed_label}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Heading</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.heading"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.meta.heading_label}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Location</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.location"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a
                                                 driver.meta.location_coordinates
                                                 (point-coordinates driver.location)
@@ -153,31 +153,31 @@
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.public_id driver.id}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Phone</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.phone"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.phone}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Vehicle</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.vehicle"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.vehicle_name}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Email</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.email"}}</div>
                                         <div class="text-[11px] text-white leading-tight truncate min-w-0 w-full">{{n-a driver.email}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Order</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.order"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.meta.current_order_reference}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Speed</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.speed-44877"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.meta.speed_label}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Heading</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.heading"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a driver.meta.heading_label}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Location</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.location"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a
                                                 driver.meta.location_coordinates
                                                 (point-coordinates driver.location)
@@ -195,7 +195,7 @@
                         @publicId={{vehicle.public_id}}
                         @location={{point-to-coordinates vehicle.location}}
                         @rotationAngle={{vehicle.heading}}
-                        @icon={{icon iconUrl=vehicle.avatar_url iconSize=(array 24 24)}}
+                        @icon={{icon iconUrl=vehicle.avatar_url iconSize=(array 32 32)}}
                         @onAdd={{fn this.trigger "onVehicleAdded" vehicle}}
                         @onClick={{fn this.trigger "onVehicleClicked" vehicle}}
                         @draggable={{false}}
@@ -216,7 +216,7 @@
                                 </div>
                                 <div class="grid grid-cols-2 gap-1">
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Vehicle #</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.vehicle-b8b0c"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a
                                                 vehicle.internal_id
                                                 vehicle.public_id
@@ -226,26 +226,29 @@
                                             }}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Driver</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.driver"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a vehicle.driver_name}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Order</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.order"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a vehicle.meta.current_order_reference}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Speed</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.speed-44877"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a vehicle.meta.speed_label}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Heading</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.heading"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a vehicle.meta.heading_label}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Location</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.location"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a vehicle.meta.location_coordinates}}</div>
                                     </div>
                                 </div>
+                                <RegistryYield @registry="fleet-ops:component:live-map:vehicle:popup" as |RegistryComponent|>
+                                    <RegistryComponent @resource={{vehicle}} @compact={{true}} />
+                                </RegistryYield>
                             </div>
                         </marker.popup>
                         <marker.tooltip @permanent={{false}} @sticky={{true}}>
@@ -263,7 +266,7 @@
                                 </div>
                                 <div class="grid grid-cols-2 gap-1">
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Vehicle #</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.vehicle-b8b0c"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a
                                                 vehicle.internal_id
                                                 vehicle.public_id
@@ -273,23 +276,23 @@
                                             }}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Driver</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.driver"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a vehicle.driver_name}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Order</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.order"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a vehicle.meta.current_order_reference}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Speed</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.speed-44877"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a vehicle.meta.speed_label}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Heading</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.heading"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a vehicle.meta.heading_label}}</div>
                                     </div>
                                     <div class="rounded bg-gray-900 shadow-md px-1.5 py-1 min-w-0">
-                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">Location</div>
+                                        <div class="text-[9px] font-semibold uppercase text-gray-400 leading-none">{{t "literal.fleet-ops.location"}}</div>
                                         <div class="text-[11px] text-white leading-tight whitespace-normal break-words">{{n-a vehicle.meta.location_coordinates}}</div>
                                     </div>
                                 </div>
@@ -303,7 +306,7 @@
                         @id={{place.id}}
                         @publicId={{place.public_id}}
                         @location={{point-to-coordinates place.location}}
-                        @icon={{icon iconUrl=(or place.avatar_url "/engines-dist/images/building-marker.png") iconSize=(array 16 16)}}
+                        @icon={{icon iconUrl=(or place.avatar_url "/engines-dist/images/building-marker.png") iconSize=(array 28 28) iconAnchor=(array 14 28)}}
                         @riseOnHover={{true}}
                         @title={{place.address}}
                         @alt={{place.address}}

@@ -4,15 +4,15 @@
             <Image
                 src={{avatar-url entry.photoUrl}}
                 @fallbackSrc={{config "defaultValues.contactImage"}}
-                alt={{or entry.name "Unknown customer"}}
+                alt={{or entry.name (t "literal.fleet-ops.unknown-customer")}}
                 class="{{this.sizeClass}} rounded-full ring-2 ring-gray-800 dark:ring-gray-700 shadow transition-shadow hover:shadow-md focus:shadow-md"
                 role="img"
                 tabindex="0"
             />
             <Attach::Tooltip @class="clean" @animation="scale" @placement="right">
                 <InputInfo>
-                    <div class="text-xs font-semibold">{{n-a entry.name "No Customer"}}</div>
-                    <div class="text-xs">{{n-a entry.phone "No Phone"}}</div>
+                    <div class="text-xs font-semibold">{{n-a entry.name (t "literal.fleet-ops.no-customer")}}</div>
+                    <div class="text-xs">{{n-a entry.phone (t "literal.fleet-ops.no-phone-b5deb")}}</div>
                     <div class="text-xs max-w-xs truncate">{{n-a entry.address}}</div>
                 </InputInfo>
             </Attach::Tooltip>

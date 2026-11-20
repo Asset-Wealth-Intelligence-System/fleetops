@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-3 p-3">
     <div class="flex flex-col gap-1">
-        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">Event Review + Triage</h2>
-        <p class="text-xs text-gray-500 dark:text-gray-300">Warning signals, diagnostics, and unprocessed telemetry.</p>
+        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.event-review-triage"}}</h2>
+        <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.warning-signals-diagnostics-and-unprocessed-tele-f5dce"}}</p>
     </div>
 
     <section class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
@@ -24,9 +24,9 @@
         <Telematic::TabEmptyState
             @tone="success"
             @icon="check"
-            @title="No warning or unprocessed events"
-            @message="Recent telemetry is reviewed and no warning-level events are currently visible for this device."
-            @primaryText="Refresh"
+            @title={{t "literal.fleet-ops.no-warning-or-unprocessed-events"}}
+            @message={{t "literal.fleet-ops.recent-telemetry-is-reviewed-and-no-warning-leve-78352"}}
+            @primaryText={{t "literal.fleet-ops.refresh"}}
             @primaryIcon="refresh"
             @primaryAction={{this.refresh}}
         />
@@ -35,12 +35,12 @@
     <section class="overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <div class="fleetops-provider-connections-header border-b border-gray-200 px-3 py-2 dark:border-gray-700">
             <div>
-                <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">Telemetry Events</h3>
-                <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Filter by type, severity, processed state, and date.</p>
+                <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.telemetry-events"}}</h3>
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.filter-by-type-severity-processed-state-and-date"}}</p>
             </div>
             <div class="fleetops-provider-connections-actions flex min-w-0 flex-wrap items-center gap-1 lg:ml-auto lg:flex-nowrap lg:justify-end">
                 <Layout::Resource::TabularActions
-                    @title="Telemetry Events"
+                    @title={{t "literal.fleet-ops.telemetry-events"}}
                     @searchQuery={{this.events_query}}
                     @onSearch={{perform this.searchTask}}
                     @columns={{this.columns}}
@@ -60,7 +60,7 @@
 
         <Layout::Resource::Tabular
             @resource="device-event"
-            @title="Telemetry Events"
+            @title={{t "literal.fleet-ops.telemetry-events"}}
             @data={{@model}}
             @columns={{this.columns}}
             @page={{this.events_page}}
@@ -72,11 +72,11 @@
                 "table/empty-state"
                 variant="compact"
                 icon="bolt"
-                title="No telemetry events"
-                description="Events appear after this device reports provider activity."
-                filteredTitle="No events match your filters"
-                filteredDescription="Adjust the search, severity, or date filters to review other events."
-                primaryText="Refresh"
+                title=(t "literal.fleet-ops.no-telemetry-events")
+                description=(t "literal.fleet-ops.events-appear-after-this-device-reports-provider-907a4")
+                filteredTitle=(t "literal.fleet-ops.no-events-match-your-filters")
+                filteredDescription=(t "literal.fleet-ops.adjust-the-search-severity-or-date-filters-to-re-16685")
+                primaryText=(t "literal.fleet-ops.refresh")
                 primaryIcon="refresh"
                 primaryAction=this.refresh
             }}

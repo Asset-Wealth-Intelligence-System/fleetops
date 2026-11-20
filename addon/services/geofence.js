@@ -211,14 +211,14 @@ export default class GeofenceService extends Service {
 
     #openGenericLayerModal(geoJson) {
         this.modalsManager.show('modals/map-layer-form', {
-            title: 'Create new Layer',
+            title: this.intl.t('literal.fleet-ops.create-new-layer'),
             modalClass: 'flb-resource-modal',
-            acceptButtonText: 'Create',
+            acceptButtonText: this.intl.t('literal.fleet-ops.create'),
             acceptButtonIcon: 'magic',
             declineButtonIcon: 'times',
             declineButtonIconPrefix: 'fas',
             layerTypes: ['Service Area', 'Zone'],
-            selectedLayerType: 'Service Area',
+            selectedLayerType: this.intl.t('literal.fleet-ops.service-area'),
             serviceAreaTypes: this.serviceAreas.serviceAreaTypes,
             layerOptions: {
                 trigger_on_entry: false,
@@ -235,7 +235,7 @@ export default class GeofenceService extends Service {
                 const selectedServiceArea = layerOptions.service_area;
 
                 if (selectedLayerType === 'Zone' && !selectedServiceArea) {
-                    this.notifications.error('Service Area required to create Zone!');
+                    this.notifications.error(this.intl.t('literal.fleet-ops.service-area-required-to-create-zone'));
                     modal.stopLoading?.();
                     return;
                 }

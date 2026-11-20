@@ -23,7 +23,7 @@ export default class ConnectivityTelematicsNewController extends Controller {
 
             yield this.hostRouter.refresh();
             yield this.hostRouter.transitionTo('console.fleet-ops.connectivity.telematics.details', telematic);
-            this.notifications.success('Telematic created successfully.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.telematic-created-successfully'));
             this.resetForm();
         } catch (err) {
             this.notifications.serverError(err);

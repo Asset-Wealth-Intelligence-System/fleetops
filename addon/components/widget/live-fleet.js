@@ -21,6 +21,7 @@ const RECONCILE_INTERVAL_MS = 5 * 60_000;
  * directly to the markers list. Full reconciliation every 5 minutes.
  */
 export default class WidgetLiveFleetComponent extends Component {
+    @service intl;
     static widgetId = 'fleet-ops-live-fleet-widget';
 
     @service fetch;
@@ -186,7 +187,7 @@ export default class WidgetLiveFleetComponent extends Component {
             this.data = yield this.fetch.get('fleet-ops/analytics/live-fleet');
             this.error = null;
         } catch (e) {
-            this.error = e?.message ?? 'Failed to load live fleet';
+            this.error = e?.message ?? this.intl.t('literal.fleet-ops.failed-to-load-live-fleet');
         }
     }
 

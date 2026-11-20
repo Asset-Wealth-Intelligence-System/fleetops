@@ -14,6 +14,7 @@ import { task } from 'ember-concurrency';
  * open_issues), and the optional sparkline line chart.
  */
 export default class WidgetKpiTileComponent extends Component {
+    @service intl;
     @service fetch;
     @tracked data = null;
     @tracked error = null;
@@ -157,7 +158,7 @@ export default class WidgetKpiTileComponent extends Component {
             });
             this.error = null;
         } catch (e) {
-            this.error = e?.message ?? 'Failed to load metric';
+            this.error = e?.message ?? this.intl.t('literal.fleet-ops.failed-to-load-metric');
         }
     }
 

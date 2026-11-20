@@ -3,15 +3,16 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class ManagementVendorsIndexDetailsController extends Controller {
+    @service intl;
     @service hostRouter;
     @tracked tabs = [
         {
             route: 'management.vendors.index.details.index',
-            label: 'Overview',
+            label: this.intl.t('literal.fleet-ops.overview'),
         },
         {
             route: 'management.vendors.index.details.personnel',
-            label: 'Personnel',
+            label: this.intl.t('literal.fleet-ops.personnel'),
         },
     ];
     @tracked actionButtons = [

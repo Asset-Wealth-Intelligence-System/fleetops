@@ -38,7 +38,7 @@
                             <div class="px-1">
                                 <div class="text-sm flex flex-row items-center px-3 py-0.5 rounded-md my-1">
                                     {{t "order-list-overlay.selected"}}
-                                    {{pluralize this.overlay.selectedOrders.length "Order"}}
+                                    {{t "literal.fleet-ops.order-count" count=this.overlay.selectedOrders.length}}
                                 </div>
                             </div>
                             <div class="next-dd-menu-seperator"></div>
@@ -88,7 +88,7 @@
                     {{#each-in this.overlay.orderGroups as |key orders|}}
                         <ContentPanel
                             @title={{t (concat "order-list-overlay." (dasherize key))}}
-                            @subtitle={{pluralize orders.length (t "resource.order")}}
+                            @subtitle={{t "literal.fleet-ops.order-count" count=orders.length}}
                             @open={{orders.length}}
                             @panelTitleInlineClass="fleetops-order-list-title-text"
                             @panelSubtitleInlineClass="resource-count"
@@ -125,7 +125,7 @@
                     {{#each this.overlay.fleets as |fleet|}}
                         <ContentPanel
                             @title={{fleet.name}}
-                            @subtitle={{concat fleet.drivers_online_count " of " fleet.drivers_count " Online"}}
+                            @subtitle={{t "literal.fleet-ops.n-of-total-online" online=fleet.drivers_online_count total=fleet.drivers_count}}
                             @open={{fleet.drivers.length}}
                             @actionButtons={{array (hash type="default" icon="cog" size="xs" onClick=(fn this.fleetActions.panel.view fleet))}}
                             @panelTitleInlineClass="fleetops-order-list-title-text"

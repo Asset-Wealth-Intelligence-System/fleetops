@@ -25,19 +25,20 @@ export default class ActivityEventSelectorComponent extends Component {
         return {
             'order.dispatched': {
                 name: 'order.dispatched',
-                description: this.intl?.t?.('activity.form.event-selector.events.order.dispatched') ?? 'Triggers when an order is successfully dispatched.',
+                description:
+                    this.intl?.t?.('activity.form.event-selector.events.order.dispatched') ?? this.intl.t('literal.fleet-ops.triggers-when-an-order-is-successfully-dispatche-fab99'),
             },
             'order.failed': {
                 name: 'order.failed',
-                description: this.intl?.t?.('activity.form.event-selector.events.order.failed') ?? 'Triggers when an order fails due to an error or exception.',
+                description: this.intl?.t?.('activity.form.event-selector.events.order.failed') ?? this.intl.t('literal.fleet-ops.triggers-when-an-order-fails-due-to-an-error-or-a408a'),
             },
             'order.canceled': {
                 name: 'order.canceled',
-                description: this.intl?.t?.('activity.form.event-selector.events.order.canceled') ?? 'Triggers when an order is canceled by a user, driver, or system process.',
+                description: this.intl?.t?.('activity.form.event-selector.events.order.canceled') ?? this.intl.t('literal.fleet-ops.triggers-when-an-order-is-canceled-by-a-user-dri-8e4de'),
             },
             'order.completed': {
                 name: 'order.completed',
-                description: this.intl?.t?.('activity.form.event-selector.events.order.completed') ?? 'Triggers when an order is completed by a driver, or system process.',
+                description: this.intl?.t?.('activity.form.event-selector.events.order.completed') ?? this.intl.t('literal.fleet-ops.triggers-when-an-order-is-completed-by-a-driver-6e87a'),
             },
         };
     }

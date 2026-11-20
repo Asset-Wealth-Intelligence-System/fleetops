@@ -17,23 +17,23 @@
                             {{/if}}
                         </div>
                         <div class="mt-2 flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-300">
-                            <span>Connection test: {{this.connectionTestLabel}}</span>
-                            <span>Last test: {{n-a (format-date-fns @model.meta.last_connection_test "dd MMM HH:mm")}}</span>
-                            <span>Last sync: {{n-a (format-date-fns this.lastSyncAt "dd MMM HH:mm")}}</span>
-                            <span>Devices: {{n-a @model.meta.last_sync_total}}</span>
+                            <span>{{t "literal.fleet-ops.connection-test"}} {{this.connectionTestLabel}}</span>
+                            <span>{{t "literal.fleet-ops.last-test"}} {{n-a (format-date-fns @model.meta.last_connection_test "dd MMM HH:mm")}}</span>
+                            <span>{{t "literal.fleet-ops.last-sync"}} {{n-a (format-date-fns this.lastSyncAt "dd MMM HH:mm")}}</span>
+                            <span>{{t "literal.fleet-ops.devices"}} {{n-a @model.meta.last_sync_total}}</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex flex-shrink-0 flex-nowrap items-center gap-2 whitespace-nowrap">
-                    <Button @icon="arrow-left" @text="Back" @size="xs" @onClick={{transition-to "connectivity.telematics.index"}} />
-                    <Button @icon="plug" @text="Test" @size="xs" @onClick={{this.openConnectionTestDialog}} />
-                    <Button @icon="satellite-dish" @text="Sync Devices" @type="primary" @size="xs" @isLoading={{this.discoverDevices.isRunning}} @onClick={{perform this.discoverDevices}} />
-                    <Button @icon="cog" @text="Settings" @size="xs" @onClick={{transition-to "connectivity.telematics.edit" @model}} />
+                    <Button @icon="arrow-left" @text={{t "literal.fleet-ops.back"}} @size="xs" @onClick={{transition-to "connectivity.telematics.index"}} />
+                    <Button @icon="plug" @text={{t "literal.fleet-ops.test"}} @size="xs" @onClick={{this.openConnectionTestDialog}} />
+                    <Button @icon="satellite-dish" @text={{t "literal.fleet-ops.sync-devices"}} @type="primary" @size="xs" @isLoading={{this.discoverDevices.isRunning}} @onClick={{perform this.discoverDevices}} />
+                    <Button @icon="cog" @text={{t "literal.fleet-ops.settings"}} @size="xs" @onClick={{transition-to "connectivity.telematics.edit" @model}} />
                 </div>
             </div>
 
-            <nav class="mt-4 flex w-full gap-1 overflow-x-auto border-b border-gray-200 text-sm dark:border-gray-700" aria-label="Telematic connection sections">
+            <nav class="mt-4 flex w-full gap-1 overflow-x-auto border-b border-gray-200 text-sm dark:border-gray-700" aria-label={{t "literal.fleet-ops.telematic-connection-sections"}}>
                 {{#each this.tabs as |tab|}}
                     <LinkTo
                         @route={{tab.route}}

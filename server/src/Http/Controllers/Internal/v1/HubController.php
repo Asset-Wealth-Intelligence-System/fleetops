@@ -57,51 +57,51 @@ class HubController extends Controller
 
         return response()->json([
             'kpis'     => [
-                $this->kpi('drivers', 'Drivers', $counts['drivers'], $counts['drivers'] > 0 ? 'Driver profiles available for dispatch.' : 'Add driver profiles before dispatching work.', 'blue', 'id-card', 'management.drivers'),
-                $this->kpi('vehicles', 'Vehicles', $counts['vehicles'], $counts['vehicles'] > 0 ? 'Vehicles ready for assignment and tracking.' : 'Add vehicles so dispatch has assignable assets.', 'green', 'truck', 'management.vehicles'),
-                $this->kpi('issues', 'Open Issues', $counts['issues'], $counts['issues'] > 0 ? 'Issues need review before they affect service quality.' : 'No open issues are visible right now.', $counts['issues'] > 0 ? 'rose' : 'green', 'triangle-exclamation', 'management.issues'),
-                $this->kpi('fuel_records', 'Fuel Records', $fuelRecords, $fuelRecords > 0 ? 'Fuel activity is available for review.' : 'Fuel records will appear as reports or transactions arrive.', 'amber', 'gas-pump', $counts['fuel_transactions'] > $counts['fuel_reports'] ? 'management.fuel-transactions' : 'management.fuel-reports'),
+                $this->kpi('drivers', $this->t('resources.kpis.drivers'), $counts['drivers'], $this->t($counts['drivers'] > 0 ? 'resources.kpis.drivers_ready' : 'resources.kpis.drivers_empty'), 'blue', 'id-card', 'management.drivers'),
+                $this->kpi('vehicles', $this->t('resources.kpis.vehicles'), $counts['vehicles'], $this->t($counts['vehicles'] > 0 ? 'resources.kpis.vehicles_ready' : 'resources.kpis.vehicles_empty'), 'green', 'truck', 'management.vehicles'),
+                $this->kpi('issues', $this->t('resources.kpis.issues'), $counts['issues'], $this->t($counts['issues'] > 0 ? 'resources.kpis.issues_open' : 'resources.kpis.issues_none'), $counts['issues'] > 0 ? 'rose' : 'green', 'triangle-exclamation', 'management.issues'),
+                $this->kpi('fuel_records', $this->t('resources.kpis.fuel_records'), $fuelRecords, $this->t($fuelRecords > 0 ? 'resources.kpis.fuel_records_ready' : 'resources.kpis.fuel_records_empty'), 'amber', 'gas-pump', $counts['fuel_transactions'] > $counts['fuel_reports'] ? 'management.fuel-transactions' : 'management.fuel-reports'),
             ],
             'actions'  => $this->resourceActions($counts, $fuelRecords),
             'sections' => [
                 [
                     'key'         => 'people_assets',
-                    'title'       => 'People And Assets',
-                    'description' => 'Keep dispatchable drivers, vehicles, and fleet groupings ready for live work.',
+                    'title'       => $this->t('resources.sections.people_assets'),
+                    'description' => $this->t('resources.sections.people_assets_desc'),
                     'links'       => [
-                        $this->link('Drivers', 'management.drivers', 'id-card', $counts['drivers'], 'Manage driver profiles, assignments, and schedules.'),
-                        $this->link('Vehicles', 'management.vehicles', 'truck', $counts['vehicles'], 'Track vehicles, device links, equipment, and service context.'),
-                        $this->link('Fleets', 'management.fleets', 'user-group', $counts['fleets'], 'Group drivers and vehicles by team, region, or service type.'),
+                        $this->link($this->t('resources.links.drivers'), 'management.drivers', 'id-card', $counts['drivers'], $this->t('resources.links.drivers_desc')),
+                        $this->link($this->t('resources.links.vehicles'), 'management.vehicles', 'truck', $counts['vehicles'], $this->t('resources.links.vehicles_desc')),
+                        $this->link($this->t('resources.links.fleets'), 'management.fleets', 'user-group', $counts['fleets'], $this->t('resources.links.fleets_desc')),
                     ],
                 ],
                 [
                     'key'         => 'network',
-                    'title'       => 'Operating Network',
-                    'description' => 'Maintain the partners, contacts, and places used while creating and dispatching orders.',
+                    'title'       => $this->t('resources.sections.network'),
+                    'description' => $this->t('resources.sections.network_desc'),
                     'links'       => [
-                        $this->link('Vendors', 'management.vendors', 'warehouse', $counts['vendors'], 'Service partners connected to operational work.'),
-                        $this->link('Contacts', 'management.contacts', 'address-book', $counts['contacts'], 'Customer and contact records for order workflows.'),
-                        $this->link('Places', 'management.places', 'location-dot', $counts['places'], 'Reusable locations, zones, and address context.'),
+                        $this->link($this->t('resources.links.vendors'), 'management.vendors', 'warehouse', $counts['vendors'], $this->t('resources.links.vendors_desc')),
+                        $this->link($this->t('resources.links.contacts'), 'management.contacts', 'address-book', $counts['contacts'], $this->t('resources.links.contacts_desc')),
+                        $this->link($this->t('resources.links.places'), 'management.places', 'location-dot', $counts['places'], $this->t('resources.links.places_desc')),
                     ],
                 ],
                 [
                     'key'         => 'exceptions',
-                    'title'       => 'Fuel And Exceptions',
-                    'description' => 'Review fuel activity and operational issues before they affect service quality.',
+                    'title'       => $this->t('resources.sections.exceptions'),
+                    'description' => $this->t('resources.sections.exceptions_desc'),
                     'links'       => [
-                        $this->link('Fuel Reports', 'management.fuel-reports', 'gas-pump', $counts['fuel_reports'], 'Review reported fuel activity and costs.'),
-                        $this->link('Fuel Transactions', 'management.fuel-transactions', 'credit-card', $counts['fuel_transactions'], 'Inspect transaction-level fueling data and matching context.'),
-                        $this->link('Issues', 'management.issues', 'triangle-exclamation', $counts['issues'], 'Track incidents, service issues, and follow-up work.'),
+                        $this->link($this->t('resources.links.fuel_reports'), 'management.fuel-reports', 'gas-pump', $counts['fuel_reports'], $this->t('resources.links.fuel_reports_desc')),
+                        $this->link($this->t('resources.links.fuel_transactions'), 'management.fuel-transactions', 'credit-card', $counts['fuel_transactions'], $this->t('resources.links.fuel_transactions_desc')),
+                        $this->link($this->t('resources.links.issues'), 'management.issues', 'triangle-exclamation', $counts['issues'], $this->t('resources.links.issues_desc')),
                     ],
                 ],
             ],
             'docs'     => [
-                $this->doc('Drivers', 'id-card', 'fleet-ops/resources/drivers/overview', 'Drivers guide', 'Create driver profiles, app access, assignment context, and operating status.'),
-                $this->doc('Vehicles', 'truck', 'fleet-ops/resources/vehicles/overview', 'Vehicles guide', 'Track fleet assets, assignment readiness, and vehicle operating details.'),
-                $this->doc('Fleets', 'user-group', 'fleet-ops/resources/fleets/overview', 'Fleets guide', 'Group drivers and vehicles by team, region, or service coverage.'),
-                $this->doc('Contacts', 'address-book', 'fleet-ops/resources/contacts/overview', 'Contacts guide', 'Manage people and organizations used across orders and operational records.'),
-                $this->doc('Places', 'location-dot', 'fleet-ops/resources/places/overview', 'Places guide', 'Manage reusable pickup, dropoff, hub, and facility locations.'),
-                $this->doc('Issues', 'triangle-exclamation', 'fleet-ops/resources/issues/overview', 'Issues guide', 'Track incidents, service exceptions, and operational follow-up.'),
+                $this->doc($this->t('resources.links.drivers'), 'id-card', 'fleet-ops/resources/drivers/overview', $this->t('resources.docs.drivers'), $this->t('resources.docs.drivers_desc')),
+                $this->doc($this->t('resources.links.vehicles'), 'truck', 'fleet-ops/resources/vehicles/overview', $this->t('resources.docs.vehicles'), $this->t('resources.docs.vehicles_desc')),
+                $this->doc($this->t('resources.links.fleets'), 'user-group', 'fleet-ops/resources/fleets/overview', $this->t('resources.docs.fleets'), $this->t('resources.docs.fleets_desc')),
+                $this->doc($this->t('resources.links.contacts'), 'address-book', 'fleet-ops/resources/contacts/overview', $this->t('resources.docs.contacts'), $this->t('resources.docs.contacts_desc')),
+                $this->doc($this->t('resources.links.places'), 'location-dot', 'fleet-ops/resources/places/overview', $this->t('resources.docs.places'), $this->t('resources.docs.places_desc')),
+                $this->doc($this->t('resources.links.issues'), 'triangle-exclamation', 'fleet-ops/resources/issues/overview', $this->t('resources.docs.issues'), $this->t('resources.docs.issues_desc')),
             ],
         ]);
     }
@@ -123,38 +123,38 @@ class HubController extends Controller
 
         return response()->json([
             'kpis'     => [
-                $this->kpi('overdue_schedules', 'Overdue Schedules', $overdueSchedules, $overdueSchedules > 0 ? 'Recurring service needs attention.' : 'No recurring service is overdue.', $overdueSchedules > 0 ? 'rose' : 'green', 'calendar-xmark', 'maintenance.schedules'),
-                $this->kpi('upcoming_schedules', 'Due This Week', $upcomingSchedules, 'Maintenance schedules due in the next 7 days.', 'blue', 'calendar-day', 'maintenance.schedules'),
-                $this->kpi('open_work_orders', 'Open Work Orders', $openWorkOrders, $openWorkOrders > 0 ? 'Active work needs assignment or closure.' : 'No open work orders right now.', $openWorkOrders > 0 ? 'amber' : 'green', 'clipboard-list', 'maintenance.work-orders'),
-                $this->kpi('low_stock_parts', 'Low Stock Parts', $lowStockParts, $lowStockParts > 0 ? 'Parts inventory may need replenishment.' : 'No low-stock parts detected.', $lowStockParts > 0 ? 'amber' : 'green', 'cog', 'maintenance.parts'),
+                $this->kpi('overdue_schedules', $this->t('maintenance.kpis.overdue_schedules'), $overdueSchedules, $this->t($overdueSchedules > 0 ? 'maintenance.kpis.overdue_schedules_some' : 'maintenance.kpis.overdue_schedules_none'), $overdueSchedules > 0 ? 'rose' : 'green', 'calendar-xmark', 'maintenance.schedules'),
+                $this->kpi('upcoming_schedules', $this->t('maintenance.kpis.upcoming_schedules'), $upcomingSchedules, $this->t('maintenance.kpis.upcoming_schedules_desc'), 'blue', 'calendar-day', 'maintenance.schedules'),
+                $this->kpi('open_work_orders', $this->t('maintenance.kpis.open_work_orders'), $openWorkOrders, $this->t($openWorkOrders > 0 ? 'maintenance.kpis.open_work_orders_some' : 'maintenance.kpis.open_work_orders_none'), $openWorkOrders > 0 ? 'amber' : 'green', 'clipboard-list', 'maintenance.work-orders'),
+                $this->kpi('low_stock_parts', $this->t('maintenance.kpis.low_stock_parts'), $lowStockParts, $this->t($lowStockParts > 0 ? 'maintenance.kpis.low_stock_parts_some' : 'maintenance.kpis.low_stock_parts_none'), $lowStockParts > 0 ? 'amber' : 'green', 'cog', 'maintenance.parts'),
             ],
             'actions'  => $this->maintenanceActions($overdueSchedules, $upcomingSchedules, $openWorkOrders, $overdueWorkOrders, $highPriorityMaintenance, $lowStockParts, $equipment),
             'sections' => [
                 [
                     'key'         => 'planning',
-                    'title'       => 'Planning',
-                    'description' => 'Schedule recurring service before work turns urgent.',
+                    'title'       => $this->t('maintenance.sections.planning'),
+                    'description' => $this->t('maintenance.sections.planning_desc'),
                     'links'       => [
-                        $this->link('Schedules', 'maintenance.schedules', 'calendar-alt', $upcomingSchedules + $overdueSchedules, 'Recurring maintenance intervals and service windows.'),
-                        $this->link('Work Orders', 'maintenance.work-orders', 'clipboard-list', $openWorkOrders, 'Repair tasks, assignments, vendor work, and closure.'),
+                        $this->link($this->t('maintenance.links.schedules'), 'maintenance.schedules', 'calendar-alt', $upcomingSchedules + $overdueSchedules, $this->t('maintenance.links.schedules_desc')),
+                        $this->link($this->t('maintenance.links.work_orders'), 'maintenance.work-orders', 'clipboard-list', $openWorkOrders, $this->t('maintenance.links.work_orders_desc')),
                     ],
                 ],
                 [
                     'key'         => 'records',
-                    'title'       => 'Records',
-                    'description' => 'Keep the maintenance history and serviceable asset catalog current.',
+                    'title'       => $this->t('maintenance.sections.records'),
+                    'description' => $this->t('maintenance.sections.records_desc'),
                     'links'       => [
-                        $this->link('Maintenances', 'maintenance.maintenances', 'history', $openMaintenance, 'Maintenance records and service history by asset.'),
-                        $this->link('Equipment', 'maintenance.equipment', 'trailer', $equipment, 'Assigned equipment and serviceable operational assets.'),
-                        $this->link('Parts', 'maintenance.parts', 'cog', $lowStockParts, 'Parts inventory visibility for repair planning.'),
+                        $this->link($this->t('maintenance.links.maintenances'), 'maintenance.maintenances', 'history', $openMaintenance, $this->t('maintenance.links.maintenances_desc')),
+                        $this->link($this->t('maintenance.links.equipment'), 'maintenance.equipment', 'trailer', $equipment, $this->t('maintenance.links.equipment_desc')),
+                        $this->link($this->t('maintenance.links.parts'), 'maintenance.parts', 'cog', $lowStockParts, $this->t('maintenance.links.parts_desc')),
                     ],
                 ],
             ],
             'docs'     => [
-                $this->doc('Schedules', 'calendar-alt', 'fleet-ops/maintenance/schedules/overview', 'Maintenance schedules guide', 'Plan recurring service windows and convert due schedules into work orders.'),
-                $this->doc('Work Orders', 'clipboard-list', 'fleet-ops/maintenance/work-orders/overview', 'Work orders guide', 'Coordinate assigned maintenance work, vendors, due dates, and completion.'),
-                $this->doc('Equipment', 'trailer', 'fleet-ops/maintenance/equipment/overview', 'Equipment guide', 'Track serviceable equipment that participates in maintenance operations.'),
-                $this->doc('Parts', 'cog', 'fleet-ops/maintenance/parts/overview', 'Parts guide', 'Manage parts inventory and restocking signals used by maintenance teams.'),
+                $this->doc($this->t('maintenance.links.schedules'), 'calendar-alt', 'fleet-ops/maintenance/schedules/overview', $this->t('maintenance.docs.schedules'), $this->t('maintenance.docs.schedules_desc')),
+                $this->doc($this->t('maintenance.links.work_orders'), 'clipboard-list', 'fleet-ops/maintenance/work-orders/overview', $this->t('maintenance.docs.work_orders'), $this->t('maintenance.docs.work_orders_desc')),
+                $this->doc($this->t('maintenance.links.equipment'), 'trailer', 'fleet-ops/maintenance/equipment/overview', $this->t('maintenance.docs.equipment'), $this->t('maintenance.docs.equipment_desc')),
+                $this->doc($this->t('maintenance.links.parts'), 'cog', 'fleet-ops/maintenance/parts/overview', $this->t('maintenance.docs.parts'), $this->t('maintenance.docs.parts_desc')),
             ],
         ]);
     }
@@ -164,71 +164,71 @@ class HubController extends Controller
         $actions = [];
 
         if ($counts['drivers'] === 0) {
-            $actions[] = $this->action('add_drivers', 'Add driver profiles', 'Drivers are required before dispatch can assign live orders.', 'warning', 'id-card', 'management.drivers');
+            $actions[] = $this->action('add_drivers', $this->t('resources.actions.add_drivers'), $this->t('resources.actions.add_drivers_desc'), 'warning', 'id-card', 'management.drivers');
         }
 
         if ($counts['vehicles'] === 0) {
-            $actions[] = $this->action('add_vehicles', 'Add vehicles', 'Vehicles make assignment, tracking, and service context usable.', 'warning', 'truck', 'management.vehicles');
+            $actions[] = $this->action('add_vehicles', $this->t('resources.actions.add_vehicles'), $this->t('resources.actions.add_vehicles_desc'), 'warning', 'truck', 'management.vehicles');
         }
 
         if ($counts['drivers_without_vehicles'] > 0 && $counts['vehicles'] > 0) {
-            $actions[] = $this->action('assign_vehicles_to_drivers', 'Assign vehicles to drivers', "{$counts['drivers_without_vehicles']} driver" . ($counts['drivers_without_vehicles'] === 1 ? ' does' : 's do') . ' not have an assigned vehicle.', 'warning', 'id-card', 'management.drivers', ['vehicle' => 'unassigned']);
+            $actions[] = $this->action('assign_vehicles_to_drivers', $this->t('resources.actions.assign_vehicles_to_drivers'), $this->tc('resources.actions.assign_vehicles_to_drivers_desc', $counts['drivers_without_vehicles']), 'warning', 'id-card', 'management.drivers', ['vehicle' => 'unassigned']);
         }
 
         if ($counts['vehicles_without_drivers'] > 0 && $counts['drivers'] > 0) {
-            $actions[] = $this->action('assign_drivers_to_vehicles', 'Assign drivers to vehicles', "{$counts['vehicles_without_drivers']} vehicle" . ($counts['vehicles_without_drivers'] === 1 ? ' does' : 's do') . ' not have an assigned driver.', 'warning', 'truck', 'management.vehicles', ['driver' => 'unassigned']);
+            $actions[] = $this->action('assign_drivers_to_vehicles', $this->t('resources.actions.assign_drivers_to_vehicles'), $this->tc('resources.actions.assign_drivers_to_vehicles_desc', $counts['vehicles_without_drivers']), 'warning', 'truck', 'management.vehicles', ['driver' => 'unassigned']);
         }
 
         if ($counts['vehicles_without_devices'] > 0 && $counts['unattached_devices'] > 0) {
-            $actions[] = $this->action('attach_devices_to_vehicles', 'Attach devices to vehicles', "{$counts['unattached_devices']} device" . ($counts['unattached_devices'] === 1 ? ' is' : 's are') . ' ready to attach to vehicles without telemetry hardware.', 'info', 'satellite-dish', 'connectivity.devices', ['attachment_state' => 'unattached']);
+            $actions[] = $this->action('attach_devices_to_vehicles', $this->t('resources.actions.attach_devices_to_vehicles'), $this->tc('resources.actions.attach_devices_to_vehicles_desc', $counts['unattached_devices']), 'info', 'satellite-dish', 'connectivity.devices', ['attachment_state' => 'unattached']);
         }
 
         if ($counts['resource_issues'] > 0) {
-            $actions[] = $this->action('review_resource_issues', 'Review vehicle and driver issues', "{$counts['resource_issues']} issue" . ($counts['resource_issues'] === 1 ? ' is' : 's are') . ' linked to drivers or vehicles.', 'warning', 'triangle-exclamation', 'management.issues', ['status' => 'open']);
+            $actions[] = $this->action('review_resource_issues', $this->t('resources.actions.review_resource_issues'), $this->tc('resources.actions.review_resource_issues_desc', $counts['resource_issues']), 'warning', 'triangle-exclamation', 'management.issues', ['status' => 'open']);
         } elseif ($counts['issues'] > 0) {
-            $actions[] = $this->action('review_issues', 'Review open issues', "{$counts['issues']} issue" . ($counts['issues'] === 1 ? ' needs' : 's need') . ' follow-up.', 'warning', 'triangle-exclamation', 'management.issues', ['status' => 'open']);
+            $actions[] = $this->action('review_issues', $this->t('resources.actions.review_issues'), $this->tc('resources.actions.review_issues_desc', $counts['issues']), 'warning', 'triangle-exclamation', 'management.issues', ['status' => 'open']);
         }
 
         if (($counts['overdue_vehicle_schedules'] + $counts['upcoming_vehicle_schedules']) > 0) {
             $serviceCount = $counts['overdue_vehicle_schedules'] + $counts['upcoming_vehicle_schedules'];
-            $actions[]    = $this->action('prepare_vehicle_maintenance', 'Prepare upcoming maintenance', "{$serviceCount} vehicle schedule" . ($serviceCount === 1 ? ' needs' : 's need') . ' maintenance planning.', $counts['overdue_vehicle_schedules'] > 0 ? 'warning' : 'info', 'calendar-day', 'maintenance.schedules', ['status' => 'active']);
+            $actions[]    = $this->action('prepare_vehicle_maintenance', $this->t('resources.actions.prepare_vehicle_maintenance'), $this->tc('resources.actions.prepare_vehicle_maintenance_desc', $serviceCount), $counts['overdue_vehicle_schedules'] > 0 ? 'warning' : 'info', 'calendar-day', 'maintenance.schedules', ['status' => 'active']);
         }
 
         if ($counts['overdue_resource_work_orders'] > 0) {
-            $actions[] = $this->action('close_overdue_work_orders', 'Close overdue work orders', "{$counts['overdue_resource_work_orders']} resource work order" . ($counts['overdue_resource_work_orders'] === 1 ? ' is' : 's are') . ' past due.', 'warning', 'clipboard-list', 'maintenance.work-orders', ['status' => 'open']);
+            $actions[] = $this->action('close_overdue_work_orders', $this->t('resources.actions.close_overdue_work_orders'), $this->tc('resources.actions.close_overdue_work_orders_desc', $counts['overdue_resource_work_orders']), 'warning', 'clipboard-list', 'maintenance.work-orders', ['status' => 'open']);
         } elseif ($counts['open_resource_work_orders'] > 0) {
-            $actions[] = $this->action('review_open_work_orders', 'Review open work orders', "{$counts['open_resource_work_orders']} resource work order" . ($counts['open_resource_work_orders'] === 1 ? ' is' : 's are') . ' open for vehicles or equipment.', 'info', 'clipboard-list', 'maintenance.work-orders', ['status' => 'open']);
+            $actions[] = $this->action('review_open_work_orders', $this->t('resources.actions.review_open_work_orders'), $this->tc('resources.actions.review_open_work_orders_desc', $counts['open_resource_work_orders']), 'info', 'clipboard-list', 'maintenance.work-orders', ['status' => 'open']);
         }
 
         if ($counts['low_stock_parts'] > 0) {
-            $actions[] = $this->action('replenish_low_stock_parts', 'Replenish low-stock parts', "{$counts['low_stock_parts']} stocked part" . ($counts['low_stock_parts'] === 1 ? ' is' : 's are') . ' at or below the default threshold.', 'warning', 'cog', 'maintenance.parts', ['status' => 'in_stock']);
+            $actions[] = $this->action('replenish_low_stock_parts', $this->t('resources.actions.replenish_low_stock_parts'), $this->tc('resources.actions.replenish_low_stock_parts_desc', $counts['low_stock_parts']), 'warning', 'cog', 'maintenance.parts', ['status' => 'in_stock']);
         }
 
         if ($counts['unmatched_fuel_transactions'] > 0) {
-            $actions[] = $this->action('review_unmatched_fuel_transactions', 'Review unmatched fuel transactions', "{$counts['unmatched_fuel_transactions']} fuel transaction" . ($counts['unmatched_fuel_transactions'] === 1 ? ' needs' : 's need') . ' resource matching.', 'warning', 'gas-pump', 'management.fuel-transactions', ['sync_status' => 'unmatched']);
+            $actions[] = $this->action('review_unmatched_fuel_transactions', $this->t('resources.actions.review_unmatched_fuel_transactions'), $this->tc('resources.actions.review_unmatched_fuel_transactions_desc', $counts['unmatched_fuel_transactions']), 'warning', 'gas-pump', 'management.fuel-transactions', ['sync_status' => 'unmatched']);
         }
 
         if ($counts['fleets'] === 0 && $counts['drivers'] > 0 && $counts['vehicles'] > 0) {
-            $actions[] = $this->action('create_fleets', 'Create fleet groups', 'Group active drivers and vehicles by team, region, or service type.', 'info', 'user-group', 'management.fleets');
+            $actions[] = $this->action('create_fleets', $this->t('resources.actions.create_fleets'), $this->t('resources.actions.create_fleets_desc'), 'info', 'user-group', 'management.fleets');
         }
 
         if ($counts['places'] === 0) {
-            $actions[] = $this->action('add_operating_places', 'Add operating places', 'Places keep recurring pickup, dropoff, facility, and service locations ready.', 'info', 'location-dot', 'management.places');
+            $actions[] = $this->action('add_operating_places', $this->t('resources.actions.add_operating_places'), $this->t('resources.actions.add_operating_places_desc'), 'info', 'location-dot', 'management.places');
         }
 
         if ($counts['vendors'] === 0) {
-            $actions[] = $this->action('add_service_vendors', 'Add vendors for service work', 'Vendors connect maintenance, service work, and operating partners to resources.', 'info', 'warehouse', 'management.vendors');
+            $actions[] = $this->action('add_service_vendors', $this->t('resources.actions.add_service_vendors'), $this->t('resources.actions.add_service_vendors_desc'), 'info', 'warehouse', 'management.vendors');
         }
 
         if ($counts['contacts'] === 0) {
-            $actions[] = $this->action('add_contacts', 'Add operating contacts', 'Contacts connect customers, partners, and service people to order workflows.', 'info', 'address-book', 'management.contacts');
+            $actions[] = $this->action('add_contacts', $this->t('resources.actions.add_contacts'), $this->t('resources.actions.add_contacts_desc'), 'info', 'address-book', 'management.contacts');
         }
 
         if ($fuelRecords === 0) {
-            $actions[] = $this->action('review_fuel', 'Open fuel records', 'Fuel activity will appear here once reports or transactions are captured.', 'info', 'gas-pump', 'management.fuel-reports');
+            $actions[] = $this->action('review_fuel', $this->t('resources.actions.review_fuel'), $this->t('resources.actions.review_fuel_desc'), 'info', 'gas-pump', 'management.fuel-reports');
         }
 
-        return $actions ? array_slice($actions, 0, 6) : [$this->action('ready', 'Core resources look ready', 'Drivers, vehicles, issues, and supporting records are in a healthy operating posture.', 'success', 'check-circle', null)];
+        return $actions ? array_slice($actions, 0, 6) : [$this->action('ready', $this->t('resources.actions.ready'), $this->t('resources.actions.ready_desc'), 'success', 'check-circle', null)];
     }
 
     protected function maintenanceActions(int $overdueSchedules, int $upcomingSchedules, int $openWorkOrders, int $overdueWorkOrders, int $highPriorityMaintenance, int $lowStockParts, int $equipment): array
@@ -236,34 +236,50 @@ class HubController extends Controller
         $actions = [];
 
         if ($overdueSchedules > 0) {
-            $actions[] = $this->action('overdue_schedules', 'Review overdue schedules', "{$overdueSchedules} recurring service schedule" . ($overdueSchedules === 1 ? ' is' : 's are') . ' overdue.', 'warning', 'calendar-xmark', 'maintenance.schedules');
+            $actions[] = $this->action('overdue_schedules', $this->t('maintenance.actions.overdue_schedules'), $this->tc('maintenance.actions.overdue_schedules_desc', $overdueSchedules), 'warning', 'calendar-xmark', 'maintenance.schedules');
         }
 
         if ($overdueWorkOrders > 0) {
-            $actions[] = $this->action('overdue_work_orders', 'Close overdue work orders', "{$overdueWorkOrders} work order" . ($overdueWorkOrders === 1 ? ' is' : 's are') . ' past due.', 'warning', 'clipboard-list', 'maintenance.work-orders');
+            $actions[] = $this->action('overdue_work_orders', $this->t('maintenance.actions.overdue_work_orders'), $this->tc('maintenance.actions.overdue_work_orders_desc', $overdueWorkOrders), 'warning', 'clipboard-list', 'maintenance.work-orders');
         }
 
         if ($highPriorityMaintenance > 0) {
-            $actions[] = $this->action('high_priority_maintenance', 'Prioritize critical maintenance', "{$highPriorityMaintenance} high-priority maintenance record" . ($highPriorityMaintenance === 1 ? ' needs' : 's need') . ' review.', 'warning', 'wrench', 'maintenance.maintenances');
+            $actions[] = $this->action('high_priority_maintenance', $this->t('maintenance.actions.high_priority_maintenance'), $this->tc('maintenance.actions.high_priority_maintenance_desc', $highPriorityMaintenance), 'warning', 'wrench', 'maintenance.maintenances');
         }
 
         if ($upcomingSchedules > 0) {
-            $actions[] = $this->action('upcoming_service', 'Prepare upcoming service', "{$upcomingSchedules} schedule" . ($upcomingSchedules === 1 ? ' is' : 's are') . ' due in the next 7 days.', 'info', 'calendar-day', 'maintenance.schedules');
+            $actions[] = $this->action('upcoming_service', $this->t('maintenance.actions.upcoming_service'), $this->tc('maintenance.actions.upcoming_service_desc', $upcomingSchedules), 'info', 'calendar-day', 'maintenance.schedules');
         }
 
         if ($openWorkOrders === 0) {
-            $actions[] = $this->action('no_open_work_orders', 'No open work orders', 'Create work orders when scheduled service or asset issues need assignment.', 'success', 'check-circle', 'maintenance.work-orders');
+            $actions[] = $this->action('no_open_work_orders', $this->t('maintenance.actions.no_open_work_orders'), $this->t('maintenance.actions.no_open_work_orders_desc'), 'success', 'check-circle', 'maintenance.work-orders');
         }
 
         if ($lowStockParts > 0) {
-            $actions[] = $this->action('low_stock_parts', 'Replenish low-stock parts', "{$lowStockParts} stocked part" . ($lowStockParts === 1 ? ' is' : 's are') . ' at or below the default threshold.', 'warning', 'cog', 'maintenance.parts');
+            $actions[] = $this->action('low_stock_parts', $this->t('maintenance.actions.low_stock_parts'), $this->tc('maintenance.actions.low_stock_parts_desc', $lowStockParts), 'warning', 'cog', 'maintenance.parts');
         }
 
         if ($equipment === 0) {
-            $actions[] = $this->action('add_equipment', 'Add serviceable equipment', 'Equipment records make maintenance planning more complete.', 'info', 'trailer', 'maintenance.equipment');
+            $actions[] = $this->action('add_equipment', $this->t('maintenance.actions.add_equipment'), $this->t('maintenance.actions.add_equipment_desc'), 'info', 'trailer', 'maintenance.equipment');
         }
 
         return array_slice($actions, 0, 5);
+    }
+
+    /**
+     * Translate a hub string (`fleetops::hub.*`) in the request locale.
+     */
+    protected function t(string $key, array $replace = []): string
+    {
+        return (string) __('fleetops::hub.' . $key, $replace);
+    }
+
+    /**
+     * Translate a pluralized hub string with a count.
+     */
+    protected function tc(string $key, int $count, array $replace = []): string
+    {
+        return (string) trans_choice('fleetops::hub.' . $key, $count, array_merge(['count' => $count], $replace));
     }
 
     protected function count(Builder $query, ?string $companyUuid): int

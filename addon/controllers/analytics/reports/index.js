@@ -36,7 +36,7 @@ export default class AnalyticsReportsIndexController extends Controller {
     get bulkActions() {
         return [
             {
-                label: 'Delete selected...',
+                label: this.intl.t('literal.fleet-ops.delete-selected'),
                 class: 'text-red-500',
                 fn: this.reportActions.bulkDelete,
             },
@@ -47,7 +47,7 @@ export default class AnalyticsReportsIndexController extends Controller {
         return [
             {
                 sticky: true,
-                label: 'Title',
+                label: this.intl.t('literal.fleet-ops.title'),
                 valuePath: 'title',
                 cellComponent: 'table/cell/anchor',
                 action: this.reportActions.transition.view,
@@ -79,18 +79,18 @@ export default class AnalyticsReportsIndexController extends Controller {
                 width: 60,
                 actions: [
                     {
-                        label: 'View report...',
+                        label: this.intl.t('literal.fleet-ops.view-report'),
                         fn: this.reportActions.transition.view,
                     },
                     {
-                        label: 'Edit report...',
+                        label: this.intl.t('literal.fleet-ops.edit-report'),
                         fn: this.reportActions.transition.edit,
                     },
                     {
                         separator: true,
                     },
                     {
-                        label: 'Delete report...',
+                        label: this.intl.t('literal.fleet-ops.delete-report'),
                         fn: this.reportActions.delete,
                     },
                 ],

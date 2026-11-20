@@ -158,7 +158,7 @@ export default class MaintenanceCostPanelComponent extends Component {
     @action
     addLineItem() {
         if (!this.draftDescription?.trim()) {
-            this.notifications.warning('Please enter a description for the line item.');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.please-enter-a-description-for-the-line-item'));
             return;
         }
 
@@ -197,7 +197,7 @@ export default class MaintenanceCostPanelComponent extends Component {
     @action
     saveEdit() {
         if (!this.draftDescription?.trim()) {
-            this.notifications.warning('Please enter a description for the line item.');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.please-enter-a-description-for-the-line-item'));
             return;
         }
 

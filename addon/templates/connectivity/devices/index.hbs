@@ -13,19 +13,19 @@
     @emptyStateComponent={{component
         "table/empty-state"
         icon="tablet-screen-button"
-        title="Add your first device"
-        description="Devices connect vehicles and assets to telemetry, events, tracking, and provider syncs."
-        filteredTitle="No devices match your filters"
-        filteredDescription="Adjust the search or filters to find another device."
-        primaryText="New device"
+        title=(t "literal.fleet-ops.add-your-first-device")
+        description=(t "literal.fleet-ops.devices-connect-vehicles-and-assets-to-telemetry-e6300")
+        filteredTitle=(t "literal.fleet-ops.no-devices-match-your-filters")
+        filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-dev-71188")
+        primaryText=(t "literal.fleet-ops.new-device")
         primaryIcon="plus"
         primaryAction=this.deviceActions.transition.create
-        secondaryText="Import"
+        secondaryText=(t "literal.fleet-ops.import")
         secondaryIcon="upload"
         secondaryAction=this.deviceActions.import
         docsSlug="fleet-ops/connectivity/devices/overview"
-        docsTitle="Devices guide"
-        docsText="Device guide"
+        docsTitle=(t "literal.fleet-ops.devices-guide")
+        docsText=(t "literal.fleet-ops.device-guide")
         docsSource="fleet-ops-empty-devices"
     }}
 />

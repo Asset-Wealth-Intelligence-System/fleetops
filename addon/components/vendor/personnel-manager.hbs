@@ -1,10 +1,10 @@
 <div class="details-wrapper" ...attributes>
-    <ContentPanel @title="Personnel" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.personnel"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="space-y-3">
             <div class="flex flex-col space-y-2 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100">Vendor personnel</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Manage contacts assigned to this vendor account.</p>
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.vendor-personnel"}}</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{t "literal.fleet-ops.manage-contacts-assigned-to-this-vendor-account"}}</p>
                 </div>
                 <div class="inline-flex overflow-hidden rounded-md border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
                     <button
@@ -13,7 +13,7 @@
                         {{on "click" (fn this.setMode "existing")}}
                     >
                         <FaIcon @icon="address-book" class="mr-1.5" />
-                        Existing contact
+                        {{t "literal.fleet-ops.existing-contact"}}
                     </button>
                     <button
                         type="button"
@@ -21,7 +21,7 @@
                         {{on "click" (fn this.setMode "new")}}
                     >
                         <FaIcon @icon="user-plus" class="mr-1.5" />
-                        New contact
+                        {{t "literal.fleet-ops.new-contact"}}
                     </button>
                 </div>
             </div>
@@ -30,11 +30,11 @@
                 <div class="space-y-3">
                     {{#if this.isAddingExistingContact}}
                         <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
-                        <InputGroup @name="Contact" @wrapperClass="mb-0i">
+                        <InputGroup @name={{t "literal.fleet-ops.contact"}} @wrapperClass="mb-0i">
                             <ModelSelect
                                 @modelName="contact"
                                 @selectedModel={{this.selectedContact}}
-                                @placeholder="Select existing customer contact"
+                                @placeholder={{t "literal.fleet-ops.select-existing-customer-contact"}}
                                 @query={{hash type="customer"}}
                                 @triggerClass="form-select form-input"
                                 @infiniteScroll={{false}}
@@ -54,13 +54,13 @@
                             </ModelSelect>
                         </InputGroup>
 
-                    <InputGroup @name="Role" @wrapperClass="mb-0i">
+                    <InputGroup @name={{t "literal.fleet-ops.role"}} @wrapperClass="mb-0i">
                         <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                             <PowerSelect
                                 @options={{this.roleOptions}}
                                 @selected={{this.selectedRole}}
                                 @onChange={{this.selectRole}}
-                                @placeholder="Select role"
+                                @placeholder={{t "literal.fleet-ops.select-role"}}
                                 @triggerClass="form-select form-input"
                                 as |role|
                             >
@@ -74,20 +74,20 @@
                         </div>
                     {{else}}
                         <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
-                            <InputGroup @name="Name" @wrapperClass="mb-0i" @value={{this.name}} @placeholder="Personnel name" />
-                            <InputGroup @name="Email" @wrapperClass="mb-0i" @type="email" @value={{this.email}} @placeholder="email@example.com" />
+                            <InputGroup @name={{t "literal.fleet-ops.name"}} @wrapperClass="mb-0i" @value={{this.name}} @placeholder={{t "literal.fleet-ops.personnel-name"}} />
+                            <InputGroup @name={{t "literal.fleet-ops.email"}} @wrapperClass="mb-0i" @type="email" @value={{this.email}} @placeholder="email@example.com" />
                         </div>
                         <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
-                            <InputGroup @name="Phone" @wrapperClass="mb-0i">
+                            <InputGroup @name={{t "literal.fleet-ops.phone"}} @wrapperClass="mb-0i">
                                 <PhoneInput @value={{this.phone}} @onInput={{fn (mut this.phone)}} class="form-input w-full" />
                             </InputGroup>
-                            <InputGroup @name="Role" @wrapperClass="mb-0i">
+                            <InputGroup @name={{t "literal.fleet-ops.role"}} @wrapperClass="mb-0i">
                                 <div class="fleetbase-model-select fleetbase-power-select ember-model-select">
                                     <PowerSelect
                                         @options={{this.roleOptions}}
                                         @selected={{this.selectedRole}}
                                         @onChange={{this.selectRole}}
-                                        @placeholder="Select role"
+                                        @placeholder={{t "literal.fleet-ops.select-role"}}
                                         @triggerClass="form-select form-input"
                                         as |role|
                                     >
@@ -102,7 +102,7 @@
                     {{/if}}
 
                     <div>
-                        <Checkbox @value={{this.createLogin}} @onToggle={{this.toggleCreateLogin}}>Create login</Checkbox>
+                        <Checkbox @value={{this.createLogin}} @onToggle={{this.toggleCreateLogin}}>{{t "literal.fleet-ops.create-login"}}</Checkbox>
                     </div>
 
                     <div class="flex justify-end">
@@ -110,7 +110,7 @@
                             @buttonType="submit"
                             @type="primary"
                             @icon="plus"
-                            @text="Add Personnel"
+                            @text={{t "literal.fleet-ops.add-personnel"}}
                             @isLoading={{this.addPersonnel.isRunning}}
                             @disabled={{not this.canSubmit}}
                         />
@@ -120,16 +120,16 @@
 
             <div class="overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
                 <div class="grid grid-cols-12 border-b border-gray-200 bg-gray-50 px-3 py-2 text-xs font-semibold text-gray-800 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">
-                    <div class="col-span-6">Contact</div>
-                    <div class="col-span-2">Role</div>
-                    <div class="col-span-2">Status</div>
-                    <div class="col-span-2 text-right">Actions</div>
+                    <div class="col-span-6">{{t "literal.fleet-ops.contact"}}</div>
+                    <div class="col-span-2">{{t "literal.fleet-ops.role"}}</div>
+                    <div class="col-span-2">{{t "literal.fleet-ops.status-ec53a"}}</div>
+                    <div class="col-span-2 text-right">{{t "literal.fleet-ops.actions"}}</div>
                 </div>
 
                 {{#if this.loadPersonnel.isRunning}}
                     <div class="flex items-center justify-center p-4 text-sm text-gray-500 dark:text-gray-300">
                         <Spinner @iconClass="text-sky-500" />
-                        <span class="ml-2">Loading personnel...</span>
+                        <span class="ml-2">{{t "literal.fleet-ops.loading-personnel"}}</span>
                     </div>
                 {{else if this.hasPersonnel}}
                     {{#each this.personnels as |personnel|}}
@@ -150,7 +150,7 @@
                                     @type="danger"
                                     @size="xs"
                                     @icon="trash"
-                                    @text="Remove"
+                                    @text={{t "literal.fleet-ops.remove"}}
                                     @onClick={{perform this.removePersonnel personnel}}
                                     @isLoading={{this.removePersonnel.isRunning}}
                                 />
@@ -158,7 +158,7 @@
                         </div>
                     {{/each}}
                 {{else}}
-                    <div class="p-4 text-sm text-gray-500 dark:text-gray-400">No personnel added yet.</div>
+                    <div class="p-4 text-sm text-gray-500 dark:text-gray-400">{{t "literal.fleet-ops.no-personnel-added-yet"}}</div>
                 {{/if}}
             </div>
         </div>

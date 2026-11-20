@@ -1,12 +1,14 @@
 import Component from '@glimmer/component';
 
+import { inject as service } from '@ember/service';
 export default class IssuePanelHeaderComponent extends Component {
+    @service intl;
     get resource() {
         return this.args.resource;
     }
 
     get title() {
-        return this.resource?.title || `Issue reported on ${this.resource?.createdAt || 'unknown date'}`;
+        return this.resource?.title || this.intl.t('literal.fleet-ops.issue-reported-on', { value: this.resource?.createdAt || 'unknown date' });
     }
 
     get tags() {

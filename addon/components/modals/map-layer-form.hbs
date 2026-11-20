@@ -1,6 +1,6 @@
 <Modal::Default @modalIsOpened={{@modalIsOpened}} @options={{@options}} @confirm={{@onConfirm}} @decline={{@onDecline}}>
     <div>
-        <ContentPanel @title={{if (eq @options.selectedLayerType "Zone") "Zone Details" "Service Area Details"}} @open={{true}} @wrapperClass="bordered-top">
+        <ContentPanel @title={{if (eq @options.selectedLayerType (t "literal.fleet-ops.zone")) (t "literal.fleet-ops.zone-details") (t "literal.fleet-ops.service-area-details")}} @open={{true}} @wrapperClass="bordered-top">
             <div class="space-y-2">
                 <InputGroup @name={{t "modals.map-layer-form.layer-type"}} @helpText={{t "modals.map-layer-form.layer-type-text"}}>
                     <Select
@@ -12,7 +12,7 @@
                     />
                 </InputGroup>
 
-                {{#if (eq @options.selectedLayerType "Zone")}}
+                {{#if (eq @options.selectedLayerType (t "literal.fleet-ops.zone"))}}
                     <InputGroup @name={{t "modals.map-layer-form.service-area"}} @helpText={{t "modals.map-layer-form.service-area-text"}}>
                         <ModelSelect
                             @modelName="service-area"
@@ -36,7 +36,7 @@
                     @required={{true}}
                 />
 
-                {{#if (eq @options.selectedLayerType "Service Area")}}
+                {{#if (eq @options.selectedLayerType (t "literal.fleet-ops.service-area"))}}
                     <InputGroup @name={{t "modals.map-layer-form.service-type"}} @helpText={{t "modals.map-layer-form.service-type-text"}}>
                         <Select
                             @options={{@options.serviceAreaTypes}}
@@ -65,7 +65,7 @@
                     />
                 </div>
 
-                {{#if (eq @options.selectedLayerType "Service Area")}}
+                {{#if (eq @options.selectedLayerType (t "literal.fleet-ops.service-area"))}}
                     <InputGroup @name={{t "modals.map-layer-form.service-area-country"}} @helpText={{t "modals.map-layer-form.service-area-country-text"}}>
                         <CountrySelect class="w-full form-input" @value={{@options.layerOptions.country}} @onChange={{fn (mut @options.layerOptions.country)}} />
                     </InputGroup>
@@ -77,10 +77,10 @@
             </div>
         </ContentPanel>
 
-        <ContentPanel @title="Geofence Triggers" @open={{true}} @wrapperClass="bordered-top">
+        <ContentPanel @title={{t "literal.fleet-ops.geofence-triggers"}} @open={{true}} @wrapperClass="bordered-top">
             <div class="space-y-4">
                 <p class="text-sm text-gray-500 dark:text-gray-400">
-                    Configure when this {{if (eq @options.selectedLayerType "Zone") "zone" "service area"}} fires active geofence events. Entry and exit events are dispatched to webhooks, WebSocket channels, and the notification system whenever a driver crosses the boundary.
+                    Configure when this {{if (eq @options.selectedLayerType (t "literal.fleet-ops.zone")) "zone" "service area"}} fires active geofence events. Entry and exit events are dispatched to webhooks, WebSocket channels, and the notification system whenever a driver crosses the boundary.
                 </p>
 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -92,9 +92,9 @@
                             />
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-gray-900 dark:text-white">Trigger on Entry</p>
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{t "literal.fleet-ops.trigger-on-entry"}}</p>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                                Fire a <code class="font-mono">geofence.entered</code> event when a driver enters this {{if (eq @options.selectedLayerType "Zone") "zone" "service area"}}.
+                                Fire a <code class="font-mono">geofence.entered</code> event when a driver enters this {{if (eq @options.selectedLayerType (t "literal.fleet-ops.zone")) "zone" "service area"}}.
                             </p>
                         </div>
                     </div>
@@ -107,28 +107,28 @@
                             />
                         </div>
                         <div>
-                            <p class="text-sm font-medium text-gray-900 dark:text-white">Trigger on Exit</p>
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{t "literal.fleet-ops.trigger-on-exit"}}</p>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                                Fire a <code class="font-mono">geofence.exited</code> event when a driver leaves this {{if (eq @options.selectedLayerType "Zone") "zone" "service area"}}.
+                                Fire a <code class="font-mono">geofence.exited</code> event when a driver leaves this {{if (eq @options.selectedLayerType (t "literal.fleet-ops.zone")) "zone" "service area"}}.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <InputGroup
-                    @name="Dwell Threshold (minutes)"
+                    @name={{t "literal.fleet-ops.dwell-threshold-minutes"}}
                     @value={{@options.layerOptions.dwell_threshold_minutes}}
                     @type="number"
                     @placeholder="e.g. 10"
-                    @helpText="Fire a geofence.dwelled event after a driver has been inside this boundary for this many minutes. Leave blank to disable dwell tracking."
+                    @helpText={{t "literal.fleet-ops.fire-a-geofence-dwelled-event-after-a-driver-has-39b2e"}}
                 />
 
                 <InputGroup
-                    @name="Speed Limit (km/h)"
+                    @name={{t "literal.fleet-ops.speed-limit-km-h"}}
                     @value={{@options.layerOptions.speed_limit_kmh}}
                     @type="number"
                     @placeholder="e.g. 50"
-                    @helpText="Optional speed limit enforced within this boundary. Leave blank for no limit."
+                    @helpText={{t "literal.fleet-ops.optional-speed-limit-enforced-within-this-bounda-f9482"}}
                 />
             </div>
         </ContentPanel>

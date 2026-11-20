@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default class MaintenanceIndexController extends Controller {
+    @service intl;
     @service fetch;
     @service docsPanel;
 
@@ -34,12 +35,14 @@ export default class MaintenanceIndexController extends Controller {
         }));
     }
 
-    docDescriptions = {
-        'fleet-ops/maintenance/schedules/overview': 'Plan recurring service windows and convert due schedules into work orders.',
-        'fleet-ops/maintenance/work-orders/overview': 'Coordinate assigned maintenance work, vendors, due dates, and completion.',
-        'fleet-ops/maintenance/equipment/overview': 'Track serviceable equipment that participates in maintenance operations.',
-        'fleet-ops/maintenance/parts/overview': 'Manage parts inventory and restocking signals used by maintenance teams.',
-    };
+    get docDescriptions() {
+        return {
+            'fleet-ops/maintenance/schedules/overview': this.intl.t('literal.fleet-ops.plan-recurring-service-windows-and-convert-due-s-25562'),
+            'fleet-ops/maintenance/work-orders/overview': this.intl.t('literal.fleet-ops.coordinate-assigned-maintenance-work-vendors-due-4f1ba'),
+            'fleet-ops/maintenance/equipment/overview': this.intl.t('literal.fleet-ops.track-serviceable-equipment-that-participates-in-ed032'),
+            'fleet-ops/maintenance/parts/overview': this.intl.t('literal.fleet-ops.manage-parts-inventory-and-restocking-signals-us-fd09b'),
+        };
+    }
 
     normalizeAction(action = {}) {
         const query = action.query && typeof action.query === 'object' && !Array.isArray(action.query) ? action.query : {};
@@ -54,32 +57,40 @@ export default class MaintenanceIndexController extends Controller {
         return [
             {
                 key: 'overdue_schedules',
-                label: 'Overdue Schedules',
+                label: this.intl.t('literal.fleet-ops.overdue-schedules'),
                 value: '...',
-                caption: 'Loading recurring service risk.',
+                caption: this.intl.t('literal.fleet-ops.loading-recurring-service-risk'),
                 tone: 'rose',
                 icon: 'calendar-xmark',
                 route: 'maintenance.schedules',
             },
             {
                 key: 'upcoming_schedules',
-                label: 'Due This Week',
+                label: this.intl.t('literal.fleet-ops.due-this-week'),
                 value: '...',
-                caption: 'Loading upcoming service windows.',
+                caption: this.intl.t('literal.fleet-ops.loading-upcoming-service-windows'),
                 tone: 'blue',
                 icon: 'calendar-day',
                 route: 'maintenance.schedules',
             },
             {
                 key: 'open_work_orders',
-                label: 'Open Work Orders',
+                label: this.intl.t('literal.fleet-ops.open-work-orders'),
                 value: '...',
-                caption: 'Loading active maintenance work.',
+                caption: this.intl.t('literal.fleet-ops.loading-active-maintenance-work'),
                 tone: 'amber',
                 icon: 'clipboard-list',
                 route: 'maintenance.work-orders',
             },
-            { key: 'low_stock_parts', label: 'Low Stock Parts', value: '...', caption: 'Loading parts inventory signals.', tone: 'amber', icon: 'cog', route: 'maintenance.parts' },
+            {
+                key: 'low_stock_parts',
+                label: this.intl.t('literal.fleet-ops.low-stock-parts'),
+                value: '...',
+                caption: this.intl.t('literal.fleet-ops.loading-parts-inventory-signals'),
+                tone: 'amber',
+                icon: 'cog',
+                route: 'maintenance.parts',
+            },
         ];
     }
 

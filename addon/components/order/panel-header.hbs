@@ -11,12 +11,12 @@
                 <div class="flex flex-row space-x-1">
                     <Badge @status={{@resource.status}} />
                     {{#if @resource.dispatched_at}}
-                        <Badge @status="dispatched">{{concat "Dispatched at " @resource.dispatchedAt}}</Badge>
+                        <Badge @status="dispatched">{{t "literal.fleet-ops.dispatched-at" time=@resource.dispatchedAt}}</Badge>
                     {{/if}}
                 </div>
                 <div class="mt-1">
-                    <div class="text-xs text-gray-400 dark:text-gray-500">Date Created: {{@resource.createdAt}}</div>
-                    <div class="text-xs text-gray-400 dark:text-gray-500">Type: {{smart-humanize @resource.type}}</div>
+                    <div class="text-xs text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.date-created"}} {{@resource.createdAt}}</div>
+                    <div class="text-xs text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.type-e659b"}} {{smart-humanize @resource.type}}</div>
                 </div>
             </div>
         </div>

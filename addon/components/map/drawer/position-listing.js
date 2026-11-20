@@ -141,33 +141,33 @@ export default class MapDrawerPositionListingComponent extends Component {
                 onClick: this.onPositionClicked,
             },
             {
-                label: 'Timestamp',
+                label: this.intl.t('literal.fleet-ops.timestamp'),
                 valuePath: 'timestamp',
                 cellComponent: 'table/cell/anchor',
                 onClick: this.onPositionClicked,
             },
             {
-                label: 'Latitude',
+                label: this.intl.t('literal.fleet-ops.latitude'),
                 valuePath: 'latitude',
                 cellComponent: 'table/cell/anchor',
                 onClick: this.onPositionClicked,
             },
             {
-                label: 'Longitude',
+                label: this.intl.t('literal.fleet-ops.longitude'),
                 valuePath: 'longitude',
                 cellComponent: 'table/cell/anchor',
                 onClick: this.onPositionClicked,
             },
             {
-                label: 'Speed (km/h)',
+                label: this.intl.t('literal.fleet-ops.speed-km-h'),
                 valuePath: 'speedKmh',
             },
             {
-                label: 'Heading',
+                label: this.intl.t('literal.fleet-ops.heading'),
                 valuePath: 'heading',
             },
             {
-                label: 'Altitude (m)',
+                label: this.intl.t('literal.fleet-ops.altitude-m'),
                 valuePath: 'altitude',
             },
         ];
@@ -220,12 +220,12 @@ export default class MapDrawerPositionListingComponent extends Component {
 
     @action startReplay() {
         if (this.positions.length === 0) {
-            this.notifications.warning('No positions to replay');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.no-positions-to-replay'));
             return;
         }
 
         if (this.isReplaying && !this.isPaused) {
-            this.notifications.info('Replay is already running');
+            this.notifications.info(this.intl.t('literal.fleet-ops.replay-is-already-running'));
             return;
         }
 
@@ -336,12 +336,12 @@ export default class MapDrawerPositionListingComponent extends Component {
      */
     #initializeReplay() {
         if (!this.resource) {
-            this.notifications.warning('No resource provided for replay');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.no-resource-provided-for-replay'));
             return;
         }
 
         if (this.positions.length === 0) {
-            this.notifications.warning('No positions to replay');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.no-positions-to-replay'));
             return;
         }
 
@@ -355,7 +355,7 @@ export default class MapDrawerPositionListingComponent extends Component {
                 if (data.type === 'complete') {
                     // Replay completed
                     this.#resumeViewportReload();
-                    this.notifications.success('Replay completed');
+                    this.notifications.success(this.intl.t('literal.fleet-ops.replay-completed'));
                 }
             },
         });
@@ -419,7 +419,7 @@ export default class MapDrawerPositionListingComponent extends Component {
 
             this.mapManager.addMarker(overlayId, lat, lng, {
                 content: dot,
-                title: `Position ${index + 1}`,
+                title: this.intl.t('literal.fleet-ops.position-bf8ee', { value: index + 1 }),
                 onClick: () => this.onPositionClicked(pos),
             });
             this.positionOverlayIds = [...this.positionOverlayIds, overlayId];

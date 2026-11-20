@@ -12,73 +12,77 @@ export default class SensorActionsService extends ResourceActionService {
         create: () => this.transitionTo('connectivity.sensors.index.new'),
     };
 
-    panel = {
-        create: (attributes = {}) => {
-            const sensor = this.createNewInstance(attributes);
-            return this.resourceContextPanel.open({
-                content: 'sensor/form',
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.sensor')?.toLowerCase() }),
-                useDefaultSaveTask: true,
-                saveOptions: {
-                    callback: this.refresh,
-                },
-                sensor,
-            });
-        },
-        edit: (sensor) => {
-            return this.resourceContextPanel.open({
-                content: 'sensor/form',
-                title: this.intl.t('common.edit-resource-name', { resourceName: sensor.name }),
-                useDefaultSaveTask: true,
-                sensor,
-            });
-        },
-        view: (sensor) => {
-            return this.resourceContextPanel.open({
-                sensor,
-                header: 'sensor/panel-header',
-                tabs: [
-                    {
-                        key: 'overview',
-                        id: 'overview',
-                        label: this.intl.t('common.overview'),
-                        component: 'sensor/details',
+    get panel() {
+        return {
+            create: (attributes = {}) => {
+                const sensor = this.createNewInstance(attributes);
+                return this.resourceContextPanel.open({
+                    content: 'sensor/form',
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.sensor')?.toLowerCase() }),
+                    useDefaultSaveTask: true,
+                    saveOptions: {
+                        callback: this.refresh,
                     },
-                ],
-            });
-        },
-    };
+                    sensor,
+                });
+            },
+            edit: (sensor) => {
+                return this.resourceContextPanel.open({
+                    content: 'sensor/form',
+                    title: this.intl.t('common.edit-resource-name', { resourceName: sensor.name }),
+                    useDefaultSaveTask: true,
+                    sensor,
+                });
+            },
+            view: (sensor) => {
+                return this.resourceContextPanel.open({
+                    sensor,
+                    header: 'sensor/panel-header',
+                    tabs: [
+                        {
+                            key: 'overview',
+                            id: 'overview',
+                            label: this.intl.t('common.overview'),
+                            component: 'sensor/details',
+                        },
+                    ],
+                });
+            },
+        };
+    }
 
-    modal = {
-        create: (attributes = {}, options = {}, saveOptions = {}) => {
-            const sensor = this.createNewInstance(attributes);
-            return this.modalsManager.show('modals/resource', {
-                resource: sensor,
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.sensor')?.toLowerCase() }),
-                acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.sensor') }),
-                component: 'sensor/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', sensor, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        edit: (sensor, options = {}, saveOptions = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: sensor,
-                title: this.intl.t('common.edit-resource-name', { resourceName: sensor.name }),
-                acceptButtonText: this.intl.t('common.save-changes'),
-                saveButtonIcon: 'save',
-                component: 'sensor/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', sensor, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        view: (sensor, options = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: sensor,
-                title: sensor.name,
-                component: 'sensor/details',
-                ...options,
-            });
-        },
-    };
+    get modal() {
+        return {
+            create: (attributes = {}, options = {}, saveOptions = {}) => {
+                const sensor = this.createNewInstance(attributes);
+                return this.modalsManager.show('modals/resource', {
+                    resource: sensor,
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.sensor')?.toLowerCase() }),
+                    acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.sensor') }),
+                    component: 'sensor/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', sensor, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            edit: (sensor, options = {}, saveOptions = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: sensor,
+                    title: this.intl.t('common.edit-resource-name', { resourceName: sensor.name }),
+                    acceptButtonText: this.intl.t('common.save-changes'),
+                    saveButtonIcon: 'save',
+                    component: 'sensor/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', sensor, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            view: (sensor, options = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: sensor,
+                    title: sensor.name,
+                    component: 'sensor/details',
+                    ...options,
+                });
+            },
+        };
+    }
 }

@@ -26,7 +26,7 @@ export default class MaintenanceWorkOrdersIndexController extends Controller {
     }
 
     get bulkActions() {
-        return [{ label: 'Delete selected...', class: 'text-red-500', fn: this.workOrderActions.bulkDelete }];
+        return [{ label: this.intl.t('literal.fleet-ops.delete-selected'), class: 'text-red-500', fn: this.workOrderActions.bulkDelete }];
     }
 
     get columns() {
@@ -58,7 +58,7 @@ export default class MaintenanceWorkOrdersIndexController extends Controller {
                 filterOptionLabel: 'label',
                 filterOptionValue: 'value',
                 filterOptions: fleetOpsOptions('workOrderCategories'),
-                placeholder: 'Select work order category',
+                placeholder: this.intl.t('literal.fleet-ops.select-work-order-category'),
             },
             {
                 label: this.intl.t('column.status'),
@@ -116,7 +116,7 @@ export default class MaintenanceWorkOrdersIndexController extends Controller {
                     },
                     { separator: true },
                     {
-                        label: 'Send Work Order to Vendor',
+                        label: this.intl.t('literal.fleet-ops.send-work-order-to-vendor'),
                         fn: this.workOrderActions.sendEmail,
                         icon: 'paper-plane',
                         permission: 'fleet-ops update work-order',

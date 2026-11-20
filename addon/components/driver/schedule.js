@@ -78,16 +78,16 @@ export default class DriverScheduleComponent extends Component {
 
     get hosComplianceBadge() {
         if (!this.hosStatus) {
-            return { color: 'gray', label: 'Unknown' };
+            return { color: 'gray', label: this.intl.t('literal.fleet-ops.unknown') };
         }
         const { daily_hours, weekly_hours } = this.hosStatus;
         if (daily_hours >= 11 || weekly_hours >= 70) {
-            return { color: 'red', label: 'At Limit' };
+            return { color: 'red', label: this.intl.t('literal.fleet-ops.at-limit') };
         }
         if (daily_hours >= 9 || weekly_hours >= 60) {
-            return { color: 'yellow', label: 'Approaching Limit' };
+            return { color: 'yellow', label: this.intl.t('literal.fleet-ops.approaching-limit') };
         }
-        return { color: 'green', label: 'Compliant' };
+        return { color: 'green', label: this.intl.t('literal.fleet-ops.compliant') };
     }
 
     get pendingExceptions() {
@@ -257,7 +257,7 @@ export default class DriverScheduleComponent extends Component {
                     if (options.isRecurring) {
                         // Recurring mode: create a ScheduleTemplate then apply it
                         const template = this.store.createRecord('schedule-template', {
-                            name: options.templateName || `${this.args.resource.name} Recurring Schedule`,
+                            name: options.templateName || this.intl.t('literal.fleet-ops.recurring-schedule', { name: this.args.resource.name }),
                             rrule: options.rrule,
                             start_time: options.shiftStartTime,
                             end_time: options.shiftEndTime,

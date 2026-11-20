@@ -21,6 +21,7 @@ use Fleetbase\Traits\Searchable;
 use Fleetbase\Traits\SendsWebhooks;
 use Fleetbase\Traits\TracksApiCredential;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class Place extends Model
@@ -180,7 +181,7 @@ class Place extends Model
     public function getAvatarUrlAttribute($value)
     {
         if (!$value) {
-            return static::getAvatar();
+            return static::getAvatar(static::defaultAvatarKey($this->company_uuid));
         }
 
         if (Str::isUuid($value)) {
@@ -188,6 +189,26 @@ class Place extends Model
         }
 
         return $value;
+    }
+
+    /**
+     * Avatar key used for places without an explicit avatar: a company-uploaded `place-avatar`
+     * file flagged `meta.is_default`, otherwise the stock Fleetbase building icon.
+     */
+    public static function defaultAvatarKey(?string $companyUuid = null): string
+    {
+        $companyUuid = $companyUuid ?: session('company');
+        if (!$companyUuid) {
+            return 'basic-building';
+        }
+
+        return Cache::remember('fleetops:place-default-avatar:' . $companyUuid, 300, function () use ($companyUuid) {
+            return File::where('company_uuid', $companyUuid)
+                ->where('type', 'place-avatar')
+                ->where('meta->is_default', true)
+                ->latest()
+                ->value('uuid') ?: 'basic-building';
+        });
     }
 
     /**

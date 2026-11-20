@@ -6,6 +6,7 @@ import { task } from 'ember-concurrency';
 import copyToClipboard from '@fleetbase/ember-core/utils/copy-to-clipboard';
 
 export default class FuelIntegrationFormComponent extends Component {
+    @service intl;
     @service fetch;
     @service notifications;
 
@@ -21,11 +22,11 @@ export default class FuelIntegrationFormComponent extends Component {
 
     get setupSteps() {
         return [
-            { icon: 'gas-pump', label: 'Provider', complete: Boolean(this.selectedProvider) },
-            { icon: 'key', label: 'Credentials', complete: this.hasRequiredCredentials },
-            { icon: 'plug', label: 'Test', complete: this.connectionTestResult?.success === true },
-            { icon: 'clock-rotate-left', label: 'Sync', complete: Boolean(this.syncSettings.window_days) },
-            { icon: 'route', label: 'Matching', complete: this.matchingOrder.length > 0 },
+            { icon: 'gas-pump', label: this.intl.t('literal.fleet-ops.provider-27703'), complete: Boolean(this.selectedProvider) },
+            { icon: 'key', label: this.intl.t('literal.fleet-ops.credentials'), complete: this.hasRequiredCredentials },
+            { icon: 'plug', label: this.intl.t('literal.fleet-ops.test'), complete: this.connectionTestResult?.success === true },
+            { icon: 'clock-rotate-left', label: this.intl.t('literal.fleet-ops.sync'), complete: Boolean(this.syncSettings.window_days) },
+            { icon: 'route', label: this.intl.t('literal.fleet-ops.matching'), complete: this.matchingOrder.length > 0 },
         ].map((step, index) => ({
             ...step,
             active: this.activeStep === index,
@@ -41,7 +42,7 @@ export default class FuelIntegrationFormComponent extends Component {
         return this.providers.map((provider) => ({
             ...provider,
             selected: provider.key === this.args.resource?.provider,
-            categoryLabel: provider.category ?? provider.metadata?.category ?? 'Fuel card integration',
+            categoryLabel: provider.category ?? provider.metadata?.category ?? this.intl.t('literal.fleet-ops.fuel-card-integration'),
         }));
     }
 
@@ -81,23 +82,23 @@ export default class FuelIntegrationFormComponent extends Component {
     get connectionStateTitle() {
         switch (this.connectionState) {
             case 'testing':
-                return 'Testing provider credentials...';
+                return this.intl.t('literal.fleet-ops.testing-provider-credentials');
             case 'success':
-                return 'Connection verified';
+                return this.intl.t('literal.fleet-ops.connection-verified');
             case 'failed':
-                return 'Connection failed';
+                return this.intl.t('literal.fleet-ops.connection-failed');
             default:
-                return 'Ready to test';
+                return this.intl.t('literal.fleet-ops.ready-to-test');
         }
     }
 
     get connectionStateMessage() {
         if (this.connectionState === 'idle') {
-            return 'Run a live credential test before saving so operators know the integration can import fuel data.';
+            return this.intl.t('literal.fleet-ops.run-a-live-credential-test-before-saving-so-oper-d76ab');
         }
 
         if (this.connectionState === 'testing') {
-            return 'The configured credentials are being checked with the fuel integration provider.';
+            return this.intl.t('literal.fleet-ops.the-configured-credentials-are-being-checked-wit-ec53d');
         }
 
         return this.connectionTestResult?.message;
@@ -115,7 +116,9 @@ export default class FuelIntegrationFormComponent extends Component {
             {
                 time: new Date().toLocaleTimeString(),
                 tone: 'info',
-                text: this.selectedProvider ? `Provider selected: ${this.selectedProvider.label}` : 'No provider selected',
+                text: this.selectedProvider
+                    ? this.intl.t('literal.fleet-ops.provider-selected', { label: this.selectedProvider.label })
+                    : this.intl.t('literal.fleet-ops.no-provider-selected'),
             },
         ];
 
@@ -123,7 +126,7 @@ export default class FuelIntegrationFormComponent extends Component {
             entries.push({
                 time: new Date().toLocaleTimeString(),
                 tone: this.connectionTestResult.success ? 'success' : 'danger',
-                text: this.connectionTestResult.message ?? 'Connection test returned without a message',
+                text: this.connectionTestResult.message ?? this.intl.t('literal.fleet-ops.connection-test-returned-without-a-message'),
             });
         }
 
@@ -152,12 +155,12 @@ export default class FuelIntegrationFormComponent extends Component {
 
     @task *testConnection() {
         if (!this.selectedProvider) {
-            this.notifications.warning('Choose a fuel integration provider first.');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.choose-a-fuel-integration-provider-first'));
             return;
         }
 
         if (!this.hasRequiredCredentials) {
-            this.notifications.warning('Enter the required credentials before testing.');
+            this.notifications.warning(this.intl.t('literal.fleet-ops.enter-the-required-credentials-before-testing'));
             return;
         }
 
@@ -169,7 +172,7 @@ export default class FuelIntegrationFormComponent extends Component {
         } catch (error) {
             this.connectionTestResult = {
                 success: false,
-                message: error.message ?? 'Connection test failed.',
+                message: error.message ?? this.intl.t('literal.fleet-ops.connection-test-failed-8e345'),
                 metadata: {},
             };
             this.notifications.serverError(error);
@@ -236,7 +239,7 @@ export default class FuelIntegrationFormComponent extends Component {
 
     @action copyDiagnostics() {
         copyToClipboard(this.diagnosticsText)
-            .then(() => this.notifications.success('Connection diagnostics copied.'))
-            .catch(() => this.notifications.error('Unable to copy diagnostics.'));
+            .then(() => this.notifications.success(this.intl.t('literal.fleet-ops.connection-diagnostics-copied')))
+            .catch(() => this.notifications.error(this.intl.t('literal.fleet-ops.unable-to-copy-diagnostics')));
     }
 }

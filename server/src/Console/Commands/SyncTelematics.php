@@ -40,9 +40,17 @@ class SyncTelematics extends Command
                 return self::SUCCESS;
             }
 
+            // A sync job flips the integration to `synchronizing` while it runs. If a worker dies
+            // mid-job the row would otherwise stay in that state forever and never be polled again,
+            // so treat a stale `synchronizing` row as pollable too.
+            $staleBefore = now()->subMinutes((int) config('fleetops.telematics.stale_sync_minutes', 15));
+
             $query = Telematic::withoutGlobalScopes()
                 ->whereIn('provider', $providerKeys)
-                ->whereIn('status', ['active', 'connected'])
+                ->where(function ($q) use ($staleBefore) {
+                    $q->whereIn('status', ['active', 'connected'])
+                        ->orWhere(fn ($stale) => $stale->where('status', 'synchronizing')->where('updated_at', '<', $staleBefore));
+                })
                 ->whereNotNull('company_uuid');
 
             $queued = 0;

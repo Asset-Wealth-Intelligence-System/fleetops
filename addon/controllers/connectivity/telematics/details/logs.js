@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class ConnectivityTelematicsDetailsLogsController extends Controller {
+    @service intl;
     @service hostRouter;
 
     @tracked telematic;
@@ -30,10 +31,10 @@ export default class ConnectivityTelematicsDetailsLogsController extends Control
 
     get metrics() {
         return [
-            { label: 'Log entries', value: this.logs.length, icon: 'list', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
-            { label: 'Warnings', value: this.warningCount, icon: 'triangle-exclamation', accentClass: 'fleetops-connectivity-kpi-accent-amber' },
-            { label: 'Sync records', value: this.syncCount, icon: 'satellite-dish', accentClass: 'fleetops-connectivity-kpi-accent-green' },
-            { label: 'Connection tests', value: this.testCount, icon: 'plug', accentClass: 'fleetops-connectivity-kpi-accent-rose' },
+            { label: this.intl.t('literal.fleet-ops.log-entries'), value: this.logs.length, icon: 'list', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
+            { label: this.intl.t('literal.fleet-ops.warnings'), value: this.warningCount, icon: 'triangle-exclamation', accentClass: 'fleetops-connectivity-kpi-accent-amber' },
+            { label: this.intl.t('literal.fleet-ops.sync-records'), value: this.syncCount, icon: 'satellite-dish', accentClass: 'fleetops-connectivity-kpi-accent-green' },
+            { label: this.intl.t('literal.fleet-ops.connection-tests'), value: this.testCount, icon: 'plug', accentClass: 'fleetops-connectivity-kpi-accent-rose' },
         ];
     }
 

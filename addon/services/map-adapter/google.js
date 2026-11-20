@@ -27,6 +27,8 @@ import { getOwner } from '@ember/application';
 import { isArray } from '@ember/array';
 import { debug } from '@ember/debug';
 import { waypointIconHtml } from '../../utils/route-colors';
+import { getRotatableMarkerClass } from '../../utils/google-rotatable-marker';
+import googleMapsLanguage from '../../utils/google-maps-language';
 import { Circle, Feature, Polygon } from '@fleetbase/fleetops-data/utils/geojson';
 
 const DEFAULT_GOOGLE_MAP_STYLES = [
@@ -420,6 +422,10 @@ export default class GoogleMapsAdapter extends MapAdapterInterface {
             const wrapper = document.createElement('div');
             wrapper.className = 'fleetops-map-marker';
             wrapper.style.cssText = `width: ${size[0]}px; height: ${size[1]}px; max-width: ${size[0]}px; max-height: ${size[1]}px; line-height: 0; transform-origin: center center; display: block; overflow: visible;`;
+            if (Array.isArray(options.iconAnchor)) {
+                // AdvancedMarkerElement pins the content's bottom-center on the coordinate; shift to the requested anchor
+                wrapper.style.translate = `${size[0] / 2 - options.iconAnchor[0]}px ${size[1] - options.iconAnchor[1]}px`;
+            }
             wrapper.appendChild(img);
             content = wrapper;
         }
@@ -515,7 +521,15 @@ export default class GoogleMapsAdapter extends MapAdapterInterface {
 
     setMarkerRotation(id, degrees) {
         const marker = this._markers.get(id);
-        if (!marker?.content) return;
+        if (!marker) return;
+
+        // OverlayView based rotatable marker (classic fallback without a Map ID)
+        if (typeof marker.setRotation === 'function') {
+            marker.setRotation(degrees);
+            return;
+        }
+
+        if (!marker.content) return;
         // Apply rotation to the content element
         marker.content.style.transform = `rotate(${degrees}deg)`;
         marker.content.style.transformOrigin = 'center center';
@@ -1174,7 +1188,7 @@ export default class GoogleMapsAdapter extends MapAdapterInterface {
             };
 
             const script = document.createElement('script');
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=drawing,geometry,marker,routes&callback=${callbackName}&loading=async`;
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=drawing,geometry,marker,routes&language=${googleMapsLanguage()}&callback=${callbackName}&loading=async`;
             script.async = true;
             script.onerror = () => reject(new Error('[GoogleMapsAdapter] Failed to load Google Maps API'));
             document.head.appendChild(script);
@@ -2146,6 +2160,38 @@ export default class GoogleMapsAdapter extends MapAdapterInterface {
 
     #createClassicMarker(lat, lng, options = {}) {
         const position = { lat, lng };
+
+        // Image markers that carry a heading (vehicles/drivers) use an OverlayView based
+        // marker so the icon can rotate without a Map ID / AdvancedMarkerElement.
+        if (options.iconUrl && !options.waypointLabel && 'rotationAngle' in options) {
+            const RotatableMarker = getRotatableMarkerClass();
+            if (RotatableMarker) {
+                const marker = new RotatableMarker({
+                    map: this._map,
+                    position,
+                    iconUrl: options.iconUrl,
+                    iconSize: options.iconSize ?? [24, 24],
+                    title: options.title ?? '',
+                    zIndex: options.zIndexOffset ?? 0,
+                    rotation: Number.isFinite(options.rotationAngle) && options.rotationAngle !== -1 ? options.rotationAngle : 0,
+                });
+
+                if (typeof options.onClick === 'function') {
+                    marker.addListener('click', options.onClick);
+                }
+
+                if (typeof options.onRightClick === 'function') {
+                    marker.addListener('rightclick', (event) => options.onRightClick(this.#normalizeMapEvent('rightclick', event)));
+                }
+
+                if (options.tooltip) {
+                    marker.__tooltipCleanup = this.#attachClassicMarkerTooltip(marker, options.tooltip, options.tooltipOptions ?? {});
+                }
+
+                return marker;
+            }
+        }
+
         const markerOptions = {
             map: this._map,
             position,
@@ -2167,7 +2213,7 @@ export default class GoogleMapsAdapter extends MapAdapterInterface {
                 size: new google.maps.Size(size[0], size[1]),
                 scaledSize: new google.maps.Size(size[0], size[1]),
                 origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(size[0] / 2, size[1] / 2),
+                anchor: Array.isArray(options.iconAnchor) ? new google.maps.Point(options.iconAnchor[0], options.iconAnchor[1]) : new google.maps.Point(size[0] / 2, size[1] / 2),
             };
             markerOptions.optimized = false;
         }

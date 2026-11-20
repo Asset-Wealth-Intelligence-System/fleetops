@@ -41,7 +41,7 @@ export default class OperationsServiceRatesIndexController extends Controller {
     get bulkActions() {
         return [
             {
-                label: 'Delete selected...',
+                label: this.intl.t('literal.fleet-ops.delete-selected'),
                 class: 'text-red-500',
                 fn: this.serviceRateActions.bulkDelete,
             },
@@ -79,7 +79,7 @@ export default class OperationsServiceRatesIndexController extends Controller {
                 sortable: true,
                 filterable: true,
                 filterComponent: 'filter/model',
-                filterComponentPlaceholder: 'Select service area',
+                filterComponentPlaceholder: this.intl.t('literal.fleet-ops.select-service-area'),
                 filterParam: 'service_area',
                 model: 'service-area',
             },
@@ -91,7 +91,7 @@ export default class OperationsServiceRatesIndexController extends Controller {
                 sortable: true,
                 filterable: true,
                 filterComponent: 'filter/model',
-                filterComponentPlaceholder: 'Select zone',
+                filterComponentPlaceholder: this.intl.t('literal.fleet-ops.select-zone'),
                 filterParam: 'zone',
                 model: 'zone',
             },

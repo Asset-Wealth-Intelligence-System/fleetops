@@ -1,7 +1,7 @@
 <div class="next-content-panel-wrapper" ...attributes>
 
     {{! ===== OVERVIEW ===== }}
-    <ContentPanel @title="Overview" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.overview"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 text-xs dark:text-gray-100">
 
             {{! — Photo — }}
@@ -24,65 +24,65 @@
 
             {{! — Identity & Classification — }}
             <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-1">
-                Identity & Classification
+                {{t "literal.fleet-ops.identity-classification"}}
             </div>
             <div class="field-info-container">
                 <div class="field-name">ID</div>
                 <ClickToCopy @value={{@resource.public_id}} class="field-value font-mono">{{n-a @resource.public_id}}</ClickToCopy>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Code</div>
+                <div class="field-name">{{t "literal.fleet-ops.code"}}</div>
                 <ClickToCopy @value={{@resource.code}} class="field-value font-mono">{{n-a @resource.code}}</ClickToCopy>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Name</div>
+                <div class="field-name">{{t "literal.fleet-ops.name"}}</div>
                 <div class="field-value">{{n-a @resource.name}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Type</div>
+                <div class="field-name">{{t "literal.fleet-ops.type"}}</div>
                 <div class="field-value">{{n-a (smart-humanize @resource.type)}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Status</div>
+                <div class="field-name">{{t "literal.fleet-ops.status-ec53a"}}</div>
                 <div class="field-value">
                     <Badge @status={{@resource.status}}>{{smart-humanize @resource.status}}</Badge>
                 </div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Serial Number</div>
+                <div class="field-name">{{t "literal.fleet-ops.serial-number"}}</div>
                 <div class="field-value font-mono">{{n-a @resource.serial_number}}</div>
             </div>
 
             {{! — Make & Model — }}
             <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Make & Model
+                {{t "literal.fleet-ops.make-model"}}
             </div>
             <div class="field-info-container">
-                <div class="field-name">Manufacturer</div>
+                <div class="field-name">{{t "literal.fleet-ops.manufacturer"}}</div>
                 <div class="field-value">{{n-a @resource.manufacturer}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Model</div>
+                <div class="field-name">{{t "literal.fleet-ops.model"}}</div>
                 <div class="field-value">{{n-a @resource.model}}</div>
             </div>
 
             {{! — Assignment — }}
             <div class="col-span-2 text-[11px] uppercase tracking-wide text-gray-500 font-semibold mt-3">
-                Assignment
+                {{t "literal.fleet-ops.assignment"}}
             </div>
             <div class="field-info-container">
-                <div class="field-name">Equipped Status</div>
+                <div class="field-name">{{t "literal.fleet-ops.equipped-status"}}</div>
                 <div class="field-value">
                     {{#if @resource.is_equipped}}
-                        <Badge @status="success">Equipped</Badge>
+                        <Badge @status="success">{{t "literal.fleet-ops.equipped"}}</Badge>
                     {{else}}
-                        <Badge @status="default">Not Equipped</Badge>
+                        <Badge @status="default">{{t "literal.fleet-ops.not-equipped"}}</Badge>
                     {{/if}}
                 </div>
             </div>
             {{#if @resource.is_equipped}}
                 <div class="field-info-container">
-                    <div class="field-name">Equipped To</div>
+                    <div class="field-name">{{t "literal.fleet-ops.equipped-to"}}</div>
                     <div class="field-value">{{n-a @resource.equipped_to_name}}</div>
                 </div>
             {{/if}}
@@ -90,26 +90,26 @@
     </ContentPanel>
 
     {{! ===== FINANCIALS ===== }}
-    <ContentPanel @title="Financials" @open={{true}} @wrapperClass="bordered-top">
+    <ContentPanel @title={{t "literal.fleet-ops.financials"}} @open={{true}} @wrapperClass="bordered-top">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 text-xs dark:text-gray-100">
             <div class="field-info-container">
-                <div class="field-name">Purchase Price</div>
+                <div class="field-name">{{t "literal.fleet-ops.purchase-price"}}</div>
                 <div class="field-value">{{format-currency @resource.purchase_price @resource.currency}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Purchased At</div>
+                <div class="field-name">{{t "literal.fleet-ops.purchased-at"}}</div>
                 <div class="field-value">{{n-a (format-date-fns @resource.purchased_at "dd MMM yyyy")}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Age</div>
+                <div class="field-name">{{t "literal.fleet-ops.age"}}</div>
                 <div class="field-value">{{n-a @resource.age_in_days}} days</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Depreciated Value</div>
+                <div class="field-name">{{t "literal.fleet-ops.depreciated-value"}}</div>
                 <div class="field-value">{{format-currency @resource.depreciated_value @resource.currency}}</div>
             </div>
             <div class="field-info-container">
-                <div class="field-name">Currency</div>
+                <div class="field-name">{{t "literal.fleet-ops.currency"}}</div>
                 <div class="field-value">{{n-a @resource.currency}}</div>
             </div>
         </div>
@@ -117,10 +117,10 @@
 
     {{! ===== WARRANTY ===== }}
     {{#if @resource.warranty_name}}
-        <ContentPanel @title="Warranty" @open={{true}} @wrapperClass="bordered-top">
+        <ContentPanel @title={{t "literal.fleet-ops.warranty"}} @open={{true}} @wrapperClass="bordered-top">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 text-xs dark:text-gray-100">
                 <div class="field-info-container">
-                    <div class="field-name">Warranty</div>
+                    <div class="field-name">{{t "literal.fleet-ops.warranty"}}</div>
                     <div class="field-value">{{n-a @resource.warranty_name}}</div>
                 </div>
             </div>

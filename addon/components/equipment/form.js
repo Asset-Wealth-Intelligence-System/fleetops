@@ -22,6 +22,7 @@ const TYPE_TO_OPTION_VALUE = {
 };
 
 export default class EquipmentFormComponent extends Component {
+    @service intl;
     @service fetch;
     @service currentUser;
     @service notifications;
@@ -36,10 +37,12 @@ export default class EquipmentFormComponent extends Component {
      * Polymorphic equipable type options — the asset this equipment is attached to.
      * Each entry has a `value` (stored on the model) and a `label` (displayed in the UI).
      */
-    equipableTypeOptions = [
-        { value: 'fleet-ops:vehicle', label: 'Vehicle' },
-        { value: 'fleet-ops:driver', label: 'Driver' },
-    ];
+    get equipableTypeOptions() {
+        return [
+            { value: 'fleet-ops:vehicle', label: this.intl.t('literal.fleet-ops.vehicle') },
+            { value: 'fleet-ops:driver', label: this.intl.t('literal.fleet-ops.driver') },
+        ];
+    }
 
     /** Derived Ember Data model name for the currently selected equipable type. */
     @tracked equipableModelName = null;

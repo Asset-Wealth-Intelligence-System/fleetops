@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default class ManagementFuelTransactionsIndexController extends Controller {
+    @service intl;
     @service tableContext;
     @service fetch;
     @service notifications;
@@ -28,26 +29,26 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
 
     get emptyStateTitle() {
         if (this.sync_status === 'unmatched') {
-            return 'No unmatched fuel transactions';
+            return this.intl.t('literal.fleet-ops.no-unmatched-fuel-transactions');
         }
 
         if (this.connection) {
-            return 'No transactions imported for this integration';
+            return this.intl.t('literal.fleet-ops.no-transactions-imported-for-this-integration');
         }
 
-        return 'No fuel transactions imported yet';
+        return this.intl.t('literal.fleet-ops.no-fuel-transactions-imported-yet');
     }
 
     get emptyStateMessage() {
         if (this.sync_status === 'unmatched') {
-            return 'Fleet-Ops did not find imported provider bills that still need vehicle or trip matching.';
+            return this.intl.t('literal.fleet-ops.fleet-ops-did-not-find-imported-provider-bills-t-772d6');
         }
 
         if (this.connection) {
-            return 'Run a sync from the fuel integration detail page to import provider bills into this ledger.';
+            return this.intl.t('literal.fleet-ops.run-a-sync-from-the-fuel-integration-detail-page-5e375');
         }
 
-        return 'Connect PetroApp or another fuel integration, then run a transaction sync. Imported provider bills appear here before linked Fuel Reports are created.';
+        return this.intl.t('literal.fleet-ops.connect-petroapp-or-another-fuel-integration-the-881b8');
     }
 
     get actionButtons() {
@@ -55,11 +56,11 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
             {
                 icon: 'refresh',
                 onClick: this.refresh,
-                helpText: 'Refresh',
+                helpText: this.intl.t('literal.fleet-ops.refresh'),
             },
             {
                 icon: 'gas-pump',
-                text: 'Fuel Integrations',
+                text: this.intl.t('literal.fleet-ops.fuel-integrations'),
                 onClick: () => this.hostRouter.transitionTo('console.fleet-ops.connectivity.fuel-providers.index'),
             },
         ];
@@ -74,7 +75,7 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
 
         return [
             {
-                label: `Reprocess ${selected.length} selected`,
+                label: this.intl.t('literal.fleet-ops.reprocess-selected', { length: selected.length }),
                 fn: () => selected.forEach((transaction) => this.reprocessTransaction.perform(transaction)),
             },
         ];
@@ -84,7 +85,7 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
         return [
             {
                 sticky: true,
-                label: 'Transaction',
+                label: this.intl.t('literal.fleet-ops.transaction'),
                 valuePath: 'provider_transaction_id',
                 cellComponent: 'click-to-copy',
                 resizable: true,
@@ -94,7 +95,7 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
                 filterComponent: 'filter/string',
             },
             {
-                label: 'Provider',
+                label: this.intl.t('literal.fleet-ops.provider-27703'),
                 valuePath: 'provider',
                 resizable: true,
                 sortable: true,
@@ -102,7 +103,7 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
                 filterComponent: 'filter/string',
             },
             {
-                label: 'Status',
+                label: this.intl.t('literal.fleet-ops.status-ec53a'),
                 valuePath: 'sync_status',
                 cellComponent: 'table/cell/status',
                 resizable: true,
@@ -112,7 +113,7 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
                 filterOptions: ['imported', 'matched', 'unmatched', 'reviewed', 'ignored', 'duplicate', 'error'],
             },
             {
-                label: 'Vehicle',
+                label: this.intl.t('literal.fleet-ops.vehicle'),
                 valuePath: 'vehicle_name',
                 resizable: true,
                 sortable: false,
@@ -123,43 +124,43 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
                 modelNamePath: 'displayName',
             },
             {
-                label: 'Card / Internal',
+                label: this.intl.t('literal.fleet-ops.card-internal'),
                 valuePath: 'vehicle_card_id',
                 resizable: true,
             },
             {
-                label: 'Trip',
+                label: this.intl.t('literal.fleet-ops.trip'),
                 valuePath: 'trip_number',
                 resizable: true,
                 hidden: true,
             },
             {
-                label: 'Station',
+                label: this.intl.t('literal.fleet-ops.station'),
                 valuePath: 'station_name',
                 resizable: true,
             },
             {
-                label: 'Liters',
+                label: this.intl.t('literal.fleet-ops.liters'),
                 valuePath: 'volume',
                 resizable: true,
                 sortable: true,
             },
             {
-                label: 'Amount',
+                label: this.intl.t('literal.fleet-ops.amount'),
                 valuePath: 'amount',
                 cellComponent: 'table/cell/currency',
                 resizable: true,
                 sortable: true,
             },
             {
-                label: 'Fuel Report',
+                label: this.intl.t('literal.fleet-ops.fuel-report'),
                 valuePath: 'fuel_report_id',
                 cellComponent: 'table/cell/anchor',
                 action: this.openFuelReport,
                 resizable: true,
             },
             {
-                label: 'Date',
+                label: this.intl.t('literal.fleet-ops.date'),
                 valuePath: 'transactionAt',
                 sortParam: 'transaction_at',
                 resizable: true,
@@ -174,20 +175,20 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
                 ddButtonText: false,
                 ddButtonIcon: 'ellipsis-h',
                 ddButtonIconPrefix: 'fas',
-                ddMenuLabel: 'Fuel Transaction Actions',
+                ddMenuLabel: this.intl.t('literal.fleet-ops.fuel-transaction-actions'),
                 cellClassNames: 'overflow-visible',
                 wrapperClass: 'flex items-center justify-end mx-2',
                 sticky: 'right',
                 width: 60,
                 actions: [
-                    { label: 'Review Details', fn: this.openDetails },
-                    { label: 'Open Fuel Report', fn: this.openFuelReport },
+                    { label: this.intl.t('literal.fleet-ops.review-details'), fn: this.openDetails },
+                    { label: this.intl.t('literal.fleet-ops.open-fuel-report'), fn: this.openFuelReport },
                     { separator: true },
-                    { label: 'Match to Vehicle', fn: this.matchVehicle },
-                    { label: 'Match to Order', fn: this.matchOrder },
-                    { label: 'Reprocess / Rematch', fn: (transaction) => this.reprocessTransaction.perform(transaction) },
-                    { label: 'Ignore Transaction', fn: (transaction) => this.markReviewed.perform(transaction, 'ignored') },
-                    { label: 'Mark Reviewed', fn: (transaction) => this.markReviewed.perform(transaction, 'reviewed') },
+                    { label: this.intl.t('literal.fleet-ops.match-to-vehicle'), fn: this.matchVehicle },
+                    { label: this.intl.t('literal.fleet-ops.match-to-order'), fn: this.matchOrder },
+                    { label: this.intl.t('literal.fleet-ops.reprocess-rematch'), fn: (transaction) => this.reprocessTransaction.perform(transaction) },
+                    { label: this.intl.t('literal.fleet-ops.ignore-transaction'), fn: (transaction) => this.markReviewed.perform(transaction, 'ignored') },
+                    { label: this.intl.t('literal.fleet-ops.mark-reviewed'), fn: (transaction) => this.markReviewed.perform(transaction, 'reviewed') },
                 ],
                 sortable: false,
                 filterable: false,
@@ -203,7 +204,7 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
 
     @action openFuelReport(transaction) {
         if (!transaction?.fuel_report_id) {
-            this.notifications.info('This transaction does not have a linked Fuel Report yet.');
+            this.notifications.info(this.intl.t('literal.fleet-ops.this-transaction-does-not-have-a-linked-fuel-rep-1584b'));
             return;
         }
 
@@ -221,7 +222,7 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
     @task *reprocessTransaction(transaction) {
         try {
             yield this.fetch.post(`fuel-provider-transactions/${transaction.id}/reprocess`);
-            this.notifications.success('Fuel transaction reprocessed.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.fuel-transaction-reprocessed'));
             this.target.send('refresh');
         } catch (error) {
             this.notifications.serverError(error);
@@ -231,7 +232,7 @@ export default class ManagementFuelTransactionsIndexController extends Controlle
     @task *markReviewed(transaction, status) {
         try {
             yield this.fetch.post(`fuel-provider-transactions/${transaction.id}/review`, { status });
-            this.notifications.success(status === 'ignored' ? 'Fuel transaction ignored.' : 'Fuel transaction marked reviewed.');
+            this.notifications.success(status === 'ignored' ? this.intl.t('literal.fleet-ops.fuel-transaction-ignored') : this.intl.t('literal.fleet-ops.fuel-transaction-marked-reviewed'));
             this.target.send('refresh');
         } catch (error) {
             this.notifications.serverError(error);

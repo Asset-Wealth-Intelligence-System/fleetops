@@ -50,7 +50,7 @@ export default class MaintenanceMaintenancesIndexController extends Controller {
     get bulkActions() {
         return [
             {
-                label: 'Delete selected...',
+                label: this.intl.t('literal.fleet-ops.delete-selected'),
                 class: 'text-red-500',
                 fn: this.maintenanceActions.bulkDelete,
             },

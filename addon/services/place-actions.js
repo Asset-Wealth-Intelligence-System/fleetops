@@ -17,90 +17,94 @@ export default class PlaceActionsService extends ResourceActionService {
         create: () => this.transitionTo('management.places.index.new'),
     };
 
-    panel = {
-        create: (attributes = {}) => {
-            const place = this.createNewInstance(attributes);
-            return this.resourceContextPanel.open({
-                content: 'place/form',
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.place')?.toLowerCase() }),
-                useDefaultSaveTask: true,
-                saveOptions: {
-                    callback: this.refresh,
-                },
-                place,
-            });
-        },
-        edit: async (place) => {
-            if (place?.meta?._index_resource) {
-                await place.reload();
-            }
-
-            return this.resourceContextPanel.open({
-                content: 'place/form',
-                title: this.intl.t('common.edit-resource-name', { resourceName: place.address }),
-                useDefaultSaveTask: true,
-                headerLeftClass: 'w-1/2',
-                titleWrapperClass: 'w-1/2',
-                place,
-            });
-        },
-        view: async (place) => {
-            if (place?.meta?._index_resource) {
-                await place.reload();
-            }
-
-            return this.resourceContextPanel.open({
-                place,
-                tabs: [
-                    {
-                        label: this.intl.t('common.overview'),
-                        component: 'place/details',
+    get panel() {
+        return {
+            create: (attributes = {}) => {
+                const place = this.createNewInstance(attributes);
+                return this.resourceContextPanel.open({
+                    content: 'place/form',
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.place')?.toLowerCase() }),
+                    useDefaultSaveTask: true,
+                    saveOptions: {
+                        callback: this.refresh,
                     },
-                ],
-            });
-        },
-    };
+                    place,
+                });
+            },
+            edit: async (place) => {
+                if (place?.meta?._index_resource) {
+                    await place.reload();
+                }
 
-    modal = {
-        create: (attributes = {}, options = {}, saveOptions = {}) => {
-            const place = this.createNewInstance(attributes);
-            return this.modalsManager.show('modals/resource', {
-                resource: place,
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.place')?.toLowerCase() }),
-                acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.place') }),
-                component: 'place/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', place, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        edit: async (place, options = {}, saveOptions = {}) => {
-            if (place?.meta?._index_resource) {
-                await place.reload();
-            }
+                return this.resourceContextPanel.open({
+                    content: 'place/form',
+                    title: this.intl.t('common.edit-resource-name', { resourceName: place.address }),
+                    useDefaultSaveTask: true,
+                    headerLeftClass: 'w-1/2',
+                    titleWrapperClass: 'w-1/2',
+                    place,
+                });
+            },
+            view: async (place) => {
+                if (place?.meta?._index_resource) {
+                    await place.reload();
+                }
 
-            return this.modalsManager.show('modals/resource', {
-                resource: place,
-                title: this.intl.t('common.edit-resource-name', { resourceName: place.address }),
-                acceptButtonText: this.intl.t('common.save-changes'),
-                saveButtonIcon: 'save',
-                component: 'place/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', place, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        view: async (place, options = {}) => {
-            if (place?.meta?._index_resource) {
-                await place.reload();
-            }
+                return this.resourceContextPanel.open({
+                    place,
+                    tabs: [
+                        {
+                            label: this.intl.t('common.overview'),
+                            component: 'place/details',
+                        },
+                    ],
+                });
+            },
+        };
+    }
 
-            return this.modalsManager.show('modals/resource', {
-                resource: place,
-                title: place.displayName,
-                component: 'place/details',
-                ...options,
-            });
-        },
-    };
+    get modal() {
+        return {
+            create: (attributes = {}, options = {}, saveOptions = {}) => {
+                const place = this.createNewInstance(attributes);
+                return this.modalsManager.show('modals/resource', {
+                    resource: place,
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.place')?.toLowerCase() }),
+                    acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.place') }),
+                    component: 'place/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', place, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            edit: async (place, options = {}, saveOptions = {}) => {
+                if (place?.meta?._index_resource) {
+                    await place.reload();
+                }
+
+                return this.modalsManager.show('modals/resource', {
+                    resource: place,
+                    title: this.intl.t('common.edit-resource-name', { resourceName: place.address }),
+                    acceptButtonText: this.intl.t('common.save-changes'),
+                    saveButtonIcon: 'save',
+                    component: 'place/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', place, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            view: async (place, options = {}) => {
+                if (place?.meta?._index_resource) {
+                    await place.reload();
+                }
+
+                return this.modalsManager.show('modals/resource', {
+                    resource: place,
+                    title: place.displayName,
+                    component: 'place/details',
+                    ...options,
+                });
+            },
+        };
+    }
 
     @action locate(place, options = {}) {
         const { latitude, longitude, location } = place;
@@ -113,6 +117,7 @@ export default class PlaceActionsService extends ResourceActionService {
             icon: leafletIcon({
                 iconUrl: place.avatar_url ?? '/engines-dist/images/building-marker.png',
                 iconSize: [40, 40],
+                iconAnchor: [20, 40],
             }),
             popupText: place.address,
             tooltip: place.address,

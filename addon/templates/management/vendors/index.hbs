@@ -14,19 +14,19 @@
     @emptyStateComponent={{component
         "table/empty-state"
         icon="building"
-        title="Add your first vendor"
-        description="Vendors let your team manage external carriers, service providers, and operational partners."
-        filteredTitle="No vendors match your filters"
-        filteredDescription="Adjust the search or filters to find another vendor."
-        primaryText="New vendor"
+        title=(t "literal.fleet-ops.add-your-first-vendor")
+        description=(t "literal.fleet-ops.vendors-let-your-team-manage-external-carriers-s-47cb6")
+        filteredTitle=(t "literal.fleet-ops.no-vendors-match-your-filters")
+        filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-ven-44289")
+        primaryText=(t "literal.fleet-ops.new-vendor")
         primaryIcon="plus"
         primaryAction=this.vendorActions.transition.create
-        secondaryText="Import"
+        secondaryText=(t "literal.fleet-ops.import")
         secondaryIcon="upload"
         secondaryAction=this.vendorActions.import
         docsSlug="fleet-ops/resources/vendors/overview"
-        docsTitle="Vendors guide"
-        docsText="Vendor guide"
+        docsTitle=(t "literal.fleet-ops.vendors-guide")
+        docsText=(t "literal.fleet-ops.vendor-guide")
         docsSource="fleet-ops-empty-vendors"
     }}
 />

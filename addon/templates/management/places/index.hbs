@@ -13,19 +13,19 @@
     @emptyStateComponent={{component
         "table/empty-state"
         icon="location-dot"
-        title="Add your first place"
-        description="Places keep frequent pickup, dropoff, facility, and service locations ready for orders and routing."
-        filteredTitle="No places match your filters"
-        filteredDescription="Adjust the search or filters to find another saved location."
-        primaryText="New place"
+        title=(t "literal.fleet-ops.add-your-first-place")
+        description=(t "literal.fleet-ops.places-keep-frequent-pickup-dropoff-facility-and-17599")
+        filteredTitle=(t "literal.fleet-ops.no-places-match-your-filters")
+        filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-sav-bc812")
+        primaryText=(t "literal.fleet-ops.new-place-41d8d")
         primaryIcon="plus"
         primaryAction=this.placeActions.transition.create
-        secondaryText="Import"
+        secondaryText=(t "literal.fleet-ops.import")
         secondaryIcon="upload"
         secondaryAction=this.placeActions.import
         docsSlug="fleet-ops/resources/places/overview"
-        docsTitle="Places guide"
-        docsText="Places guide"
+        docsTitle=(t "literal.fleet-ops.places-guide")
+        docsText=(t "literal.fleet-ops.places-guide")
         docsSource="fleet-ops-empty-places"
     }}
 />

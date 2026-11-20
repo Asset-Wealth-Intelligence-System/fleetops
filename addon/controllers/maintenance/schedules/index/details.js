@@ -25,7 +25,7 @@ export default class MaintenanceSchedulesIndexDetailsController extends Controll
     get actionButtons() {
         return [
             { icon: 'edit', fn: this.edit, permission: 'fleet-ops update maintenance-schedule' },
-            { icon: 'play', helpText: 'Trigger Work Order Now', fn: this.triggerNow, permission: 'fleet-ops update maintenance-schedule' },
+            { icon: 'play', helpText: this.intl.t('literal.fleet-ops.trigger-work-order-now'), fn: this.triggerNow, permission: 'fleet-ops update maintenance-schedule' },
             {
                 // Calendar export dropdown — matches the dropdown-button pattern
                 icon: 'ellipsis-h',
@@ -33,13 +33,13 @@ export default class MaintenanceSchedulesIndexDetailsController extends Controll
                 renderInPlace: true,
                 items: [
                     {
-                        text: 'Download .ics',
+                        text: this.intl.t('literal.fleet-ops.download-ics'),
                         icon: 'download',
                         iconPrefix: 'far',
                         fn: () => this.downloadIcal(this.model),
                     },
                     {
-                        text: 'Add to Google Calendar',
+                        text: this.intl.t('literal.fleet-ops.add-to-google-calendar'),
                         icon: 'calendar-plus',
                         iconPrefix: 'fab',
                         fn: () => this.addToGoogleCalendar(this.model),
@@ -92,7 +92,7 @@ export default class MaintenanceSchedulesIndexDetailsController extends Controll
      * Includes RRULE recurrence when the schedule has a time-based interval.
      */
     @action addToGoogleCalendar(schedule) {
-        const title = encodeURIComponent(schedule.name ?? 'Maintenance Schedule');
+        const title = encodeURIComponent(schedule.name ?? this.intl.t('literal.fleet-ops.maintenance-schedule'));
         const dueDate = schedule.next_due_date ? new Date(schedule.next_due_date) : new Date();
         const pad = (n) => String(n).padStart(2, '0');
         const dateStr = `${dueDate.getFullYear()}${pad(dueDate.getMonth() + 1)}${pad(dueDate.getDate())}`;

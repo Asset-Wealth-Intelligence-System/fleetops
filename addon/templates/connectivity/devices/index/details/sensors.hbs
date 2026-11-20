@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-3 p-3">
     <div class="flex flex-col gap-1">
-        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">Sensor Inventory + Health</h2>
-        <p class="text-xs text-gray-500 dark:text-gray-300">Readings, thresholds, and reporting health for this device.</p>
+        <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.sensor-inventory-health"}}</h2>
+        <p class="text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.readings-thresholds-and-reporting-health-for-thi-42f31"}}</p>
     </div>
 
     <section class="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
@@ -23,12 +23,12 @@
     <section class="overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <div class="fleetops-provider-connections-header border-b border-gray-200 px-3 py-2 dark:border-gray-700">
             <div>
-                <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">Device Sensors</h3>
-                <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">Filter by type, status, and last reading.</p>
+                <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.device-sensors"}}</h3>
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.filter-by-type-status-and-last-reading"}}</p>
             </div>
             <div class="fleetops-provider-connections-actions flex min-w-0 flex-wrap items-center gap-2 lg:ml-auto lg:flex-nowrap lg:justify-end">
                 <Layout::Resource::TabularActions
-                    @title="Device Sensors"
+                    @title={{t "literal.fleet-ops.device-sensors"}}
                     @searchQuery={{this.sensors_query}}
                     @onSearch={{perform this.searchTask}}
                     @columns={{this.columns}}
@@ -48,7 +48,7 @@
 
         <Layout::Resource::Tabular
             @resource="sensor"
-            @title="Device Sensors"
+            @title={{t "literal.fleet-ops.device-sensors"}}
             @data={{@model}}
             @columns={{this.columns}}
             @page={{this.sensors_page}}
@@ -60,11 +60,11 @@
                 "table/empty-state"
                 variant="compact"
                 icon="gauge-high"
-                title="No sensors connected"
-                description="Sensors appear here after provider telemetry links them to this device."
-                filteredTitle="No sensors match your filters"
-                filteredDescription="Adjust the search or filters to find another sensor."
-                primaryText="Refresh"
+                title=(t "literal.fleet-ops.no-sensors-connected")
+                description=(t "literal.fleet-ops.sensors-appear-here-after-provider-telemetry-lin-1b74d")
+                filteredTitle=(t "literal.fleet-ops.no-sensors-match-your-filters")
+                filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-sen-e63f2")
+                primaryText=(t "literal.fleet-ops.refresh")
                 primaryIcon="refresh"
                 primaryAction=this.refresh
             }}

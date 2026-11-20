@@ -7,6 +7,7 @@ import config from 'ember-get-config';
 import { action } from '@ember/object';
 
 export default class SettingsPaymentsIndexController extends Controller {
+    @service intl;
     @service fetch;
     @tracked hasStripeConnectAccount = true;
     @tracked table;
@@ -15,36 +16,38 @@ export default class SettingsPaymentsIndexController extends Controller {
     @tracked sort = '-created_at';
     @tracked query = null;
     queryParams = ['page', 'limit', 'sort', 'query'];
-    columns = [
-        {
-            label: 'Purchase Rate ID',
-            valuePath: 'public_id',
-            cellComponent: 'click-to-copy',
-        },
-        {
-            label: 'Service Quote',
-            valuePath: 'service_quote_id',
-            cellComponent: 'click-to-copy',
-        },
-        {
-            label: 'Order',
-            valuePath: 'order_id',
-            cellComponent: 'click-to-copy',
-        },
-        {
-            label: 'Customer',
-            valuePath: 'customer.name',
-        },
-        {
-            label: 'Amount',
-            valuePath: 'amount',
-            cellComponent: 'table/cell/currency',
-        },
-        {
-            label: 'Date',
-            valuePath: 'created_at',
-        },
-    ];
+    get columns() {
+        return [
+            {
+                label: this.intl.t('literal.fleet-ops.purchase-rate-id'),
+                valuePath: 'public_id',
+                cellComponent: 'click-to-copy',
+            },
+            {
+                label: this.intl.t('literal.fleet-ops.service-quote'),
+                valuePath: 'service_quote_id',
+                cellComponent: 'click-to-copy',
+            },
+            {
+                label: this.intl.t('literal.fleet-ops.order'),
+                valuePath: 'order_id',
+                cellComponent: 'click-to-copy',
+            },
+            {
+                label: this.intl.t('literal.fleet-ops.customer'),
+                valuePath: 'customer.name',
+            },
+            {
+                label: this.intl.t('literal.fleet-ops.amount'),
+                valuePath: 'amount',
+                cellComponent: 'table/cell/currency',
+            },
+            {
+                label: this.intl.t('literal.fleet-ops.date'),
+                valuePath: 'created_at',
+            },
+        ];
+    }
 
     get isStripeEnabled() {
         return !isEmpty(config.stripe.publishableKey);

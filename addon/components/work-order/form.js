@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { workOrderCategories, workOrderStatuses } from '../../utils/fleet-ops-options';
 
+import { inject as service } from '@ember/service';
 /**
  * Maps a user-facing polymorphic type string to the Ember Data model name
  * used by ModelSelect.
@@ -42,6 +43,7 @@ const ASSIGNEE_MODEL_TO_TYPE = {
 };
 
 export default class WorkOrderFormComponent extends Component {
+    @service intl;
     /** Status options for work orders. */
     statusOptions = workOrderStatuses;
 
@@ -54,20 +56,24 @@ export default class WorkOrderFormComponent extends Component {
     /**
      * Polymorphic target type options — the asset a work order is raised against.
      */
-    targetTypeOptions = [
-        { value: 'fleet-ops:vehicle', label: 'Vehicle' },
-        { value: 'fleet-ops:equipment', label: 'Equipment' },
-    ];
+    get targetTypeOptions() {
+        return [
+            { value: 'fleet-ops:vehicle', label: this.intl.t('literal.fleet-ops.vehicle') },
+            { value: 'fleet-ops:equipment', label: this.intl.t('literal.fleet-ops.equipment') },
+        ];
+    }
 
     /**
      * Polymorphic assignee type options — who is responsible for completing
      * the work order.
      */
-    assigneeTypeOptions = [
-        { value: 'fleet-ops:vendor', label: 'Vendor' },
-        { value: 'fleet-ops:contact', label: 'Contact' },
-        { value: 'Auth:User', label: 'User' },
-    ];
+    get assigneeTypeOptions() {
+        return [
+            { value: 'fleet-ops:vendor', label: this.intl.t('literal.fleet-ops.vendor') },
+            { value: 'fleet-ops:contact', label: this.intl.t('literal.fleet-ops.contact') },
+            { value: 'Auth:User', label: this.intl.t('literal.fleet-ops.user') },
+        ];
+    }
 
     /** Derived Ember Data model name for the currently selected target type. */
     @tracked targetModelName = null;

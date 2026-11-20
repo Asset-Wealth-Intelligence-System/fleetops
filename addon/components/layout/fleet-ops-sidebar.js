@@ -135,7 +135,7 @@ export default class LayoutFleetOpsSidebarComponent extends Component {
 
     get resourcesItems() {
         return this.withRegistryItems('management', [
-            this.createHubItem('Resources Hub', 'layer-group', 'management.index', 'fleet-ops list driver', 'fleet-ops see driver', [
+            this.createHubItem(this.intl.t('literal.fleet-ops.resources-hub'), 'layer-group', 'management.index', 'fleet-ops list driver', 'fleet-ops see driver', [
                 'resources hub',
                 'resource dashboard',
                 'resource readiness',
@@ -154,7 +154,7 @@ export default class LayoutFleetOpsSidebarComponent extends Component {
 
     get maintenanceItems() {
         return this.withRegistryItems('maintenance', [
-            this.createHubItem('Maintenance Hub', 'wrench', 'maintenance.index', 'fleet-ops list maintenance-schedule', 'fleet-ops see maintenance-schedule', [
+            this.createHubItem(this.intl.t('literal.fleet-ops.maintenance-hub'), 'wrench', 'maintenance.index', 'fleet-ops list maintenance-schedule', 'fleet-ops see maintenance-schedule', [
                 'maintenance hub',
                 'service readiness',
                 'maintenance control panel',
@@ -179,14 +179,18 @@ export default class LayoutFleetOpsSidebarComponent extends Component {
 
     get analyticsItems() {
         return this.withRegistryItems('analytics', [
-            this.createHubItem('Dashboard', 'chart-line', 'analytics.index', 'iam list report', 'fleet-ops see report', ['dashboard', 'fleetops dashboard', 'metrics']),
+            this.createHubItem(this.intl.t('literal.fleet-ops.dashboard'), 'chart-line', 'analytics.index', 'iam list report', 'fleet-ops see report', [
+                'dashboard',
+                'fleetops dashboard',
+                'metrics',
+            ]),
             this.createItem('menu.reports', 'file-import', 'analytics.reports', 'iam list report', 'fleet-ops see report'),
         ]);
     }
 
     get settingsItems() {
         return this.withRegistryItems('settings', [
-            this.createHubItem('Settings Hub', 'sliders', 'settings.index', 'fleet-ops view navigator-settings', 'fleet-ops see navigator-settings', [
+            this.createHubItem(this.intl.t('literal.fleet-ops.settings-hub'), 'sliders', 'settings.index', 'fleet-ops view navigator-settings', 'fleet-ops see navigator-settings', [
                 'settings hub',
                 'configuration dashboard',
                 'setup focus',

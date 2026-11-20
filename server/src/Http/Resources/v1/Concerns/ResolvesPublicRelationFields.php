@@ -39,7 +39,17 @@ trait ResolvesPublicRelationFields
             return [];
         }
 
-        return array_values(array_filter(array_map('strval', $with), 'strlen'));
+        $with = array_values(array_filter(array_map('strval', $with), 'strlen'));
+
+        // The same `with` param is visible to every resource rendered for the request, including this
+        // one nested inside another (e.g. `vehicle_assigned` on an order queried with `with[]=payload`).
+        // Only keep relations this model actually defines so `loadMissing()` cannot throw.
+        $resource = $this->resource;
+        if (is_object($resource)) {
+            $with = array_values(array_filter($with, fn (string $relation) => method_exists($resource, explode('.', $relation, 2)[0])));
+        }
+
+        return $with;
     }
 
     /**

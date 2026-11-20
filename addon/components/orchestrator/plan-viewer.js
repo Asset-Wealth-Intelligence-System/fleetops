@@ -27,6 +27,7 @@ import toCalendarDate from '../../utils/to-calendar-date';
  * @arg formatUnixTime        - Helper(unix) → string
  */
 export default class OrchestratorPlanViewerComponent extends Component {
+    @service intl;
     @service currentUser;
 
     @tracked expandedCards = new Set();
@@ -141,7 +142,9 @@ export default class OrchestratorPlanViewerComponent extends Component {
         const hasDriverPhase = this.args.hasDriverPhase ?? false;
         return (this.args.planByVehicle ?? []).map((group) => {
             const primaryTitle =
-                hasDriverPhase && group.driver ? (group.driver.name ?? group.driver.display_name ?? 'Driver') : (group.vehicle?.display_name ?? group.vehicle?.name ?? 'Vehicle');
+                hasDriverPhase && group.driver
+                    ? (group.driver.name ?? group.driver.display_name ?? this.intl.t('literal.fleet-ops.driver'))
+                    : (group.vehicle?.display_name ?? group.vehicle?.name ?? this.intl.t('literal.fleet-ops.vehicle'));
             return {
                 id: group.vehicle?.public_id ?? group.vehicle?.id ?? String(Math.random()),
                 title: primaryTitle,
@@ -233,7 +236,7 @@ export default class OrchestratorPlanViewerComponent extends Component {
      */
     @action renderResourceLabel({ resource }) {
         const { group, hasDriverPhase } = resource.extendedProps ?? {};
-        const vehicleName = group?.vehicle?.display_name ?? group?.vehicle?.name ?? 'Vehicle';
+        const vehicleName = group?.vehicle?.display_name ?? group?.vehicle?.name ?? this.intl.t('literal.fleet-ops.vehicle');
         const driverName = group?.driver?.name ?? '';
         const stopCount = group?.orders?.length ?? 0;
         const color = group?.routeColor ?? '#6366f1';

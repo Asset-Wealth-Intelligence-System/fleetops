@@ -13,7 +13,7 @@ export default class ManagementContactsIndexDetailsController extends Controller
         return [
             {
                 route: 'management.contacts.index.details.index',
-                label: 'Overview',
+                label: this.intl.t('literal.fleet-ops.overview'),
             },
             ...(isArray(registeredTabs) ? registeredTabs : []),
         ];

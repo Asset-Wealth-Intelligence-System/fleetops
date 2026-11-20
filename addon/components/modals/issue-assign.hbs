@@ -1,10 +1,10 @@
 <Modal::Default @modalIsOpened={{@modalIsOpened}} @options={{@options}} @confirm={{@onConfirm}} @decline={{@onDecline}}>
     <div class="modal-body-container">
-        <InputGroup @name="Assignee" @helpText="Choose the operator responsible for following up on this issue.">
+        <InputGroup @name={{t "literal.fleet-ops.assignee"}} @helpText={{t "literal.fleet-ops.choose-the-operator-responsible-for-following-up-bc647"}}>
             <ModelSelect
                 @modelName="user"
                 @selectedModel={{this.selectedAssignee}}
-                @placeholder="Select assignee"
+                @placeholder={{t "literal.fleet-ops.select-assignee"}}
                 @triggerClass="form-select form-input"
                 @infiniteScroll={{false}}
                 @renderInPlace={{true}}

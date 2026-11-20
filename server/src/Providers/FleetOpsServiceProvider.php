@@ -191,6 +191,9 @@ class FleetOpsServiceProvider extends CoreServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/../routes.php');
         $this->loadMigrationsFrom(__DIR__ . '/../../migrations');
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'fleetops');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'fleetops');
+        // Localize server-generated UI copy from the console's Accept-Language header.
+        $this->app->make(\Illuminate\Contracts\Http\Kernel::class)->pushMiddleware(\Fleetbase\FleetOps\Http\Middleware\SetRequestLocale::class);
         $this->mergeConfigFrom(__DIR__ . '/../../config/fleetops.php', 'fleetops');
         $this->mergeConfigFrom(__DIR__ . '/../../config/telematics.php', 'telematics');
         $this->mergeConfigFrom(__DIR__ . '/../../config/fuel-providers.php', 'fuel-providers');

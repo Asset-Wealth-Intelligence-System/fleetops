@@ -6,7 +6,7 @@
                 <input
                     type="search"
                     value={{this.query}}
-                    placeholder="Search hierarchy..."
+                    placeholder={{t "literal.fleet-ops.search-hierarchy"}}
                     class="min-w-0 flex-1 appearance-none rounded-md border-0 bg-transparent p-0 text-xs leading-5 text-gray-700 outline-none shadow-none ring-0 focus:border-transparent focus:outline-none focus:ring-0 dark:text-gray-100"
                     data-test-fleet-hierarchy-search
                     {{on "input" this.updateQuery}}
@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <div class="fleet-hierarchy-tree-list bg-white dark:bg-gray-900" aria-label="Fleet hierarchy">
+    <div class="fleet-hierarchy-tree-list bg-white dark:bg-gray-900" aria-label={{t "literal.fleet-ops.fleet-hierarchy"}}>
         {{#if this.visibleRows.length}}
             {{#each this.visibleRows as |row|}}
                 {{#if (eq row.type "fleet")}}
@@ -78,10 +78,10 @@
                                 as |dd|
                             >
                                 <div class="next-dd-menu mx-0 mt-1" role="menu">
-                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.viewFleet row.fleet)}}>View details</a>
+                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.viewFleet row.fleet)}}>{{t "literal.fleet-ops.view-details"}}</a>
                                     <div class="next-dd-menu-seperator"></div>
-                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignDriver row.fleet)}}>Assign driver</a>
-                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignVehicle row.fleet)}}>Assign vehicle</a>
+                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignDriver row.fleet)}}>{{t "literal.fleet-ops.assign-driver"}}</a>
+                                    <a href="javascript:;" class="next-dd-item" {{on "click" (dropdown-fn dd this.assignVehicle row.fleet)}}>{{t "literal.fleet-ops.assign-vehicle"}}</a>
                                 </div>
                             </DropdownButton>
                         </div>
@@ -96,7 +96,7 @@
                         <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full {{if row.driver.online 'bg-green-500' 'bg-yellow-300'}}" aria-hidden="true"></span>
                         <span class="min-w-0 flex-1">
                             <span class="block truncate font-medium leading-4" title={{this.displayName row.driver}}>{{this.displayName row.driver}}</span>
-                            <span class="block truncate text-xs leading-4 text-gray-400">Driver - {{this.driverSubtitle row.driver}}</span>
+                            <span class="block truncate text-xs leading-4 text-gray-400">{{t "literal.fleet-ops.driver-baed8"}} {{this.driverSubtitle row.driver}}</span>
                         </span>
                     </button>
                 {{else}}
@@ -109,7 +109,7 @@
                         <span class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full {{if row.vehicle.online 'bg-green-500' 'bg-yellow-300'}}" aria-hidden="true"></span>
                         <span class="min-w-0 flex-1">
                             <span class="block truncate font-medium leading-4" title={{this.displayName row.vehicle}}>{{this.displayName row.vehicle}}</span>
-                            <span class="block truncate text-xs leading-4 text-gray-400">Vehicle - {{this.vehicleSubtitle row.vehicle}}</span>
+                            <span class="block truncate text-xs leading-4 text-gray-400">{{t "literal.fleet-ops.vehicle-0f27a"}} {{this.vehicleSubtitle row.vehicle}}</span>
                         </span>
                     </button>
                 {{/if}}
@@ -124,11 +124,11 @@
                     <div class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-400">{{this.emptyDescription}}</div>
                 </div>
                 {{#if this.hasControlsApplied}}
-                    <Button @type="default" @size="xs" @icon="times" @text="Clear filters" @onClick={{this.clearFilters}} data-test-fleet-hierarchy-clear-filters />
+                    <Button @type="default" @size="xs" @icon="times" @text={{t "literal.fleet-ops.clear-filters"}} @onClick={{this.clearFilters}} data-test-fleet-hierarchy-clear-filters />
                 {{else}}
                     <div class="flex items-center gap-1">
-                        <Button @type="default" @size="xs" @icon="user-plus" @text="Assign driver" @onClick={{fn this.assignDriver this.rootFleet}} />
-                        <Button @type="default" @size="xs" @icon="car" @text="Assign vehicle" @onClick={{fn this.assignVehicle this.rootFleet}} />
+                        <Button @type="default" @size="xs" @icon="user-plus" @text={{t "literal.fleet-ops.assign-driver"}} @onClick={{fn this.assignDriver this.rootFleet}} />
+                        <Button @type="default" @size="xs" @icon="car" @text={{t "literal.fleet-ops.assign-vehicle"}} @onClick={{fn this.assignVehicle this.rootFleet}} />
                     </div>
                 {{/if}}
             </div>

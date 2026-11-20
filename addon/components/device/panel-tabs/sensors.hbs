@@ -1,15 +1,15 @@
 <div class="flex flex-col gap-3 p-3" ...attributes>
     <div class="flex items-start justify-between gap-3">
         <div class="min-w-0">
-            <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">Sensor Inventory</h2>
-            <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-300">Recent sensor readings and health for this device.</p>
+            <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.sensor-inventory"}}</h2>
+            <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.recent-sensor-readings-and-health-for-this-devic-7de2b"}}</p>
         </div>
         <Button @icon="refresh" @size="xs" @onClick={{this.refreshSensors}} @isLoading={{this.loadSensors.isRunning}} />
     </div>
 
     <Layout::Resource::Tabular
         @resource="sensor"
-        @title="Device Sensors"
+        @title={{t "literal.fleet-ops.device-sensors"}}
         @data={{this.sensors}}
         @columns={{this.columns}}
         @controller={{this}}
@@ -20,8 +20,8 @@
             "table/empty-state"
             variant="compact"
             icon="gauge-high"
-            title="No sensors connected"
-            description="Sensors appear here after provider telemetry links them to this device."
+            title=(t "literal.fleet-ops.no-sensors-connected")
+            description=(t "literal.fleet-ops.sensors-appear-here-after-provider-telemetry-lin-1b74d")
             primaryText="Refresh"
             primaryIcon="refresh"
             primaryAction=this.refreshSensors

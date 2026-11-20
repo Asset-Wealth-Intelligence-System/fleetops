@@ -1,10 +1,10 @@
 <div class="flex flex-col gap-4 p-4 md:p-6">
     <div class="flex flex-col gap-1 md:flex-row md:items-start md:justify-between">
         <div>
-            <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">Connection Logs</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-300">Review connection tests, device sync outcomes, and saved audit activity for this provider connection.</p>
+            <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.connection-logs"}}</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.review-connection-tests-device-sync-outcomes-and-b6c18"}}</p>
         </div>
-        <Button @icon="refresh" @text="Refresh" @size="xs" @onClick={{this.refresh}} />
+        <Button @icon="refresh" @text={{t "literal.fleet-ops.refresh"}} @size="xs" @onClick={{this.refresh}} />
     </div>
 
     <section class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -25,8 +25,8 @@
 
     <section class="overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <div class="border-b border-gray-200 px-4 py-3 dark:border-gray-700">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">Saved Activity</h3>
-            <p class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-300">Operational server logs are not shown here; this view only includes persisted audit and sync/test summary data.</p>
+            <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.saved-activity"}}</h3>
+            <p class="mt-1 text-xs leading-5 text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.operational-server-logs-are-not-shown-here-this-0c37a"}}</p>
         </div>
 
         {{#if this.hasLogs}}
@@ -44,7 +44,7 @@
                                 </div>
                                 <p class="mt-1 text-sm leading-5 text-gray-500 dark:text-gray-300">{{log.description}}</p>
                                 {{#if log.metadata.job_id}}
-                                    <div class="mt-2 font-mono text-[11px] text-gray-400 dark:text-gray-500">Job {{log.metadata.job_id}}</div>
+                                    <div class="mt-2 font-mono text-[11px] text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.job"}} {{log.metadata.job_id}}</div>
                                 {{/if}}
                             </div>
                         </div>
@@ -57,9 +57,9 @@
                 <Telematic::TabEmptyState
                     @tone="info"
                     @icon="list"
-                    @title="No saved logs yet"
-                    @message="Run a connection test or sync devices to create persisted log entries for this provider connection."
-                    @primaryText="Refresh"
+                    @title={{t "literal.fleet-ops.no-saved-logs-yet"}}
+                    @message={{t "literal.fleet-ops.run-a-connection-test-or-sync-devices-to-create-0554c"}}
+                    @primaryText={{t "literal.fleet-ops.refresh"}}
                     @primaryIcon="refresh"
                     @primaryAction={{this.refresh}}
                 />

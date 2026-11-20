@@ -156,7 +156,7 @@ export default class MaintenanceSchedulesIndexController extends Controller {
     }
 
     get bulkActions() {
-        return [{ label: 'Delete selected...', class: 'text-red-500', fn: this.maintenanceScheduleActions.bulkDelete }];
+        return [{ label: this.intl.t('literal.fleet-ops.delete-selected'), class: 'text-red-500', fn: this.maintenanceScheduleActions.bulkDelete }];
     }
 
     get columns() {

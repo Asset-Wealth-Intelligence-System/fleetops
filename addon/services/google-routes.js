@@ -2,6 +2,7 @@
 import RouteOptimizationInterfaceService from './route-optimization-interface';
 import { isArray } from '@ember/array';
 import { inject as service } from '@ember/service';
+import googleMapsLanguage from '../utils/google-maps-language';
 
 export default class GoogleRoutesService extends RouteOptimizationInterfaceService {
     @service mapSettings;
@@ -291,7 +292,7 @@ export default class GoogleRoutesService extends RouteOptimizationInterfaceServi
                 delete window[callbackName];
                 reject(error);
             };
-            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=routes,geometry,marker&callback=${callbackName}&loading=async`;
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=routes,geometry,marker&language=${googleMapsLanguage()}&callback=${callbackName}&loading=async`;
             document.head.appendChild(script);
         });
 

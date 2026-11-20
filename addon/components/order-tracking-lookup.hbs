@@ -2,7 +2,7 @@
     <div class="w-full max-w-lg">
         {{#if this.order}}
             <div class="flex flex-row justify-end mb-2">
-                <Button @icon="rotate" @text="Lookup another order" @onClick={{this.lookupAnother}} />
+                <Button @icon="rotate" @text={{t "literal.fleet-ops.lookup-another-order"}} @onClick={{this.lookupAnother}} />
             </div>
         {{/if}}
         <div class="border border-gray-200 text-black dark:text-white bg-gray-100 dark:border-gray-700 dark:bg-gray-900 rounded-lg shadow-sm {{unless this.order 'p-4'}}">
@@ -16,7 +16,7 @@
                                         <h1 class="font-bold text-lg">{{order.tracking_number.tracking_number}}</h1>
                                     </ClickToCopy>
                                     <div class="flex flex-row">
-                                        <div class="text-sm font-semibold mr-1">Date Created:</div>
+                                        <div class="text-sm font-semibold mr-1">{{t "literal.fleet-ops.date-created"}}</div>
                                         <div class="text-sm">{{order.createdAtShort}}</div>
                                     </div>
                                 </div>
@@ -29,11 +29,11 @@
                                 <div>
                                     <div class="flex flex-row items-center justify-between mb-2 ml-1">
                                         <div class="flex-1">
-                                            <h1 class="font-bold text-sm">Live Map:</h1>
+                                            <h1 class="font-bold text-sm">{{t "literal.fleet-ops.live-map"}}</h1>
                                         </div>
                                         <div class="flex flew-row space-x-2">
-                                            <Button @helpText="View Route" @icon="route" @onClick={{this.locateOrderRoute}} @size="xs" />
-                                            <Button @helpText="Locate Driver" @icon="truck" @onClick={{this.locateDriver}} @size="xs" @disabled={{not order.has_driver_assigned}} />
+                                            <Button @helpText={{t "literal.fleet-ops.view-route"}} @icon="route" @onClick={{this.locateOrderRoute}} @size="xs" />
+                                            <Button @helpText={{t "literal.fleet-ops.locate-driver"}} @icon="truck" @onClick={{this.locateDriver}} @size="xs" @disabled={{not order.has_driver_assigned}} />
                                         </div>
                                     </div>
                                     <div class="order-tracking-lookup-map-wrapper">
@@ -54,13 +54,13 @@
                                                             <div class="flex flex-row">
                                                                 <div class="flex-1">
                                                                     <div class="text-xs font-semibold">{{driver.name}}</div>
-                                                                    <div class="text-xs">Status:
+                                                                    <div class="text-xs">{{t "literal.fleet-ops.status"}}
                                                                         <span class="{{if driver.online 'text-green-500' 'text-red-400'}}">{{if
                                                                                 driver.online
-                                                                                "Online"
-                                                                                "Offline"
+                                                                                (t "literal.fleet-ops.online")
+                                                                                (t "literal.fleet-ops.offline")
                                                                             }}</span></div>
-                                                                    <div class="text-xs truncate">Pos: {{driver.positionString}}</div>
+                                                                    <div class="text-xs truncate">{{t "literal.fleet-ops.pos"}} {{driver.positionString}}</div>
                                                                 </div>
                                                             </div>
                                                         </marker.popup>
@@ -68,7 +68,7 @@
                                                             <div class="flex items-center space-x-1">
                                                                 <div class="text-xs font-semibold">{{driver.name}}</div>
                                                                 <div>•</div>
-                                                                <div class="text-xs {{if driver.online 'text-green-500' 'text-red-400'}}">{{if driver.online "Online" "Offline"}}</div>
+                                                                <div class="text-xs {{if driver.online 'text-green-500' 'text-red-400'}}">{{if driver.online (t "literal.fleet-ops.online") (t "literal.fleet-ops.offline")}}</div>
                                                             </div>
                                                             <div class="text-xs truncate"><FaIcon @icon="location-dot" @size="xs" class="mr-0.5" />{{driver.positionString}}</div>
                                                         </marker.tooltip>
@@ -83,7 +83,7 @@
                             <div>
                                 <div class="flex flex-row mb-2 ml-1">
                                     <div class="flex-1">
-                                        <h1 class="font-bold text-sm">Tracking:</h1>
+                                        <h1 class="font-bold text-sm">{{t "literal.fleet-ops.tracking"}}</h1>
                                     </div>
                                 </div>
                                 <div class="space-y-2">
@@ -97,19 +97,19 @@
                                     </div>
                                     <div class="grid grid-cols-2 gap-2 mt-1 px-1">
                                         <div class="flex flex-col text-xs">
-                                            <div class="font-semibold">Current ETA:</div>
+                                            <div class="font-semibold">{{t "literal.fleet-ops.current-eta"}}</div>
                                             <div class="">{{format-duration this.order.tracker_data.eta.active_stop_seconds}}</div>
                                         </div>
                                         <div class="flex flex-col text-xs">
-                                            <div class="font-semibold">ECT:</div>
+                                            <div class="font-semibold">{{t "literal.fleet-ops.ect"}}</div>
                                             <div class="">{{n-a this.order.tracker_data.eta.completion_at}}</div>
                                         </div>
                                         <div class="col-span-2 flex flex-col text-xs">
-                                            <div class="font-semibold">Current Destination:</div>
+                                            <div class="font-semibold">{{t "literal.fleet-ops.current-destination"}}</div>
                                             <div class="truncate">{{n-a this.order.tracker_data.active_stop.address}}</div>
                                         </div>
                                         <div class="col-span-2 flex flex-col text-xs">
-                                            <div class="font-semibold">Next Destination:</div>
+                                            <div class="font-semibold">{{t "literal.fleet-ops.next-destination"}}</div>
                                             <div class="truncate">{{n-a this.order.tracker_data.next_stop.address}}</div>
                                         </div>
                                     </div>
@@ -119,16 +119,16 @@
                             <div>
                                 <div class="flex flex-row justify-between mb-2 ml-1">
                                     <div class="flex-1">
-                                        <h1 class="font-bold text-sm">Activity:</h1>
+                                        <h1 class="font-bold text-sm">{{t "literal.fleet-ops.activity"}}</h1>
                                     </div>
                                     <div>
                                         <div
                                             class="rounded-md {{if order.has_driver_assigned 'bg-green-300 text-green-900' 'bg-yellow-300 text-yellow-900'}} px-2 py-0.5 text-xs flex-grow-0"
                                         >
                                             {{#if order.has_driver_assigned}}
-                                                <span>Driver Assigned</span>
+                                                <span>{{t "literal.fleet-ops.driver-assigned"}}</span>
                                             {{else}}
-                                                <span>No Driver Assigned</span>
+                                                <span>{{t "literal.fleet-ops.no-driver-assigned"}}</span>
                                             {{/if}}
                                         </div>
                                     </div>
@@ -137,10 +137,10 @@
                                     {{#each order.tracking_statuses as |trackingStatus|}}
                                         <div class="activity-detail">
                                             <div class="flex flex-row space-x-1">
-                                                <h3 class="font-semibold text-sm">{{trackingStatus.status}}</h3>
+                                                <h3 class="font-semibold text-sm">{{t-literal trackingStatus.status ns="status"}}</h3>
                                                 <div class="text-sm">{{trackingStatus.createdAtShortWithTime}}</div>
                                             </div>
-                                            <div class="text-sm">{{n-a trackingStatus.details}}</div>
+                                            <div class="text-sm">{{t-literal (n-a trackingStatus.details) ns="status"}}</div>
                                         </div>
                                     {{else}}
                                         <div class="px-10 py-2 flex items-center justify-center">
@@ -152,7 +152,7 @@
                             <div class="customer-order-details-seperator"></div>
                             <div>
                                 <div class="mb-2 ml-1">
-                                    <h1 class="font-bold text-sm">Items:</h1>
+                                    <h1 class="font-bold text-sm">{{t "literal.fleet-ops.items"}}</h1>
                                 </div>
                                 {{#if order.isMultipleDropoffOrder}}
                                     <div class="flex flex-col space-y-2 overflow-y-scroll" {{set-max-height "255px"}}>
@@ -176,12 +176,12 @@
                                                                 <Image src={{entity.photo_url}} class="w-14 h-14 rounded-md shadow-sm" alt={{entity.name}} />
                                                             </div>
                                                             <div class="flex-1">
-                                                                <div class="text-sm font-bold">{{n-a entity.name (concat "Item " (add index 1))}}</div>
-                                                                <div class="text-xs"><span class="font-semibold">Description:</span>
-                                                                    {{n-a entity.description "No description provided."}}</div>
-                                                                <div class="text-xs"><span class="font-semibold">Tracking:</span> {{n-a entity.tracking}}</div>
+                                                                <div class="text-sm font-bold">{{n-a entity.name (t "literal.fleet-ops.item-n" n=(add index 1))}}</div>
+                                                                <div class="text-xs"><span class="font-semibold">{{t "literal.fleet-ops.description"}}</span>
+                                                                    {{n-a entity.description (t "literal.fleet-ops.no-description-provided")}}</div>
+                                                                <div class="text-xs"><span class="font-semibold">{{t "literal.fleet-ops.tracking"}}</span> {{n-a entity.tracking}}</div>
                                                                 {{#if entity.price}}
-                                                                    <div class="text-xs"><span class="font-semibold">Price:</span>
+                                                                    <div class="text-xs"><span class="font-semibold">{{t "literal.fleet-ops.price"}}</span>
                                                                         {{format-currency entity.price entity.currency}}</div>
                                                                 {{/if}}
                                                             </div>
@@ -190,7 +190,7 @@
                                                 </div>
                                             </div>
                                         {{else}}
-                                            <div class="text-xs text-gray-500 px-2">None</div>
+                                            <div class="text-xs text-gray-500 px-2">{{t "literal.fleet-ops.none"}}</div>
                                         {{/each}}
                                     </div>
                                 {{else}}
@@ -202,18 +202,18 @@
                                                         <Image src={{entity.photo_url}} class="w-14 h-14 rounded-md shadow-sm" alt={{entity.name}} />
                                                     </div>
                                                     <div class="flex-1">
-                                                        <div class="text-sm font-bold">{{n-a entity.name (concat "Item " (add index 1))}}</div>
-                                                        <div class="text-xs"><span class="font-semibold">Description:</span>
-                                                            {{n-a entity.description "No description provided."}}</div>
-                                                        <div class="text-xs"><span class="font-semibold">Tracking:</span> {{n-a entity.tracking}}</div>
+                                                        <div class="text-sm font-bold">{{n-a entity.name (t "literal.fleet-ops.item-n" n=(add index 1))}}</div>
+                                                        <div class="text-xs"><span class="font-semibold">{{t "literal.fleet-ops.description"}}</span>
+                                                            {{n-a entity.description (t "literal.fleet-ops.no-description-provided")}}</div>
+                                                        <div class="text-xs"><span class="font-semibold">{{t "literal.fleet-ops.tracking"}}</span> {{n-a entity.tracking}}</div>
                                                         {{#if entity.price}}
-                                                            <div class="text-xs"><span class="font-semibold">Price:</span> {{format-currency entity.price entity.currency}}</div>
+                                                            <div class="text-xs"><span class="font-semibold">{{t "literal.fleet-ops.price"}}</span> {{format-currency entity.price entity.currency}}</div>
                                                         {{/if}}
                                                     </div>
                                                 </div>
                                             </div>
                                         {{else}}
-                                            <div class="text-xs text-gray-500 px-2">None</div>
+                                            <div class="text-xs text-gray-500 px-2">{{t "literal.fleet-ops.none"}}</div>
                                         {{/each}}
                                     </div>
                                 {{/if}}
@@ -224,13 +224,13 @@
             {{else}}
                 <form class="space-y-4" {{on "submit" (perform this.lookupOrder)}}>
                     <div>
-                        <div class="text-base font-semibold dark:text-white mb-2">Enter your tracking number:</div>
-                        <Input @value={{this.trackingNumber}} placeholder="Enter your tracking number" class="form-input form-input-lg w-full" disabled={{this.lookupOrder.isRunning}} />
+                        <div class="text-base font-semibold dark:text-white mb-2">{{t "literal.fleet-ops.enter-your-tracking-number-678b7"}}</div>
+                        <Input @value={{this.trackingNumber}} placeholder={{t "literal.fleet-ops.enter-your-tracking-number"}} class="form-input form-input-lg w-full" disabled={{this.lookupOrder.isRunning}} />
                     </div>
                     <Button
                         @buttonType="submit"
                         @type="primary"
-                        @text="Lookup Order"
+                        @text={{t "literal.fleet-ops.lookup-order"}}
                         @size="lg"
                         @icon="check"
                         @disabled={{not this.trackingNumber}}
@@ -245,6 +245,6 @@
 
 <div class="absolute left-0 top-0">
     <div class="p-4">
-        <Button @text="Back to Console" @icon="arrow-left" @onClick={{this.transitionToConsole}} @size="xs" />
+        <Button @text={{t "literal.fleet-ops.back-to-console"}} @icon="arrow-left" @onClick={{this.transitionToConsole}} @size="xs" />
     </div>
 </div>

@@ -14,14 +14,14 @@
     @emptyStateComponent={{component
         "table/empty-state"
         icon="user-group"
-        title="Add your first customer"
-        description="Customers give orders an owner, contact details, and account context for service history."
-        filteredTitle="No customers match your filters"
-        filteredDescription="Adjust the search or filters to find another customer."
-        primaryText="New customer"
+        title=(t "literal.fleet-ops.add-your-first-customer")
+        description=(t "literal.fleet-ops.customers-give-orders-an-owner-contact-details-a-554da")
+        filteredTitle=(t "literal.fleet-ops.no-customers-match-your-filters")
+        filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-cus-8b55a")
+        primaryText=(t "literal.fleet-ops.new-customer")
         primaryIcon="plus"
         primaryAction=this.customerActions.transition.create
-        secondaryText="Import"
+        secondaryText=(t "literal.fleet-ops.import")
         secondaryIcon="upload"
         secondaryAction=this.customerActions.import
     }}

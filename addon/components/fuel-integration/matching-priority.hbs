@@ -1,14 +1,14 @@
 <div class="space-y-4" ...attributes>
     <div class="rounded-md border border-blue-100 bg-blue-50 p-3 text-xs leading-5 text-blue-800 dark:border-blue-900/60 dark:bg-blue-900/10 dark:text-blue-200">
-        <div class="font-semibold text-blue-900 dark:text-blue-100">How matching works</div>
+        <div class="font-semibold text-blue-900 dark:text-blue-100">{{t "literal.fleet-ops.how-matching-works"}}</div>
         <p class="mt-1">
-            Fuel transactions arrive with vehicle identifiers from the provider. Matching checks this list from top to bottom and links the transaction to the first vehicle or order found.
+            {{t "literal.fleet-ops.fuel-transactions-arrive-with-vehicle-identifier-9a831"}}
         </p>
     </div>
 
     <div>
         <div class="mb-2 flex items-center justify-between gap-3">
-            <h3 class="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">Priority list</h3>
+            <h3 class="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">{{t "literal.fleet-ops.priority-list"}}</h3>
             {{#if this.hasSelectedFields}}
                 <span class="text-[11px] text-gray-400 dark:text-gray-500">{{this.selectedFields.length}} active</span>
             {{/if}}
@@ -22,7 +22,7 @@
                             <div class="min-w-0">
                                 <div class="flex flex-wrap items-center gap-2">
                                     <span class="rounded bg-blue-100 px-2 py-0.5 text-[10px] font-bold uppercase text-blue-700 dark:bg-blue-900/40 dark:text-blue-200" data-test-matching-priority-rank>
-                                        Priority
+                                        {{t "literal.fleet-ops.priority"}}
                                         {{field.priority}}
                                     </span>
                                     <span class="font-semibold text-gray-900 dark:text-gray-100">{{field.label}}</span>
@@ -33,9 +33,9 @@
 
                             {{#if @editable}}
                                 <div class="flex flex-shrink-0 items-center gap-1">
-                                    <Button data-test-matching-move-up={{field.key}} @icon="arrow-up" @size="xs" @helpText="Move earlier" @disabled={{not field.canMoveUp}} @onClick={{fn this.moveField field -1}} />
-                                    <Button data-test-matching-move-down={{field.key}} @icon="arrow-down" @size="xs" @helpText="Move later" @disabled={{not field.canMoveDown}} @onClick={{fn this.moveField field 1}} />
-                                    <Button data-test-matching-remove={{field.key}} @icon="times" @size="xs" @helpText="Remove from matching" @onClick={{fn this.removeField field}} />
+                                    <Button data-test-matching-move-up={{field.key}} @icon="arrow-up" @size="xs" @helpText={{t "literal.fleet-ops.move-earlier"}} @disabled={{not field.canMoveUp}} @onClick={{fn this.moveField field -1}} />
+                                    <Button data-test-matching-move-down={{field.key}} @icon="arrow-down" @size="xs" @helpText={{t "literal.fleet-ops.move-later"}} @disabled={{not field.canMoveDown}} @onClick={{fn this.moveField field 1}} />
+                                    <Button data-test-matching-remove={{field.key}} @icon="times" @size="xs" @helpText={{t "literal.fleet-ops.remove-from-matching"}} @onClick={{fn this.removeField field}} />
                                 </div>
                             {{/if}}
                         </div>
@@ -44,7 +44,7 @@
             </div>
         {{else}}
             <div class="rounded-md border border-dashed border-gray-300 bg-white p-5 text-center text-xs leading-5 text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300" data-test-matching-empty-state>
-                No automatic identifiers are selected. Imported transactions will stay unmatched until reviewed manually.
+                {{t "literal.fleet-ops.no-automatic-identifiers-are-selected-imported-t-c7def"}}
             </div>
         {{/if}}
     </div>
@@ -52,9 +52,9 @@
     {{#if @editable}}
         <div>
             <div class="mb-2 flex items-center justify-between gap-3">
-                <h3 class="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">Available identifiers</h3>
+                <h3 class="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">{{t "literal.fleet-ops.available-identifiers"}}</h3>
                 {{#unless this.availableFields.length}}
-                    <span class="text-[11px] text-gray-400 dark:text-gray-500">All identifiers are active</span>
+                    <span class="text-[11px] text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.all-identifiers-are-active"}}</span>
                 {{/unless}}
             </div>
 

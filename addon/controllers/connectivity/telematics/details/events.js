@@ -4,15 +4,17 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 
-const severityOptions = [
-    { label: 'Info', value: 'info' },
-    { label: 'Warning', value: 'warning' },
-    { label: 'Error', value: 'error' },
-    { label: 'Critical', value: 'critical' },
-    { label: 'High', value: 'high' },
-];
-
 export default class ConnectivityTelematicsDetailsEventsController extends Controller {
+    get severityOptions() {
+        return [
+            { label: this.intl.t('literal.fleet-ops.info'), value: 'info' },
+            { label: this.intl.t('literal.fleet-ops.warning'), value: 'warning' },
+            { label: this.intl.t('literal.fleet-ops.error'), value: 'error' },
+            { label: this.intl.t('literal.fleet-ops.critical'), value: 'critical' },
+            { label: this.intl.t('literal.fleet-ops.high'), value: 'high' },
+        ];
+    }
+
     @service deviceEventActions;
     @service hostRouter;
     @service intl;
@@ -77,9 +79,9 @@ export default class ConnectivityTelematicsDetailsEventsController extends Contr
                 return {
                     tone: 'info',
                     icon: 'filter',
-                    title: 'No events match these filters',
-                    message: 'Clear the current search and filters to return to all events for this connection.',
-                    primaryText: 'Clear filters',
+                    title: this.intl.t('literal.fleet-ops.no-events-match-these-filters'),
+                    message: this.intl.t('literal.fleet-ops.clear-the-current-search-and-filters-to-return-t-0bc05'),
+                    primaryText: this.intl.t('literal.fleet-ops.clear-filters'),
                     primaryIcon: 'filter',
                     primaryAction: this.clearFilters,
                 };
@@ -87,12 +89,12 @@ export default class ConnectivityTelematicsDetailsEventsController extends Contr
                 return {
                     tone: 'info',
                     icon: 'list',
-                    title: 'No telemetry events yet',
-                    message: 'Events arrive through provider webhooks or ingestion jobs after devices begin reporting telemetry.',
-                    primaryText: 'Refresh',
+                    title: this.intl.t('literal.fleet-ops.no-telemetry-events-yet'),
+                    message: this.intl.t('literal.fleet-ops.events-arrive-through-provider-webhooks-or-inges-d08f7'),
+                    primaryText: this.intl.t('literal.fleet-ops.refresh'),
                     primaryIcon: 'refresh',
                     primaryAction: this.refresh,
-                    note: 'Provider payloads, headers, and raw diagnostics are intentionally not shown here.',
+                    note: this.intl.t('literal.fleet-ops.provider-payloads-headers-and-raw-diagnostics-ar-e463f'),
                 };
             default:
                 return null;
@@ -101,10 +103,15 @@ export default class ConnectivityTelematicsDetailsEventsController extends Contr
 
     get metrics() {
         return [
-            { label: 'Recent events', value: this.model?.meta?.total ?? this.events.length, icon: 'list', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
-            { label: 'Warnings', value: this.warningEventsCount, icon: 'triangle-exclamation', accentClass: 'fleetops-connectivity-kpi-accent-amber' },
-            { label: 'Unprocessed', value: this.unprocessedEventsCount, icon: 'clock', accentClass: 'fleetops-connectivity-kpi-accent-rose' },
-            { label: 'Devices reporting', value: this.deviceCount, icon: 'microchip', accentClass: 'fleetops-connectivity-kpi-accent-green' },
+            {
+                label: this.intl.t('literal.fleet-ops.recent-events'),
+                value: this.model?.meta?.total ?? this.events.length,
+                icon: 'list',
+                accentClass: 'fleetops-connectivity-kpi-accent-blue',
+            },
+            { label: this.intl.t('literal.fleet-ops.warnings'), value: this.warningEventsCount, icon: 'triangle-exclamation', accentClass: 'fleetops-connectivity-kpi-accent-amber' },
+            { label: this.intl.t('literal.fleet-ops.unprocessed'), value: this.unprocessedEventsCount, icon: 'clock', accentClass: 'fleetops-connectivity-kpi-accent-rose' },
+            { label: this.intl.t('literal.fleet-ops.devices-reporting'), value: this.deviceCount, icon: 'microchip', accentClass: 'fleetops-connectivity-kpi-accent-green' },
         ];
     }
 
@@ -128,7 +135,7 @@ export default class ConnectivityTelematicsDetailsEventsController extends Contr
         return [
             {
                 sticky: true,
-                label: 'Event',
+                label: this.intl.t('literal.fleet-ops.event'),
                 valuePath: 'event_type',
                 cellComponent: 'table/cell/anchor',
                 action: this.deviceEventActions.transition.view,
@@ -140,20 +147,20 @@ export default class ConnectivityTelematicsDetailsEventsController extends Contr
                 filterComponent: 'filter/string',
             },
             {
-                label: 'Device',
+                label: this.intl.t('literal.fleet-ops.device'),
                 valuePath: 'device_name',
                 resizable: true,
                 sortable: true,
                 filterable: true,
                 filterComponent: 'filter/model',
-                filterComponentPlaceholder: 'Select device',
+                filterComponentPlaceholder: this.intl.t('literal.fleet-ops.select-device-1dffe'),
                 filterParam: 'device_uuid',
                 model: 'device',
                 modelNamePath: 'displayName',
                 query: { telematic_uuid: this.telematic?.id },
             },
             {
-                label: 'Provider',
+                label: this.intl.t('literal.fleet-ops.provider-27703'),
                 valuePath: 'provider',
                 cellClassNames: 'uppercase',
                 resizable: true,
@@ -163,7 +170,7 @@ export default class ConnectivityTelematicsDetailsEventsController extends Contr
                 filterComponent: 'filter/string',
             },
             {
-                label: 'Severity',
+                label: this.intl.t('literal.fleet-ops.severity'),
                 valuePath: 'severity',
                 cellComponent: 'table/cell/status',
                 resizable: true,
@@ -171,12 +178,12 @@ export default class ConnectivityTelematicsDetailsEventsController extends Contr
                 filterable: true,
                 filterParam: 'severity',
                 filterComponent: 'filter/multi-option',
-                filterOptions: severityOptions,
+                filterOptions: this.severityOptions,
                 filterOptionLabel: 'label',
                 filterOptionValue: 'value',
             },
             {
-                label: 'Processed',
+                label: this.intl.t('literal.fleet-ops.processed-e6f64'),
                 valuePath: 'processedAt',
                 sortParam: 'processed_at',
                 resizable: true,
@@ -185,14 +192,14 @@ export default class ConnectivityTelematicsDetailsEventsController extends Contr
                 filterParam: 'processed',
                 filterComponent: 'filter/multi-option',
                 filterOptions: [
-                    { label: 'Processed', value: 'processed' },
-                    { label: 'Unprocessed', value: 'unprocessed' },
+                    { label: this.intl.t('literal.fleet-ops.processed-e6f64'), value: 'processed' },
+                    { label: this.intl.t('literal.fleet-ops.unprocessed'), value: 'unprocessed' },
                 ],
                 filterOptionLabel: 'label',
                 filterOptionValue: 'value',
             },
             {
-                label: 'Occurred',
+                label: this.intl.t('literal.fleet-ops.occurred-b378d'),
                 valuePath: 'occurredAt',
                 sortParam: 'occurred_at',
                 resizable: true,
@@ -228,7 +235,7 @@ export default class ConnectivityTelematicsDetailsEventsController extends Contr
                         permission: 'fleet-ops view device-event',
                     },
                     {
-                        label: 'Mark processed',
+                        label: this.intl.t('literal.fleet-ops.mark-processed-f1bfb'),
                         fn: this.markProcessed,
                         permission: 'fleet-ops update device-event',
                     },

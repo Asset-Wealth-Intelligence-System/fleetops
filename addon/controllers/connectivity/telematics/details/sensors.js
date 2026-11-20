@@ -80,9 +80,9 @@ export default class ConnectivityTelematicsDetailsSensorsController extends Cont
                 return {
                     tone: 'info',
                     icon: 'filter',
-                    title: 'No sensors match these filters',
-                    message: 'Clear the current search and filters to return to the full sensor inventory.',
-                    primaryText: 'Clear filters',
+                    title: this.intl.t('literal.fleet-ops.no-sensors-match-these-filters'),
+                    message: this.intl.t('literal.fleet-ops.clear-the-current-search-and-filters-to-return-t-2aaed'),
+                    primaryText: this.intl.t('literal.fleet-ops.clear-filters'),
                     primaryIcon: 'filter',
                     primaryAction: this.clearFilters,
                 };
@@ -90,9 +90,9 @@ export default class ConnectivityTelematicsDetailsSensorsController extends Cont
                 return {
                     tone: 'warning',
                     icon: 'satellite-dish',
-                    title: 'Sync devices before reviewing sensors',
-                    message: 'Sensor inventory depends on synced devices and provider telemetry ingestion.',
-                    primaryText: 'Go to Devices',
+                    title: this.intl.t('literal.fleet-ops.sync-devices-before-reviewing-sensors'),
+                    message: this.intl.t('literal.fleet-ops.sensor-inventory-depends-on-synced-devices-and-p-7dd87'),
+                    primaryText: this.intl.t('literal.fleet-ops.go-to-devices'),
                     primaryIcon: 'microchip',
                     primaryAction: this.goToDevices,
                 };
@@ -100,15 +100,15 @@ export default class ConnectivityTelematicsDetailsSensorsController extends Cont
                 return {
                     tone: 'info',
                     icon: 'gauge-high',
-                    title: 'No sensors reported yet',
-                    message: 'Devices are synced, but this provider has not reported sensor inventory or webhook sensor data yet.',
-                    primaryText: 'Refresh',
+                    title: this.intl.t('literal.fleet-ops.no-sensors-reported-yet'),
+                    message: this.intl.t('literal.fleet-ops.devices-are-synced-but-this-provider-has-not-rep-54cfd'),
+                    primaryText: this.intl.t('literal.fleet-ops.refresh'),
                     primaryIcon: 'refresh',
                     primaryAction: this.refresh,
-                    secondaryText: 'View Devices',
+                    secondaryText: this.intl.t('literal.fleet-ops.view-devices'),
                     secondaryIcon: 'microchip',
                     secondaryAction: this.goToDevices,
-                    note: 'Some providers expose sensors only after live telemetry, fuel, or diagnostic events are ingested.',
+                    note: this.intl.t('literal.fleet-ops.some-providers-expose-sensors-only-after-live-te-b394c'),
                 };
             default:
                 return null;
@@ -117,10 +117,15 @@ export default class ConnectivityTelematicsDetailsSensorsController extends Cont
 
     get metrics() {
         return [
-            { label: 'Sensors', value: this.model?.meta?.total ?? this.sensors.length, icon: 'gauge-high', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
-            { label: 'Active', value: this.activeSensorsCount, icon: 'signal', accentClass: 'fleetops-connectivity-kpi-accent-green' },
-            { label: 'Reporting values', value: this.sensorsWithReadingsCount, icon: 'chart-line', accentClass: 'fleetops-connectivity-kpi-accent-amber' },
-            { label: 'Parent devices', value: this.deviceCount, icon: 'microchip', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
+            {
+                label: this.intl.t('literal.fleet-ops.sensors'),
+                value: this.model?.meta?.total ?? this.sensors.length,
+                icon: 'gauge-high',
+                accentClass: 'fleetops-connectivity-kpi-accent-blue',
+            },
+            { label: this.intl.t('literal.fleet-ops.active'), value: this.activeSensorsCount, icon: 'signal', accentClass: 'fleetops-connectivity-kpi-accent-green' },
+            { label: this.intl.t('literal.fleet-ops.reporting-values'), value: this.sensorsWithReadingsCount, icon: 'chart-line', accentClass: 'fleetops-connectivity-kpi-accent-amber' },
+            { label: this.intl.t('literal.fleet-ops.parent-devices'), value: this.deviceCount, icon: 'microchip', accentClass: 'fleetops-connectivity-kpi-accent-blue' },
         ];
     }
 
@@ -137,7 +142,7 @@ export default class ConnectivityTelematicsDetailsSensorsController extends Cont
             },
             {
                 icon: 'microchip',
-                text: 'View Devices',
+                text: this.intl.t('literal.fleet-ops.view-devices'),
                 size: 'sm',
                 onClick: this.goToDevices,
                 wrapperClass: 'fleetops-telematics-action-button',
@@ -163,7 +168,7 @@ export default class ConnectivityTelematicsDetailsSensorsController extends Cont
                 filterComponent: 'filter/string',
             },
             {
-                label: 'Type',
+                label: this.intl.t('literal.fleet-ops.type'),
                 valuePath: 'type',
                 resizable: true,
                 sortable: true,
@@ -175,7 +180,7 @@ export default class ConnectivityTelematicsDetailsSensorsController extends Cont
                 filterOptionValue: 'value',
             },
             {
-                label: 'Device',
+                label: this.intl.t('literal.fleet-ops.device'),
                 valuePath: 'device.displayName',
                 cellComponent: 'table/cell/anchor',
                 action: this.deviceActions.transition.view,
@@ -184,20 +189,20 @@ export default class ConnectivityTelematicsDetailsSensorsController extends Cont
                 sortable: true,
                 filterable: true,
                 filterComponent: 'filter/model',
-                filterComponentPlaceholder: 'Select device',
+                filterComponentPlaceholder: this.intl.t('literal.fleet-ops.select-device-1dffe'),
                 filterParam: 'device_uuid',
                 model: 'device',
                 modelNamePath: 'displayName',
                 query: { telematic_uuid: this.telematic?.id },
             },
             {
-                label: 'Value',
+                label: this.intl.t('literal.fleet-ops.value'),
                 valuePath: 'last_value',
                 resizable: true,
                 sortable: true,
             },
             {
-                label: 'Unit',
+                label: this.intl.t('literal.fleet-ops.unit'),
                 valuePath: 'unit',
                 resizable: true,
                 sortable: true,
@@ -215,7 +220,7 @@ export default class ConnectivityTelematicsDetailsSensorsController extends Cont
                 filterOptionValue: 'value',
             },
             {
-                label: 'Last Reading',
+                label: this.intl.t('literal.fleet-ops.last-reading'),
                 valuePath: 'lastReadingAt',
                 sortParam: 'last_reading_at',
                 resizable: true,
@@ -242,7 +247,7 @@ export default class ConnectivityTelematicsDetailsSensorsController extends Cont
                         permission: 'fleet-ops view sensor',
                     },
                     {
-                        label: 'Open parent device',
+                        label: this.intl.t('literal.fleet-ops.open-parent-device'),
                         fn: this.openParentDevice,
                         permission: 'fleet-ops view device',
                     },

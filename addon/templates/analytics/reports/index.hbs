@@ -14,19 +14,19 @@
     @emptyStateComponent={{component
         "table/empty-state"
         icon="chart-line"
-        title="No reports yet"
-        description="Create a Fleet-Ops report to start tracking operational trends, utilization, and performance over time."
-        filteredTitle="No reports match your search"
-        filteredDescription="Adjust the search or filters to find an existing report."
-        primaryText="New report"
+        title=(t "literal.fleet-ops.no-reports-yet")
+        description=(t "literal.fleet-ops.create-a-fleet-ops-report-to-start-tracking-oper-05bfd")
+        filteredTitle=(t "literal.fleet-ops.no-reports-match-your-search")
+        filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-an-existing-5c664")
+        primaryText=(t "literal.fleet-ops.new-report")
         primaryIcon="plus"
         primaryAction=this.reportActions.transition.create
-        secondaryText="Refresh"
+        secondaryText=(t "literal.fleet-ops.refresh")
         secondaryIcon="refresh"
         secondaryAction=this.reportActions.refresh
         docsSlug="fleet-ops/analytics/reports/overview"
-        docsTitle="Reports guide"
-        docsText="Reports guide"
+        docsTitle=(t "literal.fleet-ops.reports-guide")
+        docsText=(t "literal.fleet-ops.reports-guide")
         docsSource="fleet-ops-empty-reports"
     }}
 />

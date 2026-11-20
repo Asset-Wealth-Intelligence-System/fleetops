@@ -43,7 +43,7 @@ export default class MaintenancePartsIndexController extends Controller {
                     },
                 ],
                 renderInPlace: true,
-                helpText: 'Change the layout',
+                helpText: this.intl.t('literal.fleet-ops.change-the-layout'),
             },
             { icon: 'refresh', onClick: this.partActions.refresh, helpText: this.intl.t('common.refresh') },
             { text: this.intl.t('common.new'), type: 'primary', icon: 'plus', onClick: this.partActions.transition.create },
@@ -53,7 +53,7 @@ export default class MaintenancePartsIndexController extends Controller {
     }
 
     get bulkActions() {
-        return [{ label: 'Delete selected...', class: 'text-red-500', fn: this.partActions.bulkDelete }];
+        return [{ label: this.intl.t('literal.fleet-ops.delete-selected'), class: 'text-red-500', fn: this.partActions.bulkDelete }];
     }
 
     get columns() {

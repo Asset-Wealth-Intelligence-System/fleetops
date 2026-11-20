@@ -4,13 +4,13 @@
             <TimelineItem @activeStatus={{@resource.status}} as |trackingStatus|>
                 <div class="flex flex-col px-3 py-2 rounded text-sm leading-4 space-y-2 bg-gray-100 dark:bg-gray-900 dark:text-white">
                     <div class="flex flex-col space-y-1">
-                        <div class="text-xs font-semibold truncate">{{trackingStatus.status}}</div>
-                        <div class="text-xs truncate">{{n-a trackingStatus.details}}</div>
+                        <div class="text-xs font-semibold truncate">{{t-literal trackingStatus.status ns="status"}}</div>
+                        <div class="text-xs truncate">{{t-literal (n-a trackingStatus.details) ns="status"}}</div>
                         <div class="text-xs">{{format-date-fns trackingStatus.created_at "d MMM HH:mm"}}</div>
                     </div>
                     <Attach::Tooltip @class="clean" @animation="scale" @placement="top">
                         <InputInfo>
-                            <div class="text-xs">{{or trackingStatus.details trackingStatus.status}}</div>
+                            <div class="text-xs">{{t-literal (or trackingStatus.details trackingStatus.status) ns="status"}}</div>
                             <div class="text-xs">{{format-date-fns trackingStatus.created_at "d MMM yyyy HH:mm"}}</div>
                         </InputInfo>
                     </Attach::Tooltip>
@@ -23,10 +23,10 @@
                 <div class="text-center">
                     <FaIcon @icon="layer-group" @size="2x" class="text-gray-400 mb-2" />
                     <div class="text-sm text-gray-600 dark:text-gray-400 font-medium">
-                        No order activity
+                        {{t "literal.fleet-ops.no-order-activity"}}
                     </div>
                     <div class="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                        Dispatch or update the order to create activity
+                        {{t "literal.fleet-ops.dispatch-or-update-the-order-to-create-activity"}}
                     </div>
                 </div>
             </div>

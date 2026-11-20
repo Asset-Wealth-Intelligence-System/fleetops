@@ -1,7 +1,7 @@
 <Layout::Resource::Panel
     @resource={{@model}}
     @controller={{this}}
-    @headerTitle={{or @model.name (concat "Fuel reported on " @model.createdAt)}}
+    @headerTitle={{or @model.name (t "literal.fleet-ops.fuel-reported-on" date=@model.createdAt)}}
     @actionButtons={{this.actionButtons}}
     @onPressCancel={{transition-to "management.fuel-reports.index"}}
     @onOverlayReady={{fn (mut this.overlay)}}

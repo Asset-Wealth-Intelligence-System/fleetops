@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class WidgetFuelEfficiencyComponent extends Component {
+    @service intl;
     static widgetId = 'fleet-ops-fuel-efficiency-widget';
 
     @service fetch;
@@ -37,7 +38,7 @@ export default class WidgetFuelEfficiencyComponent extends Component {
             this.data = yield this.fetch.get('fleet-ops/analytics/fuel-efficiency', { period: '90d' });
             this.error = null;
         } catch (e) {
-            this.error = e?.message ?? 'Failed to load fuel data';
+            this.error = e?.message ?? this.intl.t('literal.fleet-ops.failed-to-load-fuel-data');
         }
     }
 }

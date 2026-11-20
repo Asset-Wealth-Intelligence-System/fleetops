@@ -159,7 +159,7 @@
                         <div class="relative flex-shrink-0 mt-0.5">
                             <img
                                 src={{vehicle.photo_url}}
-                                alt={{or vehicle.display_name "Vehicle"}}
+                                alt={{or vehicle.display_name (t "literal.fleet-ops.vehicle")}}
                                 class="w-9 h-9 rounded object-cover bg-gray-200 dark:bg-gray-700"
                                 {{fallback-img-src (config "defaultValues.vehicleAvatar")}}
                             />
@@ -233,7 +233,7 @@
                         <div class="relative flex-shrink-0 mt-0.5">
                             <img
                                 src={{driver.photo_url}}
-                                alt={{or driver.name "Driver"}}
+                                alt={{or driver.name (t "literal.fleet-ops.driver")}}
                                 class="w-9 h-9 rounded-full object-cover bg-gray-200 dark:bg-gray-700"
                                 {{fallback-img-src (config "defaultValues.driverImage")}}
                             />
@@ -290,7 +290,7 @@
             <span class="text-xs text-indigo-400">
                 {{#if this.selectedVehicleIdsArray.length}}
                     {{this.selectedVehicleIdsArray.length}}
-                    vehicles selected
+                    {{t "literal.fleet-ops.vehicles-selected"}}
                 {{/if}}
                 {{#if (and this.selectedVehicleIdsArray.length this.selectedDriverIdsArray.length)}}
                     ·

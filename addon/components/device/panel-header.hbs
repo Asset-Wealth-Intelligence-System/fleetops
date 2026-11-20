@@ -47,7 +47,7 @@
                     {{/if}}
                     <span class="inline-flex max-w-[13rem] items-center gap-1 truncate rounded-md bg-gray-100 px-1.5 py-0.5 text-[11px] font-medium leading-4 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                         <FaIcon @icon="clock" class="text-gray-400 dark:text-gray-300" />
-                        <span class="truncate">{{#if this.lastOnlineAt}}{{format-date-fns this.lastOnlineAt "dd MMM yyyy, HH:mm"}}{{else}}No last online{{/if}}</span>
+                        <span class="truncate">{{#if this.lastOnlineAt}}{{format-date-fns this.lastOnlineAt "dd MMM yyyy, HH:mm"}}{{else}}{{t "literal.fleet-ops.no-last-online"}}{{/if}}</span>
                     </span>
                 </div>
             </div>

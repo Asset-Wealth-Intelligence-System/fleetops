@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default class VendorPersonnelManagerComponent extends Component {
+    @service intl;
     @service fetch;
     @service notifications;
 
@@ -17,18 +18,20 @@ export default class VendorPersonnelManagerComponent extends Component {
     @tracked role = 'member';
     @tracked createLogin = true;
 
-    roleOptions = [
-        {
-            label: 'Admin',
-            value: 'admin',
-            description: 'Can manage vendor account settings and personnel.',
-        },
-        {
-            label: 'Member',
-            value: 'member',
-            description: 'Can access the vendor customer workspace.',
-        },
-    ];
+    get roleOptions() {
+        return [
+            {
+                label: this.intl.t('literal.fleet-ops.admin'),
+                value: 'admin',
+                description: this.intl.t('literal.fleet-ops.can-manage-vendor-account-settings-and-personnel'),
+            },
+            {
+                label: this.intl.t('literal.fleet-ops.member'),
+                value: 'member',
+                description: this.intl.t('literal.fleet-ops.can-access-the-vendor-customer-workspace'),
+            },
+        ];
+    }
 
     constructor(owner, args) {
         super(owner, args);
@@ -100,7 +103,9 @@ export default class VendorPersonnelManagerComponent extends Component {
         }
 
         if (!this.canSubmit) {
-            this.notifications.warning(this.isAddingExistingContact ? 'Select a contact to add.' : 'Name and email are required.');
+            this.notifications.warning(
+                this.isAddingExistingContact ? this.intl.t('literal.fleet-ops.select-a-contact-to-add') : this.intl.t('literal.fleet-ops.name-and-email-are-required')
+            );
             return;
         }
 
@@ -125,7 +130,7 @@ export default class VendorPersonnelManagerComponent extends Component {
             }
 
             this.clearForm();
-            this.notifications.success('Personnel added.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.personnel-added'));
         } catch (error) {
             this.notifications.serverError(error);
         }
@@ -135,7 +140,7 @@ export default class VendorPersonnelManagerComponent extends Component {
         try {
             yield this.fetch.delete(`vendors/${this.args.vendor.id}/personnels/${personnel.id}`, {}, { namespace: 'int/v1' });
             this.personnels = this.personnels.filter((item) => item.id !== personnel.id);
-            this.notifications.success('Personnel removed.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.personnel-removed'));
         } catch (error) {
             this.notifications.serverError(error);
         }

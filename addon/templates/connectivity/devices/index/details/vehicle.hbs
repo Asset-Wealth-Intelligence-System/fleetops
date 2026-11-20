@@ -1,20 +1,20 @@
 <div class="flex flex-col gap-3 p-3">
     <div class="flex flex-col items-start justify-between gap-3">
         <div class="min-w-0">
-            <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">Vehicle Attachment</h2>
-            <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-300">Fleet context for telemetry from this device.</p>
+            <h2 class="text-base font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.vehicle-attachment"}}</h2>
+            <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.fleet-context-for-telemetry-from-this-device"}}</p>
         </div>
 
         {{#if this.hasVehicle}}
             <div class="flex flex-nowrap items-center gap-2 whitespace-nowrap">
                 {{#if this.canOpenVehicle}}
-                    <Button @icon="eye" @text="Open Vehicle" @size="xs" @onClick={{this.openVehicle}} />
+                    <Button @icon="eye" @text={{t "literal.fleet-ops.open-vehicle"}} @size="xs" @onClick={{this.openVehicle}} />
                 {{/if}}
                 {{#if this.canLocateVehicle}}
-                    <Button @icon="location-dot" @text="Locate" @size="xs" @onClick={{this.locateVehicle}} />
+                    <Button @icon="location-dot" @text={{t "literal.fleet-ops.locate"}} @size="xs" @onClick={{this.locateVehicle}} />
                 {{/if}}
-                <Button @icon="shuffle" @text="Change Vehicle" @size="xs" @onClick={{this.attachToVehicle}} />
-                <Button @icon="unlink" @text="Detach" @size="xs" @type="danger" @onClick={{this.detachFromVehicle}} />
+                <Button @icon="shuffle" @text={{t "literal.fleet-ops.change-vehicle"}} @size="xs" @onClick={{this.attachToVehicle}} />
+                <Button @icon="unlink" @text={{t "literal.fleet-ops.detach"}} @size="xs" @type="danger" @onClick={{this.detachFromVehicle}} />
             </div>
         {{/if}}
     </div>
@@ -39,7 +39,7 @@
 
                     <div class="mt-1 grid grid-cols-1 gap-2 text-xs text-gray-500 dark:text-gray-300 sm:grid-cols-2 lg:grid-cols-4">
                         <div>
-                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">Plate</div>
+                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.plate"}}</div>
                             <div class="truncate text-gray-800 dark:text-gray-100">{{n-a this.plateNumber}}</div>
                         </div>
                         <div>
@@ -47,26 +47,26 @@
                             <div class="truncate text-gray-800 dark:text-gray-100">{{n-a this.vin}}</div>
                         </div>
                         <div>
-                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">Call Sign</div>
+                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.call-sign"}}</div>
                             <div class="truncate text-gray-800 dark:text-gray-100">{{n-a this.callSign}}</div>
                         </div>
                         <div>
-                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">Driver</div>
+                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.driver"}}</div>
                             <div class="truncate text-gray-800 dark:text-gray-100">{{n-a this.vehicleDriverName}}</div>
                         </div>
                     </div>
 
                     <div class="mt-3 grid grid-cols-1 gap-2 text-xs text-gray-500 dark:text-gray-300 sm:grid-cols-3">
                         <div>
-                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">Vehicle</div>
+                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.vehicle"}}</div>
                             <div class="truncate text-gray-800 dark:text-gray-100">{{n-a this.yearMakeModel}}</div>
                         </div>
                         <div>
-                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">Attached Device</div>
+                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.attached-device"}}</div>
                             <div class="truncate text-gray-800 dark:text-gray-100">{{n-a this.device.displayName}}</div>
                         </div>
                         <div>
-                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">Device Last Seen</div>
+                            <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.device-last-seen"}}</div>
                             <div class="truncate text-gray-800 dark:text-gray-100">{{n-a (format-date-fns this.device.last_online_at "dd MMM yyyy, HH:mm")}}</div>
                         </div>
                     </div>
@@ -77,11 +77,11 @@
         <section class="overflow-hidden rounded-md border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <div class="flex items-start justify-between gap-3 border-b border-gray-200 px-3 py-2 dark:border-gray-700">
                 <div class="min-w-0">
-                    <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">Latest Positions</h3>
-                    <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-300">Recent vehicle coordinates reported through this device attachment.</p>
+                    <h3 class="text-sm font-bold text-gray-900 dark:text-gray-100">{{t "literal.fleet-ops.latest-positions"}}</h3>
+                    <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-300">{{t "literal.fleet-ops.recent-vehicle-coordinates-reported-through-this-2ea9d"}}</p>
                 </div>
                 {{#if this.canOpenVehicle}}
-                    <Button @icon="route" @text="Full History" @size="xs" @onClick={{this.openVehiclePositions}} />
+                    <Button @icon="route" @text={{t "literal.fleet-ops.full-history"}} @size="xs" @onClick={{this.openVehiclePositions}} />
                 {{/if}}
             </div>
 
@@ -100,15 +100,15 @@
                             </div>
                             <div class="grid grid-cols-2 gap-2 text-right text-gray-500 dark:text-gray-400 sm:grid-cols-3">
                                 <div>
-                                    <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">Speed</div>
+                                    <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.speed-44877"}}</div>
                                     <div class="text-gray-800 dark:text-gray-100">{{n-a position.speed}}</div>
                                 </div>
                                 <div>
-                                    <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">Heading</div>
+                                    <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.heading"}}</div>
                                     <div class="text-gray-800 dark:text-gray-100">{{n-a position.heading position.bearing}}</div>
                                 </div>
                                 <div>
-                                    <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">Altitude</div>
+                                    <div class="font-semibold uppercase text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.altitude"}}</div>
                                     <div class="text-gray-800 dark:text-gray-100">{{n-a position.altitude}}</div>
                                 </div>
                             </div>
@@ -125,9 +125,9 @@
                     <Telematic::TabEmptyState
                         @tone="info"
                         @icon="location-dot"
-                        @title="No recent positions"
-                        @message="This attached vehicle does not have recent position history available yet."
-                        @primaryText="Locate Vehicle"
+                        @title={{t "literal.fleet-ops.no-recent-positions"}}
+                        @message={{t "literal.fleet-ops.this-attached-vehicle-does-not-have-recent-posit-48e4b"}}
+                        @primaryText={{t "literal.fleet-ops.locate-vehicle"}}
                         @primaryIcon="location-dot"
                         @primaryAction={{this.locateVehicle}}
                     />
@@ -138,9 +138,9 @@
         <Telematic::TabEmptyState
             @tone="warning"
             @icon="link-slash"
-            @title="No vehicle attached"
-            @message="Attach this device to a vehicle so telemetry has fleet context."
-            @primaryText="Attach Vehicle"
+            @title={{t "literal.fleet-ops.no-vehicle-attached"}}
+            @message={{t "literal.fleet-ops.attach-this-device-to-a-vehicle-so-telemetry-has-f50c9"}}
+            @primaryText={{t "literal.fleet-ops.attach-vehicle"}}
             @primaryIcon="link"
             @primaryAction={{this.attachToVehicle}}
         />

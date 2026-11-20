@@ -66,7 +66,7 @@ export default class OperationsSchedulerFleetScheduleController extends Controll
             return {
                 id: item.id,
                 resourceId: item.assignee_uuid,
-                title: item.title || (driver ? `${driver.name} — Shift` : 'Shift'),
+                title: item.title || (driver ? this.intl.t('literal.fleet-ops.shift', { name: driver.name }) : this.intl.t('literal.fleet-ops.shift-825a3')),
                 start: item.start_at,
                 end: item.end_at,
                 backgroundColor: this.getShiftColor(item),
@@ -154,7 +154,7 @@ export default class OperationsSchedulerFleetScheduleController extends Controll
             if (!info.event.extendedProps.scheduleItem) return;
             const item = info.event.extendedProps.scheduleItem;
             const driver = info.event.extendedProps.driver;
-            const tooltip = `${driver?.name || 'Driver'}\n${format(new Date(item.start_at), 'HH:mm')}–${format(new Date(item.end_at), 'HH:mm')}`;
+            const tooltip = `${driver?.name || this.intl.t('literal.fleet-ops.driver')}\n${format(new Date(item.start_at), 'HH:mm')}–${format(new Date(item.end_at), 'HH:mm')}`;
             info.tooltip = new Tooltip(info.el, { text: tooltip });
         });
 
@@ -247,7 +247,7 @@ export default class OperationsSchedulerFleetScheduleController extends Controll
                     if (options.isRecurring) {
                         // Build RRULE-based ScheduleTemplate and apply it to the driver's Schedule
                         const template = this.store.createRecord('schedule-template', {
-                            name: options.templateName || `${targetDriver.name} Recurring Schedule`,
+                            name: options.templateName || this.intl.t('literal.fleet-ops.recurring-schedule', { name: targetDriver.name }),
                             rrule: options.rrule,
                             start_time: options.shiftStartTime,
                             end_time: options.shiftEndTime,

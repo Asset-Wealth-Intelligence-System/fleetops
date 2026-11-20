@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class WidgetOnTimeDeliveryComponent extends Component {
+    @service intl;
     static widgetId = 'fleet-ops-on-time-delivery-widget';
 
     @service fetch;
@@ -67,7 +68,7 @@ export default class WidgetOnTimeDeliveryComponent extends Component {
             this.data = yield this.fetch.get('fleet-ops/analytics/on-time-delivery', { period: '30d' });
             this.error = null;
         } catch (e) {
-            this.error = e?.message ?? 'Failed to load on-time delivery';
+            this.error = e?.message ?? this.intl.t('literal.fleet-ops.failed-to-load-on-time-delivery');
         }
     }
 }

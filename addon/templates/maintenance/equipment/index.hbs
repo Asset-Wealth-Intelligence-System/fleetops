@@ -15,19 +15,19 @@
         @emptyStateComponent={{component
             "table/empty-state"
             icon="toolbox"
-            title="Add your first equipment item"
-            description="Equipment records help track assigned assets, condition, service history, and operational readiness."
-            filteredTitle="No equipment matches your filters"
-            filteredDescription="Adjust the search or filters to find another equipment item."
-            primaryText="New equipment"
+            title=(t "literal.fleet-ops.add-your-first-equipment-item")
+            description=(t "literal.fleet-ops.equipment-records-help-track-assigned-assets-con-12bc3")
+            filteredTitle=(t "literal.fleet-ops.no-equipment-matches-your-filters")
+            filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-find-another-equ-d0ee0")
+            primaryText=(t "literal.fleet-ops.new-equipment")
             primaryIcon="plus"
             primaryAction=this.equipmentActions.transition.create
-            secondaryText="Import"
+            secondaryText=(t "literal.fleet-ops.import")
             secondaryIcon="upload"
             secondaryAction=this.equipmentActions.import
             docsSlug="fleet-ops/maintenance/equipment/overview"
-            docsTitle="Equipment guide"
-            docsText="Equipment guide"
+            docsTitle=(t "literal.fleet-ops.equipment-guide")
+            docsText=(t "literal.fleet-ops.equipment-guide")
             docsSource="fleet-ops-empty-equipment"
         }}
     />

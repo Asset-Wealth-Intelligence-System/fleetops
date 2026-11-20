@@ -444,14 +444,14 @@ export default class CustomerCreateOrderFormComponent extends Component {
             owner_type: 'fleet-ops:contact',
         });
         this.modalsManager.show('modals/place-form', {
-            title: 'New Place',
+            title: this.intl.t('literal.fleet-ops.new-place'),
             place,
         });
     }
 
     @action editPlace(place) {
         this.modalsManager.show('modals/place-form', {
-            title: 'Edit Place',
+            title: this.intl.t('literal.fleet-ops.edit-place'),
             place,
         });
     }
@@ -565,7 +565,7 @@ export default class CustomerCreateOrderFormComponent extends Component {
     @action editEntity(entity) {
         this.modalsManager.show('modals/entity-form', {
             title: this.intl.t('fleet-ops.operations.orders.index.new.edit-item'),
-            acceptButtonText: 'Save Changes',
+            acceptButtonText: this.intl.t('literal.fleet-ops.save-changes'),
             entity,
             uploadNewPhoto: (file) => {
                 const fileUrl = URL.createObjectURL(file.file);
@@ -764,7 +764,7 @@ export default class CustomerCreateOrderFormComponent extends Component {
             this,
             () => {
                 this.modalsManager.show('modals/service-quote-purchase-form', {
-                    title: `Complete Payment for ${this.orderConfig.name} Service`,
+                    title: this.intl.t('literal.fleet-ops.complete-payment-for-service', { name: this.orderConfig.name }),
                     modalClass: 'service-quote-extension-purchase',
                     modalFooterClass: 'hidden-i',
                     serviceQuote,
@@ -788,9 +788,9 @@ export default class CustomerCreateOrderFormComponent extends Component {
                 await this.modalsManager.done();
                 if (this.urlSearchParams.has('checkout_session_id') && this.urlSearchParams.has('service_quote')) {
                     this.modalsManager.show('modals/confirm-service-quote-purchase', {
-                        title: 'Finalizing Purchase',
+                        title: this.intl.t('literal.fleet-ops.finalizing-purchase'),
                         modalClass: 'finalize-service-quote-purchase',
-                        loadingMessage: 'Completing purchase do not refresh or exit window...',
+                        loadingMessage: this.intl.t('literal.fleet-ops.completing-purchase-do-not-refresh-or-exit-windo-63987'),
                         modalFooterClass: 'hidden-i',
                         backdropClose: false,
                     });
@@ -811,7 +811,7 @@ export default class CustomerCreateOrderFormComponent extends Component {
         // Restore from service quote id
         yield this.restoreFromServiceQuote(serviceQuoteId);
         if (this.selectedServiceQuote !== serviceQuoteId) {
-            this.notifications.error('Something went wrong trying to complete purchase.');
+            this.notifications.error(this.intl.t('literal.fleet-ops.something-went-wrong-trying-to-complete-purchase'));
             return;
         }
 

@@ -14,19 +14,19 @@
     @emptyStateComponent={{component
         "table/empty-state"
         icon="triangle-exclamation"
-        title="No issues reported"
-        description="Track vehicle, driver, facility, and service issues here so follow-up work stays visible."
-        filteredTitle="No issues match your filters"
-        filteredDescription="Clear the search or filters to review other reported issues."
-        primaryText="New issue"
+        title=(t "literal.fleet-ops.no-issues-reported")
+        description=(t "literal.fleet-ops.track-vehicle-driver-facility-and-service-issues-ce204")
+        filteredTitle=(t "literal.fleet-ops.no-issues-match-your-filters")
+        filteredDescription=(t "literal.fleet-ops.clear-the-search-or-filters-to-review-other-repo-e881c")
+        primaryText=(t "literal.fleet-ops.new-issue")
         primaryIcon="plus"
         primaryAction=this.issueActions.transition.create
-        secondaryText="Import"
+        secondaryText=(t "literal.fleet-ops.import")
         secondaryIcon="upload"
         secondaryAction=this.issueActions.import
         docsSlug="fleet-ops/resources/issues/overview"
-        docsTitle="Issues guide"
-        docsText="Issues guide"
+        docsTitle=(t "literal.fleet-ops.issues-guide")
+        docsText=(t "literal.fleet-ops.issues-guide")
         docsSource="fleet-ops-empty-issues"
     }}
 />

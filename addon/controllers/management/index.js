@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default class ManagementIndexController extends Controller {
+    @service intl;
     @service fetch;
     @service docsPanel;
 
@@ -18,7 +19,7 @@ export default class ManagementIndexController extends Controller {
     get kpis() {
         return (this.hub?.kpis ?? this.loadingKpis).map((kpi) => ({
             ...kpi,
-            actionLabel: kpi.actionLabel ?? this.kpiActionLabels[kpi.key] ?? `Open ${kpi.label}`,
+            actionLabel: kpi.actionLabel ?? this.kpiActionLabels[kpi.key] ?? this.intl.t('literal.fleet-ops.open-a31ae', { label: kpi.label }),
         }));
     }
 
@@ -37,21 +38,25 @@ export default class ManagementIndexController extends Controller {
         }));
     }
 
-    docDescriptions = {
-        'fleet-ops/resources/drivers/overview': 'Create driver profiles, app access, assignment context, and operating status.',
-        'fleet-ops/resources/vehicles/overview': 'Track fleet assets, assignment readiness, and vehicle operating details.',
-        'fleet-ops/resources/fleets/overview': 'Group drivers and vehicles by team, region, or service coverage.',
-        'fleet-ops/resources/contacts/overview': 'Manage people and organizations used across orders and operational records.',
-        'fleet-ops/resources/places/overview': 'Manage reusable pickup, dropoff, hub, and facility locations.',
-        'fleet-ops/resources/issues/overview': 'Track incidents, service exceptions, and operational follow-up.',
-    };
+    get docDescriptions() {
+        return {
+            'fleet-ops/resources/drivers/overview': this.intl.t('literal.fleet-ops.create-driver-profiles-app-access-assignment-con-51fac'),
+            'fleet-ops/resources/vehicles/overview': this.intl.t('literal.fleet-ops.track-fleet-assets-assignment-readiness-and-vehi-16d14'),
+            'fleet-ops/resources/fleets/overview': this.intl.t('literal.fleet-ops.group-drivers-and-vehicles-by-team-region-or-ser-74e21'),
+            'fleet-ops/resources/contacts/overview': this.intl.t('literal.fleet-ops.manage-people-and-organizations-used-across-orde-4eac2'),
+            'fleet-ops/resources/places/overview': this.intl.t('literal.fleet-ops.manage-reusable-pickup-dropoff-hub-and-facility-10f99'),
+            'fleet-ops/resources/issues/overview': this.intl.t('literal.fleet-ops.track-incidents-service-exceptions-and-operation-eaba3'),
+        };
+    }
 
-    kpiActionLabels = {
-        drivers: 'Manage Drivers',
-        vehicles: 'Track Vehicles',
-        issues: 'Review Issues',
-        fuel_records: 'Review Fuel Records',
-    };
+    get kpiActionLabels() {
+        return {
+            drivers: this.intl.t('literal.fleet-ops.manage-drivers'),
+            vehicles: this.intl.t('literal.fleet-ops.track-vehicles'),
+            issues: this.intl.t('literal.fleet-ops.review-issues'),
+            fuel_records: this.intl.t('literal.fleet-ops.review-fuel-records'),
+        };
+    }
 
     normalizeAction(action = {}) {
         const query = action.query && typeof action.query === 'object' && !Array.isArray(action.query) ? action.query : {};
@@ -64,10 +69,42 @@ export default class ManagementIndexController extends Controller {
 
     get loadingKpis() {
         return [
-            { key: 'drivers', label: 'Drivers', value: '...', caption: 'Loading resource readiness.', tone: 'blue', icon: 'id-card', route: 'management.drivers' },
-            { key: 'vehicles', label: 'Vehicles', value: '...', caption: 'Loading fleet asset coverage.', tone: 'green', icon: 'truck', route: 'management.vehicles' },
-            { key: 'issues', label: 'Open Issues', value: '...', caption: 'Loading exception health.', tone: 'rose', icon: 'triangle-exclamation', route: 'management.issues' },
-            { key: 'fuel_records', label: 'Fuel Records', value: '...', caption: 'Loading fuel activity.', tone: 'amber', icon: 'gas-pump', route: 'management.fuel-reports' },
+            {
+                key: 'drivers',
+                label: this.intl.t('literal.fleet-ops.drivers'),
+                value: '...',
+                caption: this.intl.t('literal.fleet-ops.loading-resource-readiness'),
+                tone: 'blue',
+                icon: 'id-card',
+                route: 'management.drivers',
+            },
+            {
+                key: 'vehicles',
+                label: this.intl.t('literal.fleet-ops.vehicles'),
+                value: '...',
+                caption: this.intl.t('literal.fleet-ops.loading-fleet-asset-coverage'),
+                tone: 'green',
+                icon: 'truck',
+                route: 'management.vehicles',
+            },
+            {
+                key: 'issues',
+                label: this.intl.t('literal.fleet-ops.open-issues'),
+                value: '...',
+                caption: this.intl.t('literal.fleet-ops.loading-exception-health'),
+                tone: 'rose',
+                icon: 'triangle-exclamation',
+                route: 'management.issues',
+            },
+            {
+                key: 'fuel_records',
+                label: this.intl.t('literal.fleet-ops.fuel-records'),
+                value: '...',
+                caption: this.intl.t('literal.fleet-ops.loading-fuel-activity'),
+                tone: 'amber',
+                icon: 'gas-pump',
+                route: 'management.fuel-reports',
+            },
         ];
     }
 

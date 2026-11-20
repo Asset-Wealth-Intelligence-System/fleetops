@@ -1,9 +1,9 @@
 <div class="fleet-ops-control-hub" data-test-fleet-ops-resources-hub>
     <section class="fleet-ops-control-hub-header">
         <div class="fleet-ops-control-hub-header-copy">
-            <div class="fleet-ops-control-hub-eyebrow">Resources</div>
-            <h1 class="fleet-ops-control-hub-title">Resources Hub</h1>
-            <p class="fleet-ops-control-hub-subtitle">Manage the people, vehicles, places, partners, and operating records that keep dispatch grounded.</p>
+            <div class="fleet-ops-control-hub-eyebrow">{{t "literal.fleet-ops.resources"}}</div>
+            <h1 class="fleet-ops-control-hub-title">{{t "literal.fleet-ops.resources-hub"}}</h1>
+            <p class="fleet-ops-control-hub-subtitle">{{t "literal.fleet-ops.manage-the-people-vehicles-places-partners-and-o-a13ae"}}</p>
         </div>
         <div class="fleet-ops-control-hub-header-actions">
             <Button @icon="refresh" @size="sm" @helpText={{t "common.reload"}} @onClick={{perform this.loadHub}} />
@@ -59,8 +59,8 @@
                 <div class="fleet-ops-control-hub-panel">
                     <div class="fleet-ops-control-hub-panel-header">
                         <div>
-                            <h2>Action Queue</h2>
-                            <p>Prioritized from current resource readiness.</p>
+                            <h2>{{t "literal.fleet-ops.action-queue"}}</h2>
+                            <p>{{t "literal.fleet-ops.prioritized-from-current-resource-readiness"}}</p>
                         </div>
                     </div>
 
@@ -90,15 +90,15 @@
                 <div class="fleet-ops-control-hub-doc-note">
                     <div class="fleet-ops-control-hub-doc-note-heading">
                         <FaIcon @icon="lightbulb" />
-                        <span>Guides</span>
+                        <span>{{t "literal.fleet-ops.guides"}}</span>
                     </div>
-                    <p class="fleet-ops-control-hub-doc-note-copy">Read the guide before changing resource setup.</p>
+                    <p class="fleet-ops-control-hub-doc-note-copy">{{t "literal.fleet-ops.read-the-guide-before-changing-resource-setup"}}</p>
                     <div class="fleet-ops-control-hub-doc-grid">
                         {{#each this.docs as |doc|}}
                             <button type="button" class="fleet-ops-control-hub-doc-link" {{on "click" (fn this.openDocs doc)}}>
                                 <FaIcon @icon={{doc.icon}} />
                                 <span class="fleet-ops-control-hub-doc-copy">
-                                    <strong>Read the guide on {{doc.label}}</strong>
+                                    <strong>{{t "literal.fleet-ops.read-the-guide-on"}} {{doc.label}}</strong>
                                     <small>{{doc.description}}</small>
                                 </span>
                             </button>

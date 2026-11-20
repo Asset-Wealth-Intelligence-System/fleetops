@@ -19,23 +19,23 @@
                             {{/if}}
                         </div>
                         <div class="mt-2 flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-300">
-                            <span>Last test: {{n-a (format-date-fns @model.last_tested_at "dd MMM HH:mm")}}</span>
-                            <span>Last sync: {{n-a (format-date-fns @model.last_synced_at "dd MMM HH:mm")}}</span>
-                            <span>Imported: {{n-a this.lastSummary.imported}}</span>
-                            <span>Unmatched: {{n-a this.lastSummary.unmatched}}</span>
+                            <span>{{t "literal.fleet-ops.last-test"}} {{n-a (format-date-fns @model.last_tested_at "dd MMM HH:mm")}}</span>
+                            <span>{{t "literal.fleet-ops.last-sync"}} {{n-a (format-date-fns @model.last_synced_at "dd MMM HH:mm")}}</span>
+                            <span>{{t "literal.fleet-ops.imported-c1e49"}} {{n-a this.lastSummary.imported}}</span>
+                            <span>{{t "literal.fleet-ops.unmatched-3d518"}} {{n-a this.lastSummary.unmatched}}</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex flex-wrap items-center gap-2">
-                    <Button @icon="arrow-left" @text="Back" @size="xs" @onClick={{transition-to "connectivity.fuel-providers.index"}} />
-                    <Button @icon="plug" @text="Test" @size="xs" @isLoading={{this.testConnection.isRunning}} @onClick={{perform this.testConnection}} />
-                    <Button @icon="rotate" @text="Sync Transactions" @type="primary" @size="xs" @isLoading={{this.syncTransactions.isRunning}} @onClick={{perform this.syncTransactions}} />
-                    <Button @icon="cog" @text="Settings" @size="xs" @onClick={{transition-to "connectivity.fuel-providers.edit" @model}} />
+                    <Button @icon="arrow-left" @text={{t "literal.fleet-ops.back"}} @size="xs" @onClick={{transition-to "connectivity.fuel-providers.index"}} />
+                    <Button @icon="plug" @text={{t "literal.fleet-ops.test"}} @size="xs" @isLoading={{this.testConnection.isRunning}} @onClick={{perform this.testConnection}} />
+                    <Button @icon="rotate" @text={{t "literal.fleet-ops.sync-transactions"}} @type="primary" @size="xs" @isLoading={{this.syncTransactions.isRunning}} @onClick={{perform this.syncTransactions}} />
+                    <Button @icon="cog" @text={{t "literal.fleet-ops.settings"}} @size="xs" @onClick={{transition-to "connectivity.fuel-providers.edit" @model}} />
                 </div>
             </div>
 
-            <nav class="mt-4 flex w-full gap-1 overflow-x-auto border-b border-gray-200 text-sm dark:border-gray-700" aria-label="Fuel integration sections">
+            <nav class="mt-4 flex w-full gap-1 overflow-x-auto border-b border-gray-200 text-sm dark:border-gray-700" aria-label={{t "literal.fleet-ops.fuel-integration-sections"}}>
                 {{#each this.tabs as |tab|}}
                     <LinkTo @route={{tab.route}} class="inline-flex flex-shrink-0 items-center border-b-2 px-3 py-3 font-medium {{if tab.active 'border-blue-500 text-gray-900 dark:text-white' 'border-transparent text-gray-500 hover:border-blue-400 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'}}">
                         {{tab.label}}

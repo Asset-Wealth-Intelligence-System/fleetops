@@ -6,6 +6,7 @@ import { isArray } from '@ember/array';
 import { dasherize } from '@ember/string';
 
 export default class DriverActionsService extends ResourceActionService {
+    @service intl;
     @service('universe/menu-service') menuService;
     @service fetch;
 
@@ -31,7 +32,7 @@ export default class DriverActionsService extends ResourceActionService {
             },
             {
                 key: 'positions',
-                label: 'Positions',
+                label: this.intl.t('literal.fleet-ops.positions'),
                 component: 'positions-replay',
             },
             {
@@ -54,105 +55,109 @@ export default class DriverActionsService extends ResourceActionService {
         create: () => this.transitionTo('management.drivers.index.new'),
     };
 
-    panel = {
-        create: (attributes = {}, options = {}) => {
-            const driver = this.createNewInstance(attributes);
-            return this.resourceContextPanel.open({
-                content: 'driver/form',
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.driver')?.toLowerCase() }),
-                saveOptions: {
-                    callback: this.refresh,
-                },
-                useDefaultSaveTask: true,
-                driver,
-                ...options,
-            });
-        },
-        edit: async (driver, options = {}) => {
-            if (driver?.meta?._index_resource) {
-                await driver.reload();
-            }
-
-            return this.resourceContextPanel.open({
-                content: 'driver/form',
-                title: this.intl.t('common.edit-resource-name', { resourceName: driver.name }),
-                actionButtons: [
-                    {
-                        icon: 'eye',
-                        fn: async () => {
-                            await this.resourceContextPanel.closeAll();
-                            this.panel.view(driver);
-                        },
+    get panel() {
+        return {
+            create: (attributes = {}, options = {}) => {
+                const driver = this.createNewInstance(attributes);
+                return this.resourceContextPanel.open({
+                    content: 'driver/form',
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.driver')?.toLowerCase() }),
+                    saveOptions: {
+                        callback: this.refresh,
                     },
-                ],
-                useDefaultSaveTask: true,
-                driver,
-                ...options,
-            });
-        },
-        view: async (driver, options = {}) => {
-            if (driver?.meta?._index_resource) {
-                await driver.reload();
-            }
+                    useDefaultSaveTask: true,
+                    driver,
+                    ...options,
+                });
+            },
+            edit: async (driver, options = {}) => {
+                if (driver?.meta?._index_resource) {
+                    await driver.reload();
+                }
 
-            return this.resourceContextPanel.open({
-                driver,
-                header: 'driver/panel-header',
-                actionButtons: [
-                    {
-                        icon: 'pencil',
-                        fn: async () => {
-                            await this.resourceContextPanel.closeAll();
-                            this.panel.edit(driver);
+                return this.resourceContextPanel.open({
+                    content: 'driver/form',
+                    title: this.intl.t('common.edit-resource-name', { resourceName: driver.name }),
+                    actionButtons: [
+                        {
+                            icon: 'eye',
+                            fn: async () => {
+                                await this.resourceContextPanel.closeAll();
+                                this.panel.view(driver);
+                            },
                         },
-                    },
-                ],
-                tabs: this.panelTabs,
-                ...options,
-            });
-        },
-    };
+                    ],
+                    useDefaultSaveTask: true,
+                    driver,
+                    ...options,
+                });
+            },
+            view: async (driver, options = {}) => {
+                if (driver?.meta?._index_resource) {
+                    await driver.reload();
+                }
 
-    modal = {
-        create: (attributes = {}, options = {}, saveOptions = {}) => {
-            const driver = this.createNewInstance(attributes);
-            return this.modalsManager.show('modals/resource', {
-                resource: driver,
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.driver')?.toLowerCase() }),
-                acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.driver') }),
-                component: 'driver/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', driver, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        edit: async (driver, options = {}, saveOptions = {}) => {
-            if (driver?.meta?._index_resource) {
-                await driver.reload();
-            }
+                return this.resourceContextPanel.open({
+                    driver,
+                    header: 'driver/panel-header',
+                    actionButtons: [
+                        {
+                            icon: 'pencil',
+                            fn: async () => {
+                                await this.resourceContextPanel.closeAll();
+                                this.panel.edit(driver);
+                            },
+                        },
+                    ],
+                    tabs: this.panelTabs,
+                    ...options,
+                });
+            },
+        };
+    }
 
-            return this.modalsManager.show('modals/resource', {
-                resource: driver,
-                title: this.intl.t('common.edit-resource-name', { resourceName: driver.name }),
-                acceptButtonText: this.intl.t('common.save-changes'),
-                saveButtonIcon: 'save',
-                component: 'driver/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', driver, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        view: async (driver, options = {}) => {
-            if (driver?.meta?._index_resource) {
-                await driver.reload();
-            }
+    get modal() {
+        return {
+            create: (attributes = {}, options = {}, saveOptions = {}) => {
+                const driver = this.createNewInstance(attributes);
+                return this.modalsManager.show('modals/resource', {
+                    resource: driver,
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.driver')?.toLowerCase() }),
+                    acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.driver') }),
+                    component: 'driver/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', driver, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            edit: async (driver, options = {}, saveOptions = {}) => {
+                if (driver?.meta?._index_resource) {
+                    await driver.reload();
+                }
 
-            return this.modalsManager.show('modals/resource', {
-                resource: driver,
-                title: driver.name,
-                component: 'driver/details',
-                ...options,
-            });
-        },
-    };
+                return this.modalsManager.show('modals/resource', {
+                    resource: driver,
+                    title: this.intl.t('common.edit-resource-name', { resourceName: driver.name }),
+                    acceptButtonText: this.intl.t('common.save-changes'),
+                    saveButtonIcon: 'save',
+                    component: 'driver/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', driver, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            view: async (driver, options = {}) => {
+                if (driver?.meta?._index_resource) {
+                    await driver.reload();
+                }
+
+                return this.modalsManager.show('modals/resource', {
+                    resource: driver,
+                    title: driver.name,
+                    component: 'driver/details',
+                    ...options,
+                });
+            },
+        };
+    }
 
     @action locate(driver, options = {}) {
         const { latitude, longitude, location } = driver;

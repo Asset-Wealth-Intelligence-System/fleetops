@@ -28,72 +28,76 @@ export default class ServiceRateActionsService extends ResourceActionService {
         create: () => this.transitionTo('operations.service-rates.index.new'),
     };
 
-    panel = {
-        create: (attributes = {}) => {
-            const serviceRate = this.createNewInstance(attributes);
-            return this.resourceContextPanel.open({
-                content: 'service-rate/form',
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.service rate')?.toLowerCase() }),
-                useDefaultSaveTask: true,
-                saveOptions: {
-                    callback: this.refresh,
-                },
-                serviceRate,
-            });
-        },
-        edit: (serviceRate) => {
-            return this.resourceContextPanel.open({
-                content: 'service-rate/form',
-                title: this.intl.t('common.edit-resource-name', { resourceName: serviceRate.name }),
-                useDefaultSaveTask: true,
-                serviceRate,
-            });
-        },
-        view: (serviceRate) => {
-            return this.resourceContextPanel.open({
-                serviceRate,
-                tabs: [
-                    {
-                        label: this.intl.t('common.overview'),
-                        component: 'service-rate/details',
+    get panel() {
+        return {
+            create: (attributes = {}) => {
+                const serviceRate = this.createNewInstance(attributes);
+                return this.resourceContextPanel.open({
+                    content: 'service-rate/form',
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.service rate')?.toLowerCase() }),
+                    useDefaultSaveTask: true,
+                    saveOptions: {
+                        callback: this.refresh,
                     },
-                ],
-            });
-        },
-    };
+                    serviceRate,
+                });
+            },
+            edit: (serviceRate) => {
+                return this.resourceContextPanel.open({
+                    content: 'service-rate/form',
+                    title: this.intl.t('common.edit-resource-name', { resourceName: serviceRate.name }),
+                    useDefaultSaveTask: true,
+                    serviceRate,
+                });
+            },
+            view: (serviceRate) => {
+                return this.resourceContextPanel.open({
+                    serviceRate,
+                    tabs: [
+                        {
+                            label: this.intl.t('common.overview'),
+                            component: 'service-rate/details',
+                        },
+                    ],
+                });
+            },
+        };
+    }
 
-    modal = {
-        create: (attributes = {}, options = {}, saveOptions = {}) => {
-            const serviceRate = this.createNewInstance(attributes);
-            return this.modalsManager.show('modals/resource', {
-                resource: serviceRate,
-                title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.service rate')?.toLowerCase() }),
-                acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.service-rate') }),
-                component: 'service-rate/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', serviceRate, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        edit: (serviceRate, options = {}, saveOptions = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: serviceRate,
-                title: this.intl.t('common.edit-resource-name', { resourceName: serviceRate.name }),
-                acceptButtonText: this.intl.t('common.save-changes'),
-                saveButtonIcon: 'save',
-                component: 'service-rate/form',
-                confirm: (modal) => this.modalTask.perform(modal, 'saveTask', serviceRate, { refresh: true, ...saveOptions }),
-                ...options,
-            });
-        },
-        view: (serviceRate, options = {}) => {
-            return this.modalsManager.show('modals/resource', {
-                resource: serviceRate,
-                title: serviceRate.name,
-                component: 'service-rate/details',
-                ...options,
-            });
-        },
-    };
+    get modal() {
+        return {
+            create: (attributes = {}, options = {}, saveOptions = {}) => {
+                const serviceRate = this.createNewInstance(attributes);
+                return this.modalsManager.show('modals/resource', {
+                    resource: serviceRate,
+                    title: this.intl.t('common.create-a-new-resource', { resource: this.intl.t('resource.service rate')?.toLowerCase() }),
+                    acceptButtonText: this.intl.t('common.create-resource', { resource: this.intl.t('resource.service-rate') }),
+                    component: 'service-rate/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', serviceRate, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            edit: (serviceRate, options = {}, saveOptions = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: serviceRate,
+                    title: this.intl.t('common.edit-resource-name', { resourceName: serviceRate.name }),
+                    acceptButtonText: this.intl.t('common.save-changes'),
+                    saveButtonIcon: 'save',
+                    component: 'service-rate/form',
+                    confirm: (modal) => this.modalTask.perform(modal, 'saveTask', serviceRate, { refresh: true, ...saveOptions }),
+                    ...options,
+                });
+            },
+            view: (serviceRate, options = {}) => {
+                return this.modalsManager.show('modals/resource', {
+                    resource: serviceRate,
+                    title: serviceRate.name,
+                    component: 'service-rate/details',
+                    ...options,
+                });
+            },
+        };
+    }
 
     @task *queryServiceRatesForOrder(order, params = {}) {
         const payloadCoordinates = order.payload?.payloadCoordinates ?? [];

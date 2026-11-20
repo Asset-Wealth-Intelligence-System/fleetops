@@ -58,7 +58,7 @@ export default class DeviceDetailsComponent extends Component {
     }
 
     get connectionLabel() {
-        return this.connectionStatus ? this.connectionStatus.replaceAll('_', ' ') : 'Unknown';
+        return this.connectionStatus ? this.connectionStatus.replaceAll('_', ' ') : this.intl.t('literal.fleet-ops.unknown');
     }
 
     get attachedVehicleName() {
@@ -66,7 +66,7 @@ export default class DeviceDetailsComponent extends Component {
     }
 
     get attachmentLabel() {
-        return this.attachedVehicleName ?? 'Unattached';
+        return this.attachedVehicleName ?? this.intl.t('literal.fleet-ops.unattached');
     }
 
     get attachmentTone() {
@@ -125,27 +125,27 @@ export default class DeviceDetailsComponent extends Component {
     get metrics() {
         return [
             {
-                label: 'Connection',
+                label: this.intl.t('literal.fleet-ops.connection'),
                 value: this.connectionLabel,
                 icon: this.connectionStatus === 'online' ? 'signal' : 'power-off',
                 accentClass: this.connectionStatus === 'online' ? 'fleetops-connectivity-kpi-accent-green' : 'fleetops-connectivity-kpi-accent-rose',
             },
             {
-                label: 'Sensors',
+                label: this.intl.t('literal.fleet-ops.sensors'),
                 value: this.sensorTotal ?? this.sensors.length,
                 meta: `${this.activeSensorsCount} active`,
                 icon: 'gauge-high',
                 accentClass: 'fleetops-connectivity-kpi-accent-blue',
             },
             {
-                label: 'Events',
+                label: this.intl.t('literal.fleet-ops.events'),
                 value: this.eventTotal ?? this.events.length,
-                meta: `${this.warningEventsCount + this.unprocessedEventsCount} need review`,
+                meta: this.intl.t('literal.fleet-ops.need-review', { value: this.warningEventsCount + this.unprocessedEventsCount }),
                 icon: 'bolt',
                 accentClass: this.warningEventsCount || this.unprocessedEventsCount ? 'fleetops-connectivity-kpi-accent-amber' : 'fleetops-connectivity-kpi-accent-green',
             },
             {
-                label: 'Vehicle',
+                label: this.intl.t('literal.fleet-ops.vehicle'),
                 value: this.attachmentLabel,
                 icon: this.attachedVehicleName ? 'truck' : 'link-slash',
                 accentClass: this.attachedVehicleName ? 'fleetops-connectivity-kpi-accent-green' : 'fleetops-connectivity-kpi-accent-amber',

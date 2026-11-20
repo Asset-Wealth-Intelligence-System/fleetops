@@ -7,6 +7,7 @@ import { buildServiceStopsFromPayload, describeRoutePoint } from '../../utils/ro
 import { colorForId } from '../../utils/route-colors';
 
 export default class ModalsOrderChangeDestinationComponent extends Component {
+    @service intl;
     @service fetch;
     @service notifications;
     @tracked selectedOption;
@@ -83,14 +84,14 @@ export default class ModalsOrderChangeDestinationComponent extends Component {
         const waypointId = this.waypointId(waypoint);
         if (!waypointId) {
             modal.stopLoading();
-            return this.notifications.warning('Select a destination first.');
+            return this.notifications.warning(this.intl.t('literal.fleet-ops.select-a-destination-first'));
         }
 
         modal.startLoading();
 
         try {
             const order = yield this.fetch.patch(`orders/set-destination/${this.order.id}/${waypointId}`);
-            this.notifications.success(`Current destination changed to ${waypoint.name ?? waypoint.address ?? waypointId}.`);
+            this.notifications.success(this.intl.t('literal.fleet-ops.current-destination-changed-to', { value: waypoint.name ?? waypoint.address ?? waypointId }));
 
             if (typeof this.args.options?.onChange === 'function') {
                 yield this.args.options.onChange(order, waypoint);

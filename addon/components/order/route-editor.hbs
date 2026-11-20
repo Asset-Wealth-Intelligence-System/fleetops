@@ -1,7 +1,7 @@
 <div class="order-route-editor" ...attributes>
     <div class="flex flex-row items-start justify-between mb-4">
         <div>
-            <div class="text-sm font-semibold dark:text-gray-100">Route Structure</div>
+            <div class="text-sm font-semibold dark:text-gray-100">{{t "literal.fleet-ops.route-structure"}}</div>
             <div class="text-xs text-gray-400 mt-1">{{this.routeSummary}}</div>
         </div>
 
@@ -36,8 +36,8 @@
             <div class="fleetops-route-editor-section__title-group">
                 <span class="fleetops-route-stop-badge fleetops-route-editor-section__badge" style={{this.pickupStop.badgeStyle}}>{{this.pickupStop.label}}</span>
                 <div>
-                    <div class="fleetops-route-editor-section__title">Pickup</div>
-                    <div class="fleetops-route-editor-section__subtitle">Route starting location</div>
+                    <div class="fleetops-route-editor-section__title">{{t "literal.fleet-ops.pickup"}}</div>
+                    <div class="fleetops-route-editor-section__subtitle">{{t "literal.fleet-ops.route-starting-location"}}</div>
                 </div>
             </div>
 
@@ -78,8 +78,8 @@
             <div class="fleetops-route-editor-section__title-group">
                 <span class="fleetops-route-stop-badge fleetops-route-editor-section__badge" style={{this.stopsSectionBadgeStyle}}>{{this.intermediateWaypoints.length}}</span>
                 <div>
-                    <div class="fleetops-route-editor-section__title">Intermediate Stops</div>
-                    <div class="fleetops-route-editor-section__subtitle">Drag to reorder stops between the fixed endpoints</div>
+                    <div class="fleetops-route-editor-section__title">{{t "literal.fleet-ops.intermediate-stops"}}</div>
+                    <div class="fleetops-route-editor-section__subtitle">{{t "literal.fleet-ops.drag-to-reorder-stops-between-the-fixed-endpoint-64499"}}</div>
                 </div>
             </div>
 
@@ -138,8 +138,8 @@
                 </DragSortList>
             {{else}}
                 <div class="fleetops-route-editor-empty-state">
-                    <div class="text-sm dark:text-gray-100">No intermediate stops yet.</div>
-                    <div class="text-xs text-gray-400 mt-1">Add a stop to build a mixed route between pickup and dropoff.</div>
+                    <div class="text-sm dark:text-gray-100">{{t "literal.fleet-ops.no-intermediate-stops-yet"}}</div>
+                    <div class="text-xs text-gray-400 mt-1">{{t "literal.fleet-ops.add-a-stop-to-build-a-mixed-route-between-pickup-32d91"}}</div>
                 </div>
             {{/if}}
         </div>
@@ -150,8 +150,8 @@
             <div class="fleetops-route-editor-section__title-group">
                 <span class="fleetops-route-stop-badge fleetops-route-editor-section__badge" style={{this.dropoffStop.badgeStyle}}>{{this.dropoffStop.label}}</span>
                 <div>
-                    <div class="fleetops-route-editor-section__title">Dropoff</div>
-                    <div class="fleetops-route-editor-section__subtitle">Route ending location</div>
+                    <div class="fleetops-route-editor-section__title">{{t "literal.fleet-ops.dropoff"}}</div>
+                    <div class="fleetops-route-editor-section__subtitle">{{t "literal.fleet-ops.route-ending-location"}}</div>
                 </div>
             </div>
 
@@ -192,8 +192,8 @@
             <div class="fleetops-route-editor-section__title-group">
                 <span class="fleetops-route-stop-badge fleetops-route-editor-section__badge" style={{this.returnStop.badgeStyle}}>{{this.returnStop.label}}</span>
                 <div>
-                    <div class="fleetops-route-editor-section__title">Return</div>
-                    <div class="fleetops-route-editor-section__subtitle">Optional fallback destination</div>
+                    <div class="fleetops-route-editor-section__title">{{t "literal.fleet-ops.return"}}</div>
+                    <div class="fleetops-route-editor-section__subtitle">{{t "literal.fleet-ops.optional-fallback-destination"}}</div>
                 </div>
             </div>
 

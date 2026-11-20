@@ -2,10 +2,10 @@
     <section class="flex-shrink-0 border-b border-gray-200 bg-white px-4 py-4 shadow-sm dark:border-gray-700 dark:bg-gray-900 md:px-6">
         <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
             <div>
-                <div class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500">Fuel transaction ledger</div>
+                <div class="text-xs font-semibold uppercase text-gray-400 dark:text-gray-500">{{t "literal.fleet-ops.fuel-transaction-ledger"}}</div>
                 <h1 class="text-lg font-bold text-gray-900 dark:text-gray-100">{{t "menu.fuel-transactions"}}</h1>
                 <p class="mt-1 max-w-4xl text-sm leading-5 text-gray-500 dark:text-gray-300">
-                    Imported fuel card bills and provider purchase records are reviewed here before, during, and after they match to vehicles, trips, and linked Fuel Reports.
+                    {{t "literal.fleet-ops.imported-fuel-card-bills-and-provider-purchase-r-b3fa3"}}
                 </p>
             </div>
         </div>
@@ -28,16 +28,16 @@
                 @emptyStateComponent={{component
                     "table/empty-state"
                     icon="receipt"
-                    title="No fuel transactions"
-                    description="Imported fuel card bills and provider purchase records appear here after provider syncs complete."
-                    filteredTitle="No transactions match your filters"
-                    filteredDescription="Adjust the search or filters to review other imported transactions."
-                    primaryText="Refresh"
+                    title=(t "literal.fleet-ops.no-fuel-transactions")
+                    description=(t "literal.fleet-ops.imported-fuel-card-bills-and-provider-purchase-r-97561")
+                    filteredTitle=(t "literal.fleet-ops.no-transactions-match-your-filters")
+                    filteredDescription=(t "literal.fleet-ops.adjust-the-search-or-filters-to-review-other-imp-9af2e")
+                    primaryText=(t "literal.fleet-ops.refresh")
                     primaryIcon="refresh"
                     primaryAction=this.refresh
                     docsSlug="fleet-ops/resources/fuel-reports/overview"
-                    docsTitle="Fuel reports guide"
-                    docsText="Fuel reports guide"
+                    docsTitle=(t "literal.fleet-ops.fuel-reports-guide")
+                    docsText=(t "literal.fleet-ops.fuel-reports-guide")
                 }}
             />
         {{else}}
@@ -48,8 +48,8 @@
                 <h2 class="mt-3 text-sm font-bold text-gray-900 dark:text-gray-100">{{this.emptyStateTitle}}</h2>
                 <p class="mx-auto mt-1 max-w-2xl text-xs leading-5 text-gray-500 dark:text-gray-300">{{this.emptyStateMessage}}</p>
                 <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
-                    <Button @icon="gas-pump" @text="Open Fuel Integrations" @type="primary" @size="sm" @onClick={{transition-to "connectivity.fuel-providers.index"}} />
-                    <Button @icon="refresh" @text="Refresh" @size="sm" @onClick={{this.refresh}} />
+                    <Button @icon="gas-pump" @text={{t "literal.fleet-ops.open-fuel-integrations"}} @type="primary" @size="sm" @onClick={{transition-to "connectivity.fuel-providers.index"}} />
+                    <Button @icon="refresh" @text={{t "literal.fleet-ops.refresh"}} @size="sm" @onClick={{this.refresh}} />
                 </div>
             </section>
         {{/if}}

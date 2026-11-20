@@ -44,6 +44,7 @@ const GOOGLE_MAP_STYLES = [
 ];
 
 export default class AiRoutePreviewMapComponent extends Component {
+    @service intl;
     @service mapSettings;
     @service routeEngine;
 
@@ -111,7 +112,7 @@ export default class AiRoutePreviewMapComponent extends Component {
             return null;
         }
 
-        return 'Unable to calculate route';
+        return this.intl.t('literal.fleet-ops.unable-to-calculate-route');
     }
 
     get center() {
@@ -173,10 +174,10 @@ export default class AiRoutePreviewMapComponent extends Component {
 
     get emptyText() {
         if (this.error) {
-            return 'Unable to preview the route right now.';
+            return this.intl.t('literal.fleet-ops.unable-to-preview-the-route-right-now');
         }
 
-        return 'Select pickup and dropoff with coordinates to preview the route.';
+        return this.intl.t('literal.fleet-ops.select-pickup-and-dropoff-with-coordinates-to-pr-65bac');
     }
 
     addressLabel(place) {

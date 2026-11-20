@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default class ManagementFuelTransactionsIndexDetailsController extends Controller {
+    @service intl;
     @service fetch;
     @service notifications;
     @service hostRouter;
@@ -31,7 +32,7 @@ export default class ManagementFuelTransactionsIndexDetailsController extends Co
     @task *matchVehicle() {
         try {
             yield this.fetch.post(`fuel-provider-transactions/${this.model.id}/match-vehicle`, { vehicle: this.vehicleId });
-            this.notifications.success('Fuel transaction matched to vehicle.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.fuel-transaction-matched-to-vehicle'));
             yield this.hostRouter.refresh();
         } catch (error) {
             this.notifications.serverError(error);
@@ -41,7 +42,7 @@ export default class ManagementFuelTransactionsIndexDetailsController extends Co
     @task *matchOrder() {
         try {
             yield this.fetch.post(`fuel-provider-transactions/${this.model.id}/match-order`, { order: this.orderId });
-            this.notifications.success('Fuel transaction matched to order.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.fuel-transaction-matched-to-order'));
             yield this.hostRouter.refresh();
         } catch (error) {
             this.notifications.serverError(error);
@@ -51,7 +52,7 @@ export default class ManagementFuelTransactionsIndexDetailsController extends Co
     @task *reprocess() {
         try {
             yield this.fetch.post(`fuel-provider-transactions/${this.model.id}/reprocess`);
-            this.notifications.success('Fuel transaction reprocessed.');
+            this.notifications.success(this.intl.t('literal.fleet-ops.fuel-transaction-reprocessed'));
             yield this.hostRouter.refresh();
         } catch (error) {
             this.notifications.serverError(error);
@@ -61,7 +62,7 @@ export default class ManagementFuelTransactionsIndexDetailsController extends Co
     @task *review(status) {
         try {
             yield this.fetch.post(`fuel-provider-transactions/${this.model.id}/review`, { status });
-            this.notifications.success(status === 'ignored' ? 'Fuel transaction ignored.' : 'Fuel transaction reviewed.');
+            this.notifications.success(status === 'ignored' ? this.intl.t('literal.fleet-ops.fuel-transaction-ignored') : this.intl.t('literal.fleet-ops.fuel-transaction-reviewed'));
             yield this.hostRouter.refresh();
         } catch (error) {
             this.notifications.serverError(error);

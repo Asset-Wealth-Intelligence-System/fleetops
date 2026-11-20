@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class WidgetMaintenanceOverviewComponent extends Component {
+    @service intl;
     static widgetId = 'fleet-ops-maintenance-overview-widget';
 
     @service fetch;
@@ -34,7 +35,7 @@ export default class WidgetMaintenanceOverviewComponent extends Component {
             this.data = yield this.fetch.get('fleet-ops/analytics/maintenance-overview');
             this.error = null;
         } catch (e) {
-            this.error = e?.message ?? 'Failed to load maintenance overview';
+            this.error = e?.message ?? this.intl.t('literal.fleet-ops.failed-to-load-maintenance-overview');
         }
     }
 }

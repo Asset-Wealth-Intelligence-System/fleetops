@@ -60,7 +60,7 @@ export default class MapGoogleLiveMapComponent extends Component {
             if (!marker) {
                 const createdMarker = await this.mapManager.addMarker(driver.id, coords.lat, coords.lng, {
                     iconUrl: driver.vehicle_avatar ?? '/engines-dist/images/driver-marker.png',
-                    iconSize: [20, 20],
+                    iconSize: [32, 32],
                     title: driver.name,
                     tooltip: buildDriverLiveMapContent(driver),
                     tooltipOptions: { html: true },
@@ -90,7 +90,7 @@ export default class MapGoogleLiveMapComponent extends Component {
             if (!marker) {
                 const createdMarker = await this.mapManager.addMarker(vehicle.id, coords.lat, coords.lng, {
                     iconUrl: vehicle.avatar_url ?? '/engines-dist/images/vehicle-marker.png',
-                    iconSize: [20, 20],
+                    iconSize: [32, 32],
                     title: vehicle.displayName,
                     tooltip: buildVehicleLiveMapContent(vehicle),
                     tooltipOptions: { html: true },
@@ -120,7 +120,8 @@ export default class MapGoogleLiveMapComponent extends Component {
             if (!marker) {
                 const createdMarker = await this.mapManager.addMarker(place.id, coords.lat, coords.lng, {
                     iconUrl: place.avatar_url ?? '/engines-dist/images/building-marker.png',
-                    iconSize: [16, 16],
+                    iconSize: [28, 28],
+                    iconAnchor: [14, 28],
                     title: place.address,
                     tooltip: buildPlaceTooltipContent(place),
                     tooltipOptions: { html: true },

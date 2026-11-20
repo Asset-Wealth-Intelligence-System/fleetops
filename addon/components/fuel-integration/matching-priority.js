@@ -1,65 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
-const MATCHING_FIELDS = [
-    {
-        key: 'plate_number',
-        label: 'Plate number',
-        source: 'Provider plate number',
-        target: 'Vehicle plate number',
-        description: 'Best default for fuel card imports. Matches license plates with normalized spacing and casing.',
-    },
-    {
-        key: 'internal_id',
-        label: 'Internal ID',
-        source: 'Provider internal fleet number',
-        target: 'Vehicle internal ID',
-        description: 'Use when the provider fleet number is the same identifier operators maintain on the vehicle.',
-    },
-    {
-        key: 'vin',
-        label: 'VIN',
-        source: 'Provider VIN',
-        target: 'Vehicle VIN',
-        description: 'Matches the vehicle identification number when the provider sends it with the transaction.',
-    },
-    {
-        key: 'serial_number',
-        label: 'Serial number',
-        source: 'Provider serial number',
-        target: 'Vehicle serial number',
-        description: 'Matches manufacturer or fleet serial numbers recorded on the vehicle.',
-    },
-    {
-        key: 'call_sign',
-        label: 'Call sign',
-        source: 'Provider call sign',
-        target: 'Vehicle call sign',
-        description: 'Matches operational call signs when those are shared with the fuel provider.',
-    },
-    {
-        key: 'fuel_card_number',
-        label: 'Fuel card number',
-        source: 'Provider fuel card number',
-        target: 'Vehicle fuel card number',
-        description: 'Use when each vehicle has a dedicated fuel card number saved on the vehicle record.',
-    },
-    {
-        key: 'trip_number',
-        label: 'Trip number / order reference',
-        source: 'Provider trip/order reference',
-        target: 'Order public ID, internal ID, or tracking number',
-        description: 'Links the transaction to an order when the provider sends a trip or order reference. It does not identify the vehicle by itself.',
-    },
-    {
-        key: 'provider_vehicle_id',
-        label: 'Provider vehicle ID',
-        source: 'Provider-specific vehicle ID',
-        target: 'Vehicle provider metadata',
-        description: 'Advanced fallback only. Use it when provider vehicle IDs have been intentionally stored on vehicle metadata.',
-    },
-];
-
+import { inject as service } from '@ember/service';
 const DEFAULT_MATCHING_ORDER = ['plate_number', 'internal_id', 'vin', 'serial_number', 'call_sign', 'fuel_card_number', 'trip_number'];
 const LEGACY_DEFAULT_MATCHING_ORDER = ['provider_vehicle_id', 'internal_number', 'structure_number', 'plate_number', 'vehicle_card_id', 'trip_number'];
 const LEGACY_FIELD_ALIASES = {
@@ -68,7 +10,70 @@ const LEGACY_FIELD_ALIASES = {
 };
 
 export default class FuelIntegrationMatchingPriorityComponent extends Component {
-    fields = MATCHING_FIELDS;
+    @service intl;
+
+    get MATCHING_FIELDS() {
+        return [
+            {
+                key: 'plate_number',
+                label: this.intl.t('literal.fleet-ops.plate-number'),
+                source: this.intl.t('literal.fleet-ops.provider-plate-number'),
+                target: 'Vehicle plate number',
+                description: this.intl.t('literal.fleet-ops.best-default-for-fuel-card-imports-matches-licen-68b5e'),
+            },
+            {
+                key: 'internal_id',
+                label: this.intl.t('literal.fleet-ops.internal-id'),
+                source: this.intl.t('literal.fleet-ops.provider-internal-fleet-number'),
+                target: 'Vehicle internal ID',
+                description: this.intl.t('literal.fleet-ops.use-when-the-provider-fleet-number-is-the-same-i-55dc2'),
+            },
+            {
+                key: 'vin',
+                label: 'VIN',
+                source: this.intl.t('literal.fleet-ops.provider-vin'),
+                target: 'Vehicle VIN',
+                description: this.intl.t('literal.fleet-ops.matches-the-vehicle-identification-number-when-t-423e3'),
+            },
+            {
+                key: 'serial_number',
+                label: this.intl.t('literal.fleet-ops.serial-number-34602'),
+                source: this.intl.t('literal.fleet-ops.provider-serial-number'),
+                target: 'Vehicle serial number',
+                description: this.intl.t('literal.fleet-ops.matches-manufacturer-or-fleet-serial-numbers-rec-bcbfd'),
+            },
+            {
+                key: 'call_sign',
+                label: this.intl.t('literal.fleet-ops.call-sign-f1159'),
+                source: this.intl.t('literal.fleet-ops.provider-call-sign'),
+                target: 'Vehicle call sign',
+                description: this.intl.t('literal.fleet-ops.matches-operational-call-signs-when-those-are-sh-2b9c0'),
+            },
+            {
+                key: 'fuel_card_number',
+                label: this.intl.t('literal.fleet-ops.fuel-card-number-ce750'),
+                source: this.intl.t('literal.fleet-ops.provider-fuel-card-number'),
+                target: 'Vehicle fuel card number',
+                description: this.intl.t('literal.fleet-ops.use-when-each-vehicle-has-a-dedicated-fuel-card-2deee'),
+            },
+            {
+                key: 'trip_number',
+                label: this.intl.t('literal.fleet-ops.trip-number-order-reference'),
+                source: this.intl.t('literal.fleet-ops.provider-trip-order-reference'),
+                target: 'Order public ID, internal ID, or tracking number',
+                description: this.intl.t('literal.fleet-ops.links-the-transaction-to-an-order-when-the-provi-2b96b'),
+            },
+            {
+                key: 'provider_vehicle_id',
+                label: this.intl.t('literal.fleet-ops.provider-vehicle-id'),
+                source: this.intl.t('literal.fleet-ops.provider-specific-vehicle-id'),
+                target: 'Vehicle provider metadata',
+                description: this.intl.t('literal.fleet-ops.advanced-fallback-only-use-it-when-provider-vehi-11adf'),
+            },
+        ];
+    }
+
+    fields = this.MATCHING_FIELDS;
 
     get order() {
         if (Array.isArray(this.args.order)) {

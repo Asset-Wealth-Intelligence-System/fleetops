@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class ModalsIssueCloseComponent extends Component {
+    @service intl;
     @service currentUser;
     @service notifications;
 
@@ -26,13 +27,13 @@ export default class ModalsIssueCloseComponent extends Component {
     }
 
     setupOptions() {
-        this.options.title = `Close ${this.issue?.public_id || 'Issue'}`;
+        this.options.title = `Close ${this.issue?.public_id || this.intl.t('literal.fleet-ops.issue')}`;
         this.options.acceptButtonText = 'Close Issue';
         this.options.acceptButtonIcon = 'circle-check';
         this.options.acceptButtonScheme = 'success';
         this.options.confirm = async (modal) => {
             if (!this.note) {
-                this.notifications.warning('Add a close note before closing the issue.');
+                this.notifications.warning(this.intl.t('literal.fleet-ops.add-a-close-note-before-closing-the-issue'));
                 return;
             }
 
@@ -57,7 +58,7 @@ export default class ModalsIssueCloseComponent extends Component {
                 };
 
                 await this.issue.save();
-                this.notifications.success('Issue closed.');
+                this.notifications.success(this.intl.t('literal.fleet-ops.issue-closed'));
 
                 if (typeof this.options.onSaved === 'function') {
                     await this.options.onSaved(this.issue);
